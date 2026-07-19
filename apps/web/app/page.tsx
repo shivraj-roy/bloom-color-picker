@@ -24,6 +24,14 @@ export default function Home() {
                <BloomColorPicker value={color} onChange={setColor} />
             </div>
             <code className="compare__value">{color}</code>
+            <div className="sizes">
+               <span className="compare__label">size: 28 / 32 / 40</span>
+               <div className="sizes__row">
+                  <BloomColorPicker defaultValue="#E96544" size={28} />
+                  <BloomColorPicker defaultValue="#5FB95B" size={32} />
+                  <BloomColorPicker defaultValue="#4E72D6" size={40} />
+               </div>
+            </div>
          </section>
       </main>
    );

@@ -22,7 +22,7 @@ export interface BloomColorPickerProps {
 
    /**
     * Diameter of the closed swatch in px; the whole bloom scales proportionally.
-    * @default 50
+    * @default 32
     */
    size?: number;
 

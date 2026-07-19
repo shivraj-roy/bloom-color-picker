@@ -125,7 +125,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       onOpenChange,
       outerColors = defaultOuterColors,
       innerColors = defaultInnerColors,
-      size = BASE_SWATCH,
+      size = 32,
       disabled = false,
       className,
       classNames,
@@ -134,6 +134,12 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
 
    const scale = size / BASE_SWATCH;
    const part = (name: BloomColorPickerPart) => classNames?.[name];
+
+   // Outline rings scale with the picker so proportions match the original at any size
+   const ring = (color: string): React.CSSProperties => ({
+      outline: `${2 * scale}px solid ${color}`,
+      outlineOffset: `${-2 * scale}px`,
+   });
 
    const [rawValue, setValue] = useControllableState(valueProp, defaultValue, onChange);
    const hex = normalizeHex(rawValue) ?? FALLBACK_HEX;
@@ -342,16 +348,12 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
 
                <div
                   className={cx("bcp__bloom", closing && "bcp__bloom--closing", part("bloom"))}
-                  style={{
-                     background: shade,
-                     outline: `2px solid ${ringColor}`,
-                     outlineOffset: "-2px",
-                  }}
+                  style={{ background: shade, ...ring(ringColor) }}
                >
                   <div
                      ref={dishRef}
                      className={cx("bcp__dish", part("dish"))}
-                     style={{ outline: `2px solid ${ringColor}`, outlineOffset: "-2px" }}
+                     style={ring(ringColor)}
                   />
                </div>
 
@@ -375,8 +377,9 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                            left: `calc(50% + ${p.x * scale}px)`,
                            top: `calc(50% + ${p.y * scale}px)`,
                            background: p.color,
-                           outline: `2px solid color-mix(in srgb, color-mix(in srgb, ${p.color}, #000 30%) 18%, transparent)`,
-                           outlineOffset: "-2px",
+                           ...ring(
+                              `color-mix(in srgb, color-mix(in srgb, ${p.color}, #000 30%) 18%, transparent)`
+                           ),
                            "--bcp-from-x": `${-p.x * scale}px`,
                            "--bcp-from-y": `${-p.y * scale}px`,
                            "--bcp-petal-delay": `${0.06 + p.order * 0.022}s`,

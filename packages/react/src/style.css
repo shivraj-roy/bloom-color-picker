@@ -368,7 +368,7 @@
    cursor: pointer;
    flex-shrink: 0;
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-   outline: 1.5px solid #fff;
+   outline: calc(1.5px * var(--bcp-scale)) solid #fff;
    transition:
       transform var(--bcp-dur-press) var(--bcp-ease-press),
       background-color 0.25s ease-out;

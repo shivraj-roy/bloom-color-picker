@@ -39,7 +39,7 @@ export function Example() {
 | `onOpenChange` | `(open: boolean) => void` | —                | Fired on swatch click, outside click, or Escape.                   |
 | `outerColors`  | `string[]`                | 12 warm hues     | Outer petal ring, clockwise from the top. Hex only.                |
 | `innerColors`  | `string[]`                | 6 pastels        | Inner petal ring, clockwise from the top. Hex only.                |
-| `size`         | `number`                  | `50`             | Closed swatch diameter in px; the whole bloom scales with it.      |
+| `size`         | `number`                  | `32`             | Closed swatch diameter in px; the whole bloom scales with it.      |
 | `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
 | `className`    | `string`                  | —                | Class for the root element.                                        |
 | `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`. |
