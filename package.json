@@ -1,0 +1,35 @@
+{
+  "name": "bloom-color-picker-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.1.1",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=web...",
+    "build": "turbo run build",
+    "build:web": "turbo run build --filter=web...",
+    "build:react": "turbo run build --filter=bloom-color-picker...",
+    "lint": "turbo run lint",
+    "check-types": "turbo run check-types",
+    "format:check": "prettier --check \"**/*.{ts,tsx,css,md}\" --cache",
+    "format:write": "prettier --write \"**/*.{ts,tsx,css,md}\" --cache",
+    "publish:release": "cd packages/react && pnpm publish:release"
+  },
+  "keywords": [
+    "color picker",
+    "bloom",
+    "flower",
+    "react"
+  ],
+  "author": "Shivraj Roy <shivrajroy78@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "3.5.3",
+    "turbo": "^2.9.18",
+    "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
+  }
+}

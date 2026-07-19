@@ -1,0 +1,10 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+
+autoInstallPeers: true
+linkWorkspacePackages: true

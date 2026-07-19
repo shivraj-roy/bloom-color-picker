@@ -1,0 +1,21 @@
+# deps
+node_modules/
+
+# builds
+dist/
+.next/
+out/
+build/
+
+# turbo
+.turbo/
+
+# misc
+.DS_Store
+*.log
+.env
+.env.*
+!example.env
+
+# private reference material — never commit
+_ref/

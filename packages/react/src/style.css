@@ -1,0 +1,613 @@
+/* bloom-color-picker — zero-dependency styles.
+   Spring easings are pre-computed linear() curves matching the original
+   motion springs (stiffness/damping noted on each). */
+
+.bcp {
+   /* Fallback timings for browsers without linear() support (Safari < 17.2,
+      Chrome < 113, Firefox < 112): shorter durations, spring-ish beziers. */
+   --bcp-dur-bloom: 450ms;
+   --bcp-ease-bloom: cubic-bezier(0.22, 1, 0.36, 1);
+   --bcp-dur-dish: 500ms;
+   --bcp-ease-dish: cubic-bezier(0.34, 1.3, 0.64, 1);
+   --bcp-dur-arc: 600ms;
+   --bcp-ease-arc: cubic-bezier(0.34, 1.56, 0.64, 1);
+   --bcp-dur-petal: 550ms;
+   --bcp-ease-petal: cubic-bezier(0.22, 1, 0.36, 1);
+   --bcp-dur-petal-hover: 400ms;
+   --bcp-ease-petal-hover: cubic-bezier(0.34, 1.56, 0.64, 1);
+   --bcp-dur-knob: 350ms;
+   --bcp-ease-knob: cubic-bezier(0.34, 1.56, 0.64, 1);
+   --bcp-dur-press: 300ms;
+   --bcp-ease-press: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+   --bcp-scale: 1;
+
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+/* Spring easings: pre-computed linear() curves matching the original motion
+   springs (stiffness/damping noted on each). */
+@supports (transition-timing-function: linear(0, 1)) {
+   .bcp {
+      /* bloom morph: stiffness 420, damping 30 */
+      --bcp-dur-bloom: 656ms;
+      --bcp-ease-bloom: linear(
+         0.0001,
+         0.0528,
+         0.1699,
+         0.311,
+         0.4611,
+         0.6007,
+         0.7213,
+         0.8196,
+         0.8936,
+         0.9496,
+         0.9882,
+         1.0127,
+         1.0264,
+         1.0323,
+         1.0331,
+         1.0307,
+         1.0264,
+         1.0215,
+         1.0167,
+         1.0122,
+         1.0083,
+         1.0053,
+         1.0029,
+         1.0013,
+         1.0001,
+         0.9994,
+         0.999,
+         0.9989,
+         0.9989,
+         0.999,
+         0.9992,
+         0.9993,
+         0.9995,
+         0.9996,
+         0.9998,
+         0.9998,
+         0.9999,
+         1,
+         1,
+         1,
+         1
+      );
+      /* dish: stiffness 420, damping 26 */
+      --bcp-dur-dish: 766ms;
+      --bcp-ease-dish: linear(
+         0.0001,
+         0.069,
+         0.226,
+         0.4115,
+         0.5942,
+         0.7535,
+         0.8825,
+         0.9726,
+         1.0307,
+         1.0623,
+         1.0743,
+         1.0724,
+         1.0627,
+         1.049,
+         1.035,
+         1.0223,
+         1.012,
+         1.0041,
+         0.999,
+         0.996,
+         0.9946,
+         0.9944,
+         0.995,
+         0.9959,
+         0.997,
+         0.998,
+         0.9989,
+         0.9995,
+         1,
+         1.0002,
+         1.0004,
+         1.0004,
+         1.0004,
+         1.0003,
+         1.0003,
+         1.0002,
+         1.0001,
+         1.0001,
+         1,
+         1,
+         1
+      );
+      /* arc: stiffness 300, damping 20 */
+      --bcp-dur-arc: 1010ms;
+      --bcp-ease-arc: linear(
+         0.0001,
+         0.0863,
+         0.2716,
+         0.4943,
+         0.7003,
+         0.8714,
+         0.9915,
+         1.0664,
+         1.1008,
+         1.1069,
+         1.0948,
+         1.0731,
+         1.0496,
+         1.0277,
+         1.0108,
+         0.9987,
+         0.9918,
+         0.9888,
+         0.9886,
+         0.9903,
+         0.9927,
+         0.9952,
+         0.9974,
+         0.9992,
+         1.0003,
+         1.001,
+         1.0012,
+         1.0012,
+         1.001,
+         1.0007,
+         1.0005,
+         1.0002,
+         1.0001,
+         0.9999,
+         0.9999,
+         0.9999,
+         0.9999,
+         0.9999,
+         0.9999,
+         1,
+         1
+      );
+      /* petal entrance: stiffness 220, damping 22 */
+      --bcp-dur-petal: 890ms;
+      --bcp-ease-petal: linear(
+         0.0001,
+         0.0502,
+         0.1608,
+         0.3026,
+         0.4465,
+         0.5844,
+         0.7021,
+         0.8014,
+         0.8777,
+         0.9359,
+         0.9762,
+         1.0034,
+         1.0194,
+         1.0277,
+         1.0303,
+         1.0293,
+         1.0263,
+         1.0221,
+         1.0177,
+         1.0134,
+         1.0097,
+         1.0066,
+         1.0041,
+         1.0023,
+         1.0009,
+         1,
+         0.9995,
+         0.9992,
+         0.9991,
+         0.9991,
+         0.9992,
+         0.9993,
+         0.9994,
+         0.9996,
+         0.9997,
+         0.9998,
+         0.9999,
+         0.9999,
+         1,
+         1,
+         1
+      );
+      /* petal hover: stiffness 400, damping 18 */
+      --bcp-dur-petal-hover: 1045ms;
+      --bcp-ease-petal-hover: linear(
+         0.0001,
+         0.1203,
+         0.3818,
+         0.6816,
+         0.9329,
+         1.1042,
+         1.1891,
+         1.2018,
+         1.1665,
+         1.1091,
+         1.0502,
+         1.0027,
+         0.972,
+         0.9593,
+         0.9599,
+         0.9688,
+         0.9812,
+         0.9928,
+         1.0016,
+         1.0067,
+         1.0085,
+         1.0078,
+         1.0057,
+         1.0032,
+         1.0009,
+         0.9993,
+         0.9985,
+         0.9983,
+         0.9985,
+         0.999,
+         0.9995,
+         0.9999,
+         1.0002,
+         1.0003,
+         1.0003,
+         1.0003,
+         1.0002,
+         1.0001,
+         1,
+         0.9999,
+         1
+      );
+      /* knob: stiffness 400, damping 22 */
+      --bcp-dur-knob: 906ms;
+      --bcp-ease-knob: linear(
+         0.0001,
+         0.0906,
+         0.2941,
+         0.527,
+         0.7431,
+         0.9183,
+         1.035,
+         1.1004,
+         1.1243,
+         1.1189,
+         1.0968,
+         1.0681,
+         1.0393,
+         1.016,
+         0.9993,
+         0.9891,
+         0.9848,
+         0.9846,
+         0.9869,
+         0.9904,
+         0.9941,
+         0.9972,
+         0.9996,
+         1.0011,
+         1.0018,
+         1.002,
+         1.0017,
+         1.0013,
+         1.0009,
+         1.0005,
+         1.0001,
+         0.9999,
+         0.9998,
+         0.9998,
+         0.9998,
+         0.9998,
+         0.9999,
+         0.9999,
+         1,
+         1,
+         1
+      );
+      /* swatch press: stiffness 500, damping 24 */
+      --bcp-dur-press: 817ms;
+      --bcp-ease-press: linear(
+         0.0001,
+         0.0946,
+         0.3006,
+         0.5407,
+         0.7574,
+         0.9328,
+         1.0507,
+         1.1143,
+         1.1343,
+         1.1245,
+         1.0981,
+         1.0668,
+         1.0363,
+         1.0117,
+         0.9948,
+         0.9854,
+         0.982,
+         0.9829,
+         0.9862,
+         0.9904,
+         0.9946,
+         0.998,
+         1.0005,
+         1.0018,
+         1.0024,
+         1.0023,
+         1.0019,
+         1.0014,
+         1.0008,
+         1.0003,
+         1,
+         0.9998,
+         0.9997,
+         0.9997,
+         0.9997,
+         0.9998,
+         0.9999,
+         0.9999,
+         1,
+         1,
+         1
+      );
+   }
+}
+
+/* Swatch-sized anchor the bloom overlays so it opens where the swatch was */
+.bcp__slot {
+   position: relative;
+   width: calc(50px * var(--bcp-scale));
+   height: calc(50px * var(--bcp-scale));
+   flex-shrink: 0;
+}
+
+/* --- Closed swatch --- */
+.bcp__swatch {
+   width: calc(50px * var(--bcp-scale));
+   height: calc(50px * var(--bcp-scale));
+   border-radius: 50%;
+   border: none;
+   padding: 0;
+   cursor: pointer;
+   flex-shrink: 0;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+   outline: 1.5px solid #fff;
+   transition:
+      transform var(--bcp-dur-press) var(--bcp-ease-press),
+      background-color 0.25s ease-out;
+   animation: bcp-swatch-in 0.18s ease-out;
+}
+
+.bcp__swatch--pressing {
+   transform: scale(0.85);
+}
+
+.bcp__swatch:disabled {
+   cursor: not-allowed;
+   opacity: 0.55;
+}
+
+/* Keyboard focus rings (box-shadow so the decorative outlines stay untouched) */
+.bcp__swatch:focus-visible,
+.bcp__petal:focus-visible {
+   box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px rgba(78, 114, 214, 0.85);
+}
+
+@keyframes bcp-swatch-in {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}
+
+/* --- Dahlia bloom --- */
+.bcp__bloom {
+   position: absolute;
+   z-index: 1;
+   top: 50%;
+   left: 50%;
+   width: calc(280px * var(--bcp-scale));
+   height: calc(280px * var(--bcp-scale));
+   margin: calc(-140px * var(--bcp-scale)) 0 0 calc(-140px * var(--bcp-scale));
+   border-radius: 50%;
+   box-sizing: border-box;
+   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+   /* opens from swatch size (50/280) at the same center */
+   animation:
+      bcp-bloom-in var(--bcp-dur-bloom) var(--bcp-ease-bloom) backwards,
+      bcp-unblur-3 0.26s ease-out backwards;
+   transition: background-color 0.25s ease-out;
+}
+
+@keyframes bcp-bloom-in {
+   from {
+      transform: scale(0.1786);
+   }
+   to {
+      transform: scale(1);
+   }
+}
+
+@keyframes bcp-unblur-3 {
+   from {
+      filter: blur(3px);
+   }
+   to {
+      filter: blur(0px);
+   }
+}
+
+.bcp__bloom--closing {
+   /* keyframe (not transition) so the exit reliably replaces the entrance animation */
+   animation: bcp-bloom-out 0.22s cubic-bezier(0.42, 0, 1, 1) forwards;
+}
+
+@keyframes bcp-bloom-out {
+   from {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0px);
+   }
+   to {
+      transform: scale(0.1786);
+      opacity: 0;
+      filter: blur(3px);
+   }
+}
+
+.bcp__dish {
+   position: absolute;
+   inset: calc(20px * var(--bcp-scale));
+   border-radius: 50%;
+   background: rgba(233, 234, 236, 0.8);
+   overflow: hidden;
+   animation: bcp-dish-in var(--bcp-dur-dish) var(--bcp-ease-dish) 0.05s backwards;
+}
+
+@keyframes bcp-dish-in {
+   from {
+      transform: scale(0.4);
+      opacity: 0;
+      filter: blur(8px);
+   }
+   to {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0px);
+   }
+}
+
+/* --- Brightness arc --- */
+.bcp__arc {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-top: calc(-180px * var(--bcp-scale));
+   margin-left: calc(-180px * var(--bcp-scale));
+   transform-origin: center;
+   z-index: 0;
+   pointer-events: none;
+   overflow: visible;
+   animation: bcp-arc-in var(--bcp-dur-arc) var(--bcp-ease-arc) 0.28s backwards;
+}
+
+@keyframes bcp-arc-in {
+   from {
+      opacity: 0;
+      transform: scale(0.3);
+      filter: blur(8px);
+   }
+   to {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
+   }
+}
+
+.bcp__arc--closing {
+   animation: bcp-arc-out 0.16s cubic-bezier(0.42, 0, 1, 1) forwards;
+}
+
+@keyframes bcp-arc-out {
+   from {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
+   }
+   to {
+      opacity: 0;
+      transform: scale(0.3);
+      filter: blur(8px);
+   }
+}
+
+.bcp__knob {
+   pointer-events: auto;
+}
+
+.bcp__knob-halo {
+   r: 14.5px;
+   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+   transition: r var(--bcp-dur-knob) var(--bcp-ease-knob);
+}
+
+.bcp__knob-core {
+   r: 11.5px;
+   transition: r var(--bcp-dur-knob) var(--bcp-ease-knob);
+}
+
+.bcp--dragging .bcp__knob-halo {
+   r: 16.5px;
+}
+
+.bcp--dragging .bcp__knob-core {
+   r: 13.5px;
+}
+
+/* --- Petals --- */
+.bcp__petal {
+   position: absolute;
+   z-index: 2;
+   border: none;
+   border-radius: 50%;
+   padding: 0;
+   cursor: pointer;
+   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+   /* spiral entrance from the center, staggered per petal */
+   animation: bcp-petal-in var(--bcp-dur-petal) var(--bcp-ease-petal) var(--bcp-petal-delay)
+      backwards;
+   transition: transform var(--bcp-dur-petal-hover) var(--bcp-ease-petal-hover);
+}
+
+@keyframes bcp-petal-in {
+   from {
+      transform: translate(var(--bcp-from-x), var(--bcp-from-y)) scale(1.5);
+      opacity: 0;
+      filter: blur(12px);
+   }
+   to {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+      filter: blur(0px);
+   }
+}
+
+.bcp__petal--hovered {
+   transform: scale(1.18);
+}
+
+.bcp__petal:active {
+   transform: scale(0.95);
+   transition-duration: 0.1s;
+}
+
+/* close phase 2: all rings converge back to the center */
+.bcp__petal--home {
+   animation: bcp-petal-out 0.34s ease-in-out forwards;
+   transition: none;
+   pointer-events: none;
+}
+
+@keyframes bcp-petal-out {
+   from {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+      filter: blur(0px);
+   }
+   to {
+      transform: translate(var(--bcp-from-x), var(--bcp-from-y)) scale(1);
+      opacity: 0;
+      filter: blur(3px);
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .bcp,
+   .bcp * {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+   }
+}

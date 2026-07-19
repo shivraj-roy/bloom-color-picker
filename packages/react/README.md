@@ -1,0 +1,50 @@
+# bloom-color-picker
+
+A flower-inspired color picker for React. A small swatch blooms open into a dahlia of petal swatches with a brightness arc — pick a petal, drag the arc, done.
+
+- Zero runtime dependencies (only React as a peer).
+- Spring-quality animations in pure CSS (`linear()` easings), no animation library.
+- Headless value API — bring your own hex input/display.
+- Controlled or uncontrolled `value` and `open` state.
+- Custom palettes, proportional sizing, per-part class overrides.
+
+## Installation
+
+```bash
+npm install bloom-color-picker
+```
+
+## Usage
+
+```tsx
+import { BloomColorPicker } from "bloom-color-picker";
+import "bloom-color-picker/style.css";
+
+export function Example() {
+   const [color, setColor] = React.useState("#F5B81E");
+
+   return <BloomColorPicker value={color} onChange={setColor} />;
+}
+```
+
+## Props
+
+| Prop           | Type                      | Default          | Description                                                        |
+| -------------- | ------------------------- | ---------------- | ------------------------------------------------------------------ |
+| `value`        | `string`                  | —                | Controlled hex value (`"#RRGGBB"`).                                |
+| `defaultValue` | `string`                  | `"#F5B81E"`      | Initial value when uncontrolled.                                   |
+| `onChange`     | `(hex: string) => void`   | —                | Fired with the new uppercase hex on every pick or brightness drag. |
+| `open`         | `boolean`                 | —                | Controlled open state of the bloom.                                |
+| `defaultOpen`  | `boolean`                 | `false`          | Initial open state when uncontrolled.                              |
+| `onOpenChange` | `(open: boolean) => void` | —                | Fired on swatch click, outside click, or Escape.                   |
+| `outerColors`  | `string[]`                | 12 warm hues     | Outer petal ring, clockwise from the top. Hex only.                |
+| `innerColors`  | `string[]`                | 6 pastels        | Inner petal ring, clockwise from the top. Hex only.                |
+| `size`         | `number`                  | `50`             | Closed swatch diameter in px; the whole bloom scales with it.      |
+| `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
+| `className`    | `string`                  | —                | Class for the root element.                                        |
+| `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`. |
+| `aria-label`   | `string`                  | `"Pick a color"` | Accessible label for the closed swatch.                            |
+
+## License
+
+MIT
