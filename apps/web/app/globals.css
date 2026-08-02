@@ -223,17 +223,18 @@ body {
 }
 
 .sidebar__title {
-   font-size: 26px;
+   font-size: 34px;
    font-weight: 800;
    letter-spacing: -0.3px;
-   line-height: 1.15;
+   line-height: 1.1;
+   text-transform: capitalize;
 }
 
 .sidebar__tagline {
-   font-size: 13.5px;
+   font-size: 15.5px;
    color: var(--muted);
    line-height: 1.5;
-   margin-top: 6px;
+   margin-top: 8px;
 }
 
 .badges {

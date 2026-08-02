@@ -26,7 +26,11 @@ export function Sidebar() {
    return (
       <aside className="box sidebar">
          <div>
-            <h1 className="sidebar__title">bloom‑color‑picker</h1>
+            <h1 className="sidebar__title">
+               Bloom
+               <br />
+               Color Picker
+            </h1>
             <p className="sidebar__tagline">
                A color picker for React that blooms — a tiny swatch opens into a dahlia of petal
                swatches. Zero dependencies.
