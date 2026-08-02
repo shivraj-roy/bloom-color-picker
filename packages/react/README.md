@@ -32,18 +32,27 @@ export function Example() {
 | Prop           | Type                      | Default          | Description                                                        |
 | -------------- | ------------------------- | ---------------- | ------------------------------------------------------------------ |
 | `value`        | `string`                  | —                | Controlled hex value (`"#RRGGBB"`).                                |
-| `defaultValue` | `string`                  | `"#F5B81E"`      | Initial value when uncontrolled.                                   |
+| `swatchColor`  | `string`                  | `"#F5B81E"`      | Initial value when uncontrolled.                                   |
 | `onChange`     | `(hex: string) => void`   | —                | Fired with the new uppercase hex on every pick or brightness drag. |
 | `open`         | `boolean`                 | —                | Controlled open state of the bloom.                                |
 | `defaultOpen`  | `boolean`                 | `false`          | Initial open state when uncontrolled.                              |
 | `onOpenChange` | `(open: boolean) => void` | —                | Fired on swatch click, outside click, or Escape.                   |
-| `outerColors`  | `string[]`                | 12 warm hues     | Outer petal ring, clockwise from the top. Hex only.                |
-| `innerColors`  | `string[]`                | 6 pastels        | Inner petal ring, clockwise from the top. Hex only.                |
+| `palette`      | `"warm" \| "ocean" \| "blossom" \| "pastel"` | `"warm"` | Built-in petal color scheme.                        |
+| `outerColors`  | `string[]`                | from `palette`   | Outer petal ring, clockwise from the top. Hex only. Overrides `palette`. |
+| `innerColors`  | `string[]`                | from `palette`   | Inner petal ring, clockwise from the top. Hex only. Overrides `palette`. |
 | `size`         | `number`                  | `32`             | Closed swatch diameter in px; the whole bloom scales with it.      |
 | `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
 | `className`    | `string`                  | —                | Class for the root element.                                        |
 | `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`. |
 | `aria-label`   | `string`                  | `"Pick a color"` | Accessible label for the closed swatch.                            |
+
+## Palettes
+
+```tsx
+<BloomColorPicker palette="ocean" />
+```
+
+Four built-in palettes: `warm` (default), `ocean`, `blossom`, `pastel`. Import `bloomPalettes` to inspect or remix their raw hex arrays.
 
 ## License
 

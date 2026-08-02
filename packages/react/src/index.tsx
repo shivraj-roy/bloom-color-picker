@@ -3,6 +3,7 @@ import * as React from "react";
 import "./style.css";
 
 import { deriveFromHex, normalizeHex, shadeOf } from "./color";
+import { bloomPalettes } from "./palettes";
 import type { BloomColorPickerPart, BloomColorPickerProps } from "./types";
 import { useControllableState } from "./use-controllable-state";
 
@@ -21,32 +22,6 @@ const ARC_C = ARC_CANVAS / 2;
 const ARC_RADIUS = 170;
 const ARC_HALF_SPAN = 26; // degrees above & below 3 o'clock
 const ARC_STROKE = 20;
-
-// Curated warm color wheel, clockwise from the top.
-export const defaultOuterColors = [
-   "#F7C13F", // yellow (top)
-   "#F2A23C", // amber
-   "#EE8440", // orange
-   "#E96544", // coral
-   "#E84C3F", // red
-   "#E03E66", // rose
-   "#D23C92", // magenta (bottom)
-   "#A24FC8", // purple
-   "#7B5FD4", // violet
-   "#4E72D6", // blue
-   "#3DA1B8", // teal
-   "#5FB95B", // green
-];
-
-// Pastel inner ring, clockwise from the top.
-export const defaultInnerColors = [
-   "#F6E6A4", // pale yellow (top)
-   "#F4D0B0", // pale peach
-   "#F1C1C4", // pale red/pink
-   "#E3C4DE", // pale magenta
-   "#CCC9EC", // pale violet/blue
-   "#C6E0C9", // pale teal/green
-];
 
 interface Petal {
    key: string;
@@ -118,19 +93,24 @@ const FALLBACK_HEX = "#F5B81E";
 export function BloomColorPicker(props: BloomColorPickerProps) {
    const {
       value: valueProp,
-      defaultValue = FALLBACK_HEX,
+      swatchColor = FALLBACK_HEX,
       onChange,
       open: openProp,
       defaultOpen = false,
       onOpenChange,
-      outerColors = defaultOuterColors,
-      innerColors = defaultInnerColors,
+      palette = "warm",
+      outerColors,
+      innerColors,
       size = 32,
       disabled = false,
       className,
       classNames,
       "aria-label": ariaLabel = "Pick a color",
    } = props;
+
+   const paletteColors = bloomPalettes[palette] ?? bloomPalettes.warm;
+   const resolvedOuterColors = outerColors ?? paletteColors.outer;
+   const resolvedInnerColors = innerColors ?? paletteColors.inner;
 
    const scale = size / BASE_SWATCH;
    const part = (name: BloomColorPickerPart) => classNames?.[name];
@@ -141,7 +121,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       outlineOffset: `${-2 * scale}px`,
    });
 
-   const [rawValue, setValue] = useControllableState(valueProp, defaultValue, onChange);
+   const [rawValue, setValue] = useControllableState(valueProp, swatchColor, onChange);
    const hex = normalizeHex(rawValue) ?? FALLBACK_HEX;
    const { base, lightPos } = React.useMemo(() => deriveFromHex(hex), [hex]);
 
@@ -167,8 +147,8 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
    const gradientId = React.useId();
 
    const petals = React.useMemo(
-      () => buildPetals(outerColors, innerColors),
-      [outerColors, innerColors]
+      () => buildPetals(resolvedOuterColors, resolvedInnerColors),
+      [resolvedOuterColors, resolvedInnerColors]
    );
 
    React.useEffect(() => {
@@ -410,3 +390,10 @@ export default BloomColorPicker;
 
 export type { BloomColorPickerPart, BloomColorPickerProps } from "./types";
 export { deriveFromHex, hexToHsl, hslToHex, normalizeHex, shadeOf } from "./color";
+export {
+   bloomPalettes,
+   defaultInnerColors,
+   defaultOuterColors,
+   type BloomColorPickerPalette,
+   type BloomColorPickerPaletteColors,
+} from "./palettes";

@@ -1,38 +1,31 @@
-"use client";
-
-import { useState } from "react";
-import { BloomColorPicker } from "bloom-color-picker";
-import "bloom-color-picker/style.css";
-
-import OriginalBloomPicker from "../original/BloomPicker";
+import { Sidebar } from "../components/sidebar";
 
 export default function Home() {
-   const [color, setColor] = useState("#F5B81E");
-
    return (
-      <main className="compare">
-         <section className="compare__panel">
-            <span className="compare__label">Original · motion</span>
-            <div className="compare__stage">
-               <OriginalBloomPicker />
-            </div>
-         </section>
+      <div className="page">
+         <main className="bento">
+            <Sidebar />
 
-         <section className="compare__panel">
-            <span className="compare__label">Package · zero-dep</span>
-            <div className="compare__stage">
-               <BloomColorPicker value={color} onChange={setColor} />
+            <div className="lofi lofi--playground">
+               PLAYGROUND
+               <br />
+               live bloom + controls, one card
             </div>
-            <code className="compare__value">{color}</code>
-            <div className="sizes">
-               <span className="compare__label">size: 28 / 32 / 40</span>
-               <div className="sizes__row">
-                  <BloomColorPicker defaultValue="#E96544" size={28} />
-                  <BloomColorPicker defaultValue="#5FB95B" size={32} />
-                  <BloomColorPicker defaultValue="#4E72D6" size={40} />
-               </div>
+
+            <div className="lofi lofi--code">
+               CODE
+               <br />
+               live JSX for current config
             </div>
-         </section>
-      </main>
+
+            <div className="lofi lofi--props">
+               PROPS
+               <br />
+               compact reference table
+            </div>
+         </main>
+
+         <div className="footer-strip">@your-x-handle</div>
+      </div>
    );
 }
