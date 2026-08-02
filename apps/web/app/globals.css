@@ -14,6 +14,143 @@
    --r-pill: 999px;
 }
 
+/* scroll-mask utilities (https://twilson.net/scroll-mask), ported to plain CSS */
+
+@property --scroll-mask-t-from {
+   syntax: "<length-percentage>";
+   inherits: false;
+   initial-value: 100%;
+}
+
+@property --scroll-mask-b-from {
+   syntax: "<length-percentage>";
+   inherits: false;
+   initial-value: 100%;
+}
+
+@property --scroll-mask-l-from {
+   syntax: "<length-percentage>";
+   inherits: false;
+   initial-value: 100%;
+}
+
+@property --scroll-mask-r-from {
+   syntax: "<length-percentage>";
+   inherits: false;
+   initial-value: 100%;
+}
+
+@keyframes scroll-mask-y-scroll {
+   0% {
+      --scroll-mask-t-from: 100%;
+   }
+   10%,
+   100% {
+      --scroll-mask-t-from: var(--scroll-mask-fade-from-t, 100%);
+   }
+   0%,
+   90% {
+      --scroll-mask-b-from: var(--scroll-mask-fade-from-b, 100%);
+   }
+   100% {
+      --scroll-mask-b-from: 100%;
+   }
+}
+
+@keyframes scroll-mask-x-scroll {
+   0% {
+      --scroll-mask-l-from: 100%;
+   }
+   10%,
+   100% {
+      --scroll-mask-l-from: var(--scroll-mask-fade-from-l, 100%);
+   }
+   0%,
+   90% {
+      --scroll-mask-r-from: var(--scroll-mask-fade-from-r, 100%);
+   }
+   100% {
+      --scroll-mask-r-from: 100%;
+   }
+}
+
+@supports (animation-timeline: scroll()) {
+   [class^="scroll-mask-"],
+   [class*=" scroll-mask-"] {
+      --scroll-mask-t: linear-gradient(to top, black, black var(--scroll-mask-t-from), transparent);
+      --scroll-mask-b: linear-gradient(
+         to bottom,
+         black,
+         black var(--scroll-mask-b-from),
+         transparent
+      );
+      --scroll-mask-l: linear-gradient(
+         to left,
+         black,
+         black var(--scroll-mask-l-from),
+         transparent
+      );
+      --scroll-mask-r: linear-gradient(
+         to right,
+         black,
+         black var(--scroll-mask-r-from),
+         transparent
+      );
+      mask-image: var(--scroll-mask-t), var(--scroll-mask-b), var(--scroll-mask-l),
+         var(--scroll-mask-r);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+      animation:
+         scroll-mask-y-scroll linear,
+         scroll-mask-x-scroll linear;
+      animation-timeline: scroll(self block), scroll(self inline);
+   }
+}
+
+.scroll-mask-t {
+   --scroll-mask-fade-from-t: 80%;
+}
+
+.scroll-mask-b {
+   --scroll-mask-fade-from-b: 80%;
+}
+
+.scroll-mask-y {
+   --scroll-mask-fade-from-t: 80%;
+   --scroll-mask-fade-from-b: 80%;
+}
+
+.scroll-mask-l {
+   --scroll-mask-fade-from-l: 80%;
+}
+
+.scroll-mask-r {
+   --scroll-mask-fade-from-r: 80%;
+}
+
+.scroll-mask-x {
+   --scroll-mask-fade-from-l: 80%;
+   --scroll-mask-fade-from-r: 80%;
+}
+
+::-webkit-scrollbar {
+   width: 5px;
+}
+
+::-webkit-scrollbar-track {
+   background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+   background: var(--card-border);
+   border-radius: 5px;
+}
+
+* {
+   scrollbar-width: thin;
+   scrollbar-color: var(--card-border) transparent;
+}
+
 * {
    margin: 0;
    padding: 0;
@@ -202,20 +339,43 @@ body {
    padding: 9px 8px 9px 12px;
 }
 
-.code-row code,
-.code-block {
+.code-row code {
    font-family: var(--font-mono), ui-monospace, monospace;
    font-size: 12.5px;
    color: var(--ink);
    white-space: pre;
-   overflow-x: auto;
 }
 
+/* outer: border + background, stays crisp — never masked */
 .code-block {
    background: var(--canvas);
+   border: 1px solid var(--card-border);
    border-radius: var(--r-inner);
-   padding: 10px 12px;
+   padding: 10px 12px 4px;
+}
+
+/* inner: the actual scroll container — mask/fade applies only here */
+.code-block__scroll {
+   font-family: var(--font-mono), ui-monospace, monospace;
+   font-size: 12.5px;
+   color: var(--ink);
+   white-space: pre;
    line-height: 1.6;
+   overflow-x: auto;
+   scrollbar-color: transparent transparent;
+   padding-bottom: 6px;
+}
+
+.code-block:hover .code-block__scroll {
+   scrollbar-color: var(--card-border) transparent;
+}
+
+.code-block__scroll::-webkit-scrollbar-thumb {
+   background: transparent;
+}
+
+.code-block:hover .code-block__scroll::-webkit-scrollbar-thumb {
+   background: var(--card-border);
 }
 
 .copy {

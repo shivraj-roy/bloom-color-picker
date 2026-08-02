@@ -79,7 +79,9 @@ export function Sidebar() {
                <span className="sidebar__label">Usage</span>
                <CopyButton text={USAGE} label="Copy usage snippet" />
             </div>
-            <pre className="code-block">{USAGE}</pre>
+            <div className="code-block">
+               <pre className="code-block__scroll scroll-mask-x">{USAGE}</pre>
+            </div>
          </div>
       </aside>
    );
