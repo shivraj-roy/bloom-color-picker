@@ -1,3 +1,4 @@
+import { Playground } from "../components/playground";
 import { Sidebar } from "../components/sidebar";
 
 export default function Home() {
@@ -6,11 +7,7 @@ export default function Home() {
          <main className="bento">
             <Sidebar />
 
-            <div className="lofi lofi--playground">
-               PLAYGROUND
-               <br />
-               live bloom + controls, one card
-            </div>
+            <Playground />
 
             <div className="lofi lofi--code">
                CODE
