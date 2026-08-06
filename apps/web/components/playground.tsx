@@ -1,19 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { BloomColorPicker } from "bloom-color-picker";
+import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
 
 import { ElasticSlider } from "./elastic-slider";
+import { Stepper } from "./stepper";
+
+const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
 
 export function Playground() {
    const [size, setSize] = useState(32);
    const [color, setColor] = useState("#FFB1EE");
+   const [palette, setPalette] = useState<BloomColorPickerPalette>("warm");
 
    return (
       <section className="box playground">
          <div className="playground__preview">
-            <BloomColorPicker size={size} value={color} onChange={setColor} />
+            <BloomColorPicker size={size} palette={palette} value={color} onChange={setColor} />
          </div>
 
          <div className="playground__settings">
@@ -27,6 +31,15 @@ export function Playground() {
                      value={size}
                      onValueChange={setSize}
                      formatValue={(v) => `${Math.round(v)}px`}
+                  />
+               </div>
+
+               <div className="control">
+                  <Stepper
+                     label="Palette"
+                     value={palette}
+                     options={PALETTES}
+                     onValueChange={(v) => setPalette(v as BloomColorPickerPalette)}
                   />
                </div>
             </div>
