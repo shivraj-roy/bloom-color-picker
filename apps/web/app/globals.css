@@ -502,7 +502,7 @@ body {
    background: var(--card);
    border-radius: calc(var(--r-inner) - 4px);
    transition:
-      gap 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      gap 0.4s cubic-bezier(0.34, 1.3, 0.64, 1),
       background-color 0.2s ease-out;
 }
 
@@ -517,18 +517,21 @@ body {
    height: 30px;
    background: transparent;
    border-radius: calc(var(--r-inner) - 4px) 0 0 calc(var(--r-inner) - 4px);
-   padding: 0 4px;
+   padding: 0 1px 0 4px;
    transition:
-      border-radius 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 0.2s ease-out;
+      border-radius 0.4s cubic-bezier(0.34, 1.3, 0.64, 1),
+      background-color 0.2s ease-out,
+      padding 0.4s cubic-bezier(0.34, 1.3, 0.64, 1);
 }
 
 .stepper__shape[data-expanded] {
    border-radius: calc(var(--r-inner) - 4px);
    background: var(--card);
+   padding: 0 4px;
 }
 
 .stepper__row {
+   position: relative;
    display: flex;
    align-items: center;
 }
@@ -541,17 +544,19 @@ body {
    border: none;
    outline: none;
    max-width: 120px;
-   padding: 6px 8px;
+   padding: 6px 6px;
    font-size: 12.5px;
    font-weight: 700;
    color: var(--muted);
    text-transform: capitalize;
    cursor: pointer;
    white-space: nowrap;
+   filter: blur(0px);
    transition:
-      max-width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-      padding 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.2s ease-out,
+      max-width 0.46s cubic-bezier(0.34, 1.35, 0.64, 1),
+      padding 0.46s cubic-bezier(0.34, 1.35, 0.64, 1),
+      opacity 0.28s ease-out,
+      filter 0.28s ease-out,
       color 0.15s ease-out;
 }
 
@@ -564,6 +569,7 @@ body {
    padding-left: 0;
    padding-right: 0;
    opacity: 0;
+   filter: blur(1.5px);
    pointer-events: none;
 }
 
@@ -572,12 +578,14 @@ body {
    border-radius: calc(var(--r-inner) - 8px);
 }
 
-.stepper__option-bg {
+.stepper__option-underline {
    position: absolute;
-   inset: 2px;
-   z-index: -1;
-   background: var(--canvas);
-   border-radius: calc(var(--r-inner) - 8px);
+   left: 0;
+   bottom: 2px;
+   height: 2px;
+   border-radius: var(--r-pill);
+   background: var(--accent);
+   pointer-events: none;
 }
 
 .stepper__option-label {
@@ -599,13 +607,15 @@ body {
    color: var(--muted-soft);
    cursor: pointer;
    transition:
-      border-radius 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 0.2s ease-out;
+      border-radius 0.4s cubic-bezier(0.34, 1.3, 0.64, 1),
+      background-color 0.2s ease-out,
+      box-shadow 0.2s ease-out;
 }
 
 .stepper__icon-box[data-expanded] {
    border-radius: calc(var(--r-inner) - 4px);
    background: var(--card);
+   box-shadow: 0 0 0 1.5px var(--accent);
 }
 
 .stepper__icon-box:focus-visible {
@@ -615,7 +625,6 @@ body {
 .stepper__caret-icon {
    display: flex;
    align-items: center;
-   padding: 0 6px 0 2px;
    color: var(--muted-soft);
 }
 
