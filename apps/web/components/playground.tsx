@@ -5,7 +5,7 @@ import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "b
 import "bloom-color-picker/style.css";
 
 import { ElasticSlider } from "./elastic-slider";
-import { Stepper } from "./stepper";
+import { Selector } from "./selector";
 
 const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
 
@@ -35,7 +35,7 @@ export function Playground() {
                </div>
 
                <div className="control">
-                  <Stepper
+                  <Selector
                      label="Palette"
                      value={palette}
                      options={PALETTES}

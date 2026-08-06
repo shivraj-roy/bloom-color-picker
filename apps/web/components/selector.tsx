@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { CaretUpDownIcon, CheckIcon } from "@phosphor-icons/react";
 
-export interface StepperProps {
+export interface SelectorProps {
    label: string;
    value: string;
    options: string[];
@@ -32,11 +32,11 @@ const checkVariants = {
    exit: { y: -8, opacity: 0, scale: 0.85, transition: { duration: 0.2, ease: EASE_IN } },
 };
 
-// matches the .stepper__option max-width/padding reveal duration — the highlight only
+// matches the .selector__option max-width/padding reveal duration — the highlight only
 // mounts once the row has finished opening, so it never measures a mid-transition layout.
 const REVEAL_MS = 460;
 
-export function Stepper({ label, value, options, onValueChange }: StepperProps) {
+export function Selector({ label, value, options, onValueChange }: SelectorProps) {
    const [expanded, setExpanded] = useState(false);
    const [pending, setPending] = useState(value);
    const [showHighlight, setShowHighlight] = useState(false);
@@ -99,14 +99,14 @@ export function Stepper({ label, value, options, onValueChange }: StepperProps) 
    }, [showHighlight, activeValue]);
 
    return (
-      <div ref={rootRef} className="stepper">
-         <span className="stepper__label" data-hidden={expanded || undefined}>
+      <div ref={rootRef} className="selector">
+         <span className="selector__label" data-hidden={expanded || undefined}>
             {label}
          </span>
 
-         <div className="stepper__group" data-expanded={expanded || undefined}>
-            <div className="stepper__shape" data-expanded={expanded || undefined}>
-               <div className="stepper__row" ref={rowRef}>
+         <div className="selector__group" data-expanded={expanded || undefined}>
+            <div className="selector__shape" data-expanded={expanded || undefined}>
+               <div className="selector__row" ref={rowRef}>
                   {options.map((opt) => {
                      const isActive = opt === activeValue;
                      return (
@@ -116,19 +116,19 @@ export function Stepper({ label, value, options, onValueChange }: StepperProps) 
                               optionRefs.current[opt] = el;
                            }}
                            type="button"
-                           className="stepper__option"
+                           className="selector__option"
                            data-active={isActive || undefined}
                            data-hidden={!expanded && !isActive ? true : undefined}
                            onClick={() => (expanded ? setPending(opt) : open())}
                         >
-                           <span className="stepper__option-label">{opt}</span>
+                           <span className="selector__option-label">{opt}</span>
                         </button>
                      );
                   })}
 
                   {showHighlight && underline && (
                      <motion.span
-                        className="stepper__option-underline"
+                        className="selector__option-underline"
                         initial={{ opacity: 0, x: underline.x, width: underline.width }}
                         animate={{ opacity: 1, x: underline.x, width: underline.width }}
                         transition={{ ...HIGHLIGHT_SPRING, opacity: { duration: 0.15 } }}
@@ -139,7 +139,7 @@ export function Stepper({ label, value, options, onValueChange }: StepperProps) 
 
             <button
                type="button"
-               className="stepper__icon-box"
+               className="selector__icon-box"
                data-expanded={expanded || undefined}
                onClick={() => (expanded ? confirm() : open())}
                aria-label={expanded ? "Confirm" : "Choose palette"}
@@ -158,7 +158,7 @@ export function Stepper({ label, value, options, onValueChange }: StepperProps) 
                   ) : (
                      <motion.span
                         key="caret"
-                        className="stepper__caret-icon"
+                        className="selector__caret-icon"
                         variants={caretVariants}
                         initial="initial"
                         animate="animate"
