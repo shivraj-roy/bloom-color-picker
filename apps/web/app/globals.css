@@ -169,6 +169,16 @@ body {
    -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+   background: color-mix(in srgb, var(--accent) 18%, transparent);
+   color: var(--accent);
+}
+
+::-moz-selection {
+   background: color-mix(in srgb, var(--accent) 18%, transparent);
+   color: var(--accent);
+}
+
 .page {
    height: 100dvh;
    display: flex;
