@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { normalizeHex } from "bloom-color-picker";
-import { CaretUpDownIcon, CheckIcon } from "@phosphor-icons/react";
+import { CheckIcon } from "@phosphor-icons/react";
+
+import { CaretUpDownIcon } from "./animated-icons/caret-up-down";
 
 export interface ColorSelectProps {
    label: string;
@@ -144,7 +146,7 @@ export function ColorSelect({ label, value, colors, onValueChange }: ColorSelect
                onClick={() => setCustom((c) => !c)}
                aria-label={custom ? "Show presets" : "Enter custom color"}
             >
-               <CaretUpDownIcon size={14} weight="bold" />
+               <CaretUpDownIcon size={14} />
             </button>
          </div>
       </div>

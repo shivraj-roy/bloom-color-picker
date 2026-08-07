@@ -477,7 +477,7 @@ body {
    border-radius: var(--r-inner);
    background: var(--canvas);
    border: 1px solid var(--card-border);
-   padding: 0 12px;
+   padding: 0 6px 0 12px;
 }
 
 .color-select__label {
@@ -579,11 +579,22 @@ body {
    outline: none;
    color: var(--muted-soft);
    cursor: pointer;
+   transition: color 0.15s ease-out;
+}
+
+.color-select__icon-box:hover {
+   color: var(--accent);
 }
 
 .color-select__icon-box:focus-visible {
    box-shadow: 0 0 0 2px var(--accent);
    border-radius: calc(var(--r-inner) - 8px);
+}
+
+.caret-up-down-icon {
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .color-select__item {
