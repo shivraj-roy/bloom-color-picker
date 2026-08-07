@@ -4,10 +4,12 @@ import { useState } from "react";
 import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
 
+import { ColorSelect } from "./color-select";
 import { ElasticSlider } from "./elastic-slider";
 import { Selector } from "./selector";
 
 const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
+const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440"];
 
 export function Playground() {
    const [size, setSize] = useState(32);
@@ -41,6 +43,10 @@ export function Playground() {
                      options={PALETTES}
                      onValueChange={(v) => setPalette(v as BloomColorPickerPalette)}
                   />
+               </div>
+
+               <div className="control">
+                  <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
                </div>
             </div>
          </div>
