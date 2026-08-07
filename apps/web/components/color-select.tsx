@@ -18,6 +18,16 @@ const CHECK_SPRING = { type: "spring" as const, stiffness: 500, damping: 30 };
 const TAP_SPRING = { type: "spring" as const, stiffness: 500, damping: 12 };
 const ROW_HEIGHT = 30;
 
+// perceived-brightness check so the checkmark stays visible on pale/near-white swatches
+function checkColorFor(hex: string): string {
+   const n = parseInt(hex.replace("#", ""), 16);
+   const r = (n >> 16) & 255;
+   const g = (n >> 8) & 255;
+   const b = n & 255;
+   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+   return yiq > 218 ? "var(--ink)" : "#fff";
+}
+
 export function ColorSelect({ label, value, colors, onValueChange }: ColorSelectProps) {
    const [custom, setCustom] = useState(false);
    const [hexDraft, setHexDraft] = useState("");
@@ -64,6 +74,7 @@ export function ColorSelect({ label, value, colors, onValueChange }: ColorSelect
                                     {isActive && (
                                        <motion.span
                                           className="color-select__check"
+                                          style={{ color: checkColorFor(hex) }}
                                           initial={{ opacity: 0, scale: 0.4 }}
                                           animate={{ opacity: 1, scale: 1 }}
                                           exit={{ opacity: 0, scale: 0.4 }}
@@ -101,9 +112,10 @@ export function ColorSelect({ label, value, colors, onValueChange }: ColorSelect
                            style={{ background: normalized ?? "transparent" }}
                         >
                            <AnimatePresence>
-                              {isCustomActive && (
+                              {isCustomActive && normalized && (
                                  <motion.span
                                     className="color-select__check"
+                                    style={{ color: checkColorFor(normalized) }}
                                     initial={{ opacity: 0, scale: 0.4 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.4 }}
