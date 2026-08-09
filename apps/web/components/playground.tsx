@@ -7,6 +7,7 @@ import "bloom-color-picker/style.css";
 import { ColorSelect } from "./color-select";
 import { DisabledSelect } from "./disabled-select";
 import { ElasticSlider } from "./elastic-slider";
+import { MotionSelect, type MotionValue } from "./motion-select";
 import { Selector } from "./selector";
 
 const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
@@ -17,6 +18,7 @@ export function Playground() {
    const [color, setColor] = useState("#FFB1EE");
    const [palette, setPalette] = useState<BloomColorPickerPalette>("warm");
    const [disabled, setDisabled] = useState(false);
+   const [motionValue, setMotionValue] = useState<MotionValue>("subtle");
 
    return (
       <section className="box playground">
@@ -59,6 +61,10 @@ export function Playground() {
 
                <div className="control">
                   <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
+               </div>
+
+               <div className="control">
+                  <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
                </div>
             </div>
          </div>
