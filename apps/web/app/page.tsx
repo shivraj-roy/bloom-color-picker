@@ -1,4 +1,5 @@
 import { Playground } from "../components/playground";
+import { PropsTable } from "../components/props-table";
 import { Sidebar } from "../components/sidebar";
 
 export default function Home() {
@@ -15,11 +16,7 @@ export default function Home() {
                live JSX for current config
             </div>
 
-            <div className="lofi lofi--props">
-               PROPS
-               <br />
-               compact reference table
-            </div>
+            <PropsTable />
          </main>
 
          <div className="footer-strip">@your-x-handle</div>

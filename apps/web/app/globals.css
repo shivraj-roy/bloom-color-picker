@@ -1068,10 +1068,132 @@ body {
    grid-row: 2;
 }
 
-/* props — bottom right */
-.lofi--props {
+.props-panel {
    grid-column: 3;
    grid-row: 2;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   padding: 20px 24px;
+   overflow: hidden;
+}
+
+.props-panel__label {
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 1px;
+   text-transform: uppercase;
+   color: var(--muted-soft);
+}
+
+.props-panel__scroll {
+   flex: 1;
+   min-height: 0;
+   overflow-y: auto;
+   display: flex;
+   flex-direction: column;
+}
+
+.props-panel__head-row {
+   display: grid;
+   grid-template-columns: 1fr 1fr auto;
+   gap: 8px;
+   padding: 4px 10px;
+   font-size: 11px;
+   font-weight: 700;
+   color: var(--muted-soft);
+}
+
+.props-panel__row {
+   border-radius: var(--r-inner);
+   transition: background-color 0.2s ease-out;
+}
+
+.props-panel__row[data-open] {
+   background: var(--canvas);
+}
+
+.props-panel__head {
+   display: grid;
+   grid-template-columns: 1fr 1fr auto;
+   align-items: center;
+   gap: 8px;
+   width: 100%;
+   padding: 8px 10px;
+   background: none;
+   border: none;
+   outline: none;
+   cursor: pointer;
+   text-align: left;
+}
+
+.props-panel__head:focus-visible {
+   box-shadow: 0 0 0 2px var(--accent);
+   border-radius: var(--r-inner);
+}
+
+.props-panel__name {
+   font-family: var(--font-mono), ui-monospace, monospace;
+   font-size: 12.5px;
+   font-weight: 600;
+   color: var(--ink);
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.props-panel__type {
+   font-family: var(--font-mono), ui-monospace, monospace;
+   font-size: 12px;
+   color: var(--ink);
+}
+
+.props-panel__type[data-fn] {
+   color: var(--muted-soft);
+}
+
+.props-panel__caret {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--muted-soft);
+}
+
+.props-panel__detail {
+   overflow: hidden;
+}
+
+.props-panel__detail-inner {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   padding: 0 10px 12px;
+}
+
+.props-panel__desc {
+   font-size: 12.5px;
+   line-height: 1.5;
+   color: var(--muted);
+}
+
+.props-panel__meta {
+   display: flex;
+   align-items: baseline;
+   gap: 10px;
+}
+
+.props-panel__meta-label {
+   flex-shrink: 0;
+   width: 48px;
+   font-size: 11px;
+   font-weight: 700;
+   color: var(--muted-soft);
+}
+
+.props-panel__meta-value {
+   font-family: var(--font-mono), ui-monospace, monospace;
+   font-size: 12px;
+   color: var(--muted);
 }
 
 .footer-strip {
@@ -1102,7 +1224,7 @@ body {
    .sidebar,
    .playground,
    .lofi--code,
-   .lofi--props {
+   .props-panel {
       grid-column: 1;
       grid-row: auto;
    }
