@@ -2,6 +2,8 @@ import type { BloomColorPickerPalette } from "./palettes";
 
 export type BloomColorPickerPart = "root" | "swatch" | "bloom" | "dish" | "petal" | "arc" | "knob";
 
+export type BloomColorPickerMotion = "none" | "subtle" | "bouncy";
+
 export interface BloomColorPickerProps {
    /** Controlled hex value, e.g. "#F5B81E". */
    value?: string;
@@ -35,6 +37,14 @@ export interface BloomColorPickerProps {
 
    /** Disables opening the picker. @default false */
    disabled?: boolean;
+
+   /**
+    * Spring intensity for the open/close and pick animations.
+    * "none" disables animation entirely (instant open/close, respected
+    * regardless of the visitor's OS motion setting).
+    * @default "subtle"
+    */
+   motion?: BloomColorPickerMotion;
 
    /** Class applied to the root element. */
    className?: string;

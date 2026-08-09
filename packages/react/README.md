@@ -42,6 +42,7 @@ export function Example() {
 | `innerColors`  | `string[]`                | from `palette`   | Inner petal ring, clockwise from the top. Hex only. Overrides `palette`. |
 | `size`         | `number`                  | `32`             | Closed swatch diameter in px; the whole bloom scales with it.      |
 | `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
+| `motion`       | `"none" \| "subtle" \| "bouncy"` | `"subtle"` | Spring intensity for open/close and pick animations. `"none"` is instant, applied explicitly regardless of the visitor's OS motion preference (which is otherwise respected automatically). |
 | `className`    | `string`                  | —                | Class for the root element.                                        |
 | `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`. |
 | `aria-label`   | `string`                  | `"Pick a color"` | Accessible label for the closed swatch.                            |

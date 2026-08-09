@@ -29,6 +29,7 @@ export function Playground() {
                value={color}
                onChange={setColor}
                disabled={disabled}
+               motion={motionValue}
             />
          </div>
 

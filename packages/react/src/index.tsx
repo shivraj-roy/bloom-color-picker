@@ -103,6 +103,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       innerColors,
       size = 32,
       disabled = false,
+      motion = "subtle",
       className,
       classNames,
       "aria-label": ariaLabel = "Pick a color",
@@ -114,6 +115,15 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
 
    const scale = size / BASE_SWATCH;
    const part = (name: BloomColorPickerPart) => classNames?.[name];
+
+   // "none" swaps the full spring choreography for one quick uniform fade —
+   // these match the 160ms duration forced via [data-motion="none"] in style.css.
+   const instant = motion === "none";
+   const FADE_MS = 160;
+   const PRESS_MS = instant ? FADE_MS : 140;
+   const BLOOM_DELAY_MS = instant ? FADE_MS : 1300;
+   const CLOSE_PETALS_MS = instant ? 0 : 110;
+   const CLOSE_UNMOUNT_MS = instant ? FADE_MS : 480;
 
    // Outline rings scale with the picker so proportions match the original at any size
    const ring = (color: string): React.CSSProperties => ({
@@ -157,24 +167,24 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          setRendered(true);
          setClosing(false);
          setPetalsHome(false);
-         timers.push(window.setTimeout(() => setBloomed(true), 1300));
+         timers.push(window.setTimeout(() => setBloomed(true), BLOOM_DELAY_MS));
       } else {
          setBloomed(false);
          setHovered(null);
          if (renderedRef.current) {
             setClosing(true);
-            timers.push(window.setTimeout(() => setPetalsHome(true), 110));
+            timers.push(window.setTimeout(() => setPetalsHome(true), CLOSE_PETALS_MS));
             timers.push(
                window.setTimeout(() => {
                   setRendered(false);
                   setClosing(false);
                   setPetalsHome(false);
-               }, 480)
+               }, CLOSE_UNMOUNT_MS)
             );
          }
       }
       return () => timers.forEach(clearTimeout);
-   }, [open]);
+   }, [open, BLOOM_DELAY_MS, CLOSE_PETALS_MS, CLOSE_UNMOUNT_MS]);
 
    // Close on outside click / Escape
    React.useEffect(() => {
@@ -201,7 +211,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       window.setTimeout(() => {
          setPressing(false);
          setOpen(true);
-      }, 140);
+      }, PRESS_MS);
    };
 
    // Single source of truth for hover: pick the nearest petal under the pointer.
@@ -273,6 +283,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          style={{ "--bcp-scale": scale } as React.CSSProperties}
          data-state={open ? "open" : "closed"}
          data-disabled={disabled || undefined}
+         data-motion={motion}
          onPointerMove={handleDishMove}
          onPointerLeave={() => setHovered(null)}
       >
@@ -388,7 +399,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
 
 export default BloomColorPicker;
 
-export type { BloomColorPickerPart, BloomColorPickerProps } from "./types";
+export type { BloomColorPickerMotion, BloomColorPickerPart, BloomColorPickerProps } from "./types";
 export { deriveFromHex, hexToHsl, hslToHex, normalizeHex, shadeOf } from "./color";
 export {
    bloomPalettes,

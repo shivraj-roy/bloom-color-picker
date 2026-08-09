@@ -611,3 +611,16 @@
       transition-delay: 0ms !important;
    }
 }
+
+/* motion="none" — a quick uniform fade, not an instant snap. Overrides every
+   spring/bounce curve and stagger delay with one plain ease-out, independent
+   of the visitor's OS motion setting. */
+.bcp[data-motion="none"],
+.bcp[data-motion="none"] * {
+   animation-duration: 160ms !important;
+   animation-timing-function: ease-out !important;
+   animation-delay: 0ms !important;
+   transition-duration: 160ms !important;
+   transition-timing-function: ease-out !important;
+   transition-delay: 0ms !important;
+}
