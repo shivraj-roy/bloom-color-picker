@@ -57,15 +57,15 @@ export function Playground() {
                </div>
 
                <div className="control">
+                  <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
+               </div>
+
+               <div className="control">
                   <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
                </div>
 
                <div className="control">
                   <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
-               </div>
-
-               <div className="control">
-                  <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
                </div>
             </div>
          </div>
