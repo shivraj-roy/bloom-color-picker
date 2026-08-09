@@ -131,6 +131,8 @@ const PROPS: PropRow[] = [
 ];
 
 const EXPAND_SPRING = { type: "spring" as const, stiffness: 420, damping: 38 };
+const DETAIL_SPRING = { type: "spring" as const, stiffness: 380, damping: 30 };
+const REGROUP_SPRING = { type: "spring" as const, stiffness: 380, damping: 24 };
 
 export function PropsTable() {
    const [openProp, setOpenProp] = useState<string | null>(null);
@@ -138,16 +140,29 @@ export function PropsTable() {
    return (
       <div className="box props-panel">
          <span className="props-panel__label">Props</span>
-         <div className="props-panel__scroll scroll-mask-y">
+         <div className="props-panel__list">
             <div className="props-panel__head-row">
                <span>Prop</span>
                <span>Type</span>
             </div>
-
-            {PROPS.map((prop) => {
+            <div className="props-panel__scroll scroll-mask-y">
+            {PROPS.map((prop, index) => {
                const isOpen = openProp === prop.name;
+               const prevIsOpen = index > 0 && openProp === PROPS[index - 1].name;
+               const nextIsOpen = index < PROPS.length - 1 && openProp === PROPS[index + 1].name;
+               const isGroupStart = index === 0 || prevIsOpen || isOpen;
+               const isGroupEnd = index === PROPS.length - 1 || nextIsOpen || isOpen;
+
                return (
-                  <div key={prop.name} className="props-panel__row" data-open={isOpen || undefined}>
+                  <motion.div
+                     key={prop.name}
+                     layout="position"
+                     className="props-panel__row"
+                     data-open={isOpen || undefined}
+                     data-group-start={isGroupStart || undefined}
+                     data-group-end={isGroupEnd || undefined}
+                     transition={REGROUP_SPRING}
+                  >
                      <button
                         type="button"
                         className="props-panel__head"
@@ -177,7 +192,7 @@ export function PropsTable() {
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
-                              transition={EXPAND_SPRING}
+                              transition={DETAIL_SPRING}
                            >
                               <div className="props-panel__detail-inner">
                                  <p className="props-panel__desc">{prop.description}</p>
@@ -195,9 +210,10 @@ export function PropsTable() {
                            </motion.div>
                         )}
                      </AnimatePresence>
-                  </div>
+                  </motion.div>
                );
             })}
+         </div>
          </div>
       </div>
    );
