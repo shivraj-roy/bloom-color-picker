@@ -14,6 +14,11 @@
    --r-pill: 999px;
 }
 
+:focus-visible {
+   outline: 2px solid var(--accent);
+   outline-offset: 2px;
+}
+
 /* scroll-mask utilities (https://twilson.net/scroll-mask), ported to plain CSS */
 
 @property --scroll-mask-t-from {
@@ -1212,6 +1217,8 @@ body {
 .props-panel__head:focus-visible {
    box-shadow: 0 0 0 2px var(--accent);
    border-radius: var(--r-inner);
+   position: relative;
+   z-index: 1;
 }
 
 .props-panel__name {

@@ -653,14 +653,6 @@
    }
 }
 
-/* Keyboard focus rings (box-shadow so the decorative outlines stay untouched) */
-.bcp__swatch:focus-visible,
-.bcp__petal:focus-visible {
-   box-shadow:
-      0 0 0 2px #fff,
-      0 0 0 4px rgba(78, 114, 214, 0.85);
-}
-
 @keyframes bcp-swatch-in {
    from {
       opacity: 0;
