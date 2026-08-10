@@ -1078,6 +1078,14 @@ body {
    overflow: hidden;
 }
 
+.props-panel__header {
+   flex-shrink: 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+}
+
 .props-panel__label {
    font-size: 11px;
    font-weight: 800;
@@ -1086,7 +1094,10 @@ body {
    color: var(--muted-soft);
 }
 
-/* outer: border + background, stays crisp — never masked */
+.props-panel__tabs {
+   gap: 12px;
+}
+
 .props-panel__head-row {
    flex-shrink: 0;
    display: grid;
@@ -1188,6 +1199,18 @@ body {
    overflow: hidden;
    text-overflow: ellipsis;
    white-space: nowrap;
+}
+
+.props-panel__name[data-pill] {
+   justify-self: start;
+   padding: 3px 9px;
+   border: 1px solid var(--card-border);
+   border-radius: 8px;
+   background: var(--card);
+}
+
+.props-panel__row[data-open] .props-panel__name[data-pill] {
+   background: var(--canvas);
 }
 
 .props-panel__type {

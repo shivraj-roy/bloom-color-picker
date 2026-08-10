@@ -1,5 +1,5 @@
+import { ApiReference } from "../components/api-reference";
 import { Playground } from "../components/playground";
-import { PropsTable } from "../components/props-table";
 import { Sidebar } from "../components/sidebar";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
                live JSX for current config
             </div>
 
-            <PropsTable />
+            <ApiReference />
          </main>
 
          <div className="footer-strip">@your-x-handle</div>
