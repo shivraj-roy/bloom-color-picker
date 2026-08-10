@@ -1098,6 +1098,29 @@ body {
    gap: 12px;
 }
 
+.props-panel__viewport {
+   flex: 1;
+   min-height: 0;
+   display: flex;
+   overflow: hidden;
+}
+
+.props-panel__track {
+   display: flex;
+   width: 200%;
+   flex-shrink: 0;
+   min-height: 0;
+}
+
+.props-panel__pane {
+   width: 50%;
+   flex-shrink: 0;
+   display: flex;
+   flex-direction: column;
+   min-height: 0;
+   min-width: 0;
+}
+
 .props-panel__head-row {
    flex-shrink: 0;
    display: grid;

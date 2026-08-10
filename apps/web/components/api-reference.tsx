@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 
-import { AccordionTable, type AccordionRow } from "./accordion-table";
+import { AccordionRows, type AccordionRow } from "./accordion-table";
 
 const PROPS: AccordionRow[] = [
    {
@@ -189,6 +189,8 @@ const SLOTS: AccordionRow[] = [
 
 type Tab = "props" | "styling";
 
+const TAB_SPRING = { type: "spring" as const, stiffness: 380, damping: 30 };
+
 export function ApiReference() {
    const [tab, setTab] = useState<Tab>("props");
 
@@ -217,11 +219,26 @@ export function ApiReference() {
             </div>
          </div>
 
-         {tab === "props" ? (
-            <AccordionTable columns={["Prop", "Type"]} rows={PROPS} />
-         ) : (
-            <AccordionTable columns={["Slot", "Element"]} rows={SLOTS} namePill />
-         )}
+         <div className="props-panel__list">
+            <div className="props-panel__head-row">
+               <span>{tab === "props" ? "Prop" : "Slot"}</span>
+               <span>{tab === "props" ? "Type" : "Element"}</span>
+            </div>
+            <div className="props-panel__viewport">
+               <motion.div
+                  className="props-panel__track"
+                  animate={{ x: tab === "props" ? "0%" : "-50%" }}
+                  transition={TAB_SPRING}
+               >
+                  <div className="props-panel__pane">
+                     <AccordionRows rows={PROPS} />
+                  </div>
+                  <div className="props-panel__pane">
+                     <AccordionRows rows={SLOTS} namePill />
+                  </div>
+               </motion.div>
+            </div>
+         </div>
       </div>
    );
 }
