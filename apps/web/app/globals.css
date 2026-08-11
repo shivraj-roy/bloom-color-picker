@@ -508,6 +508,13 @@ body {
    border-radius: 8px;
 }
 
+.playground__code-copy {
+   position: absolute;
+   top: 8px;
+   right: 8px;
+   z-index: 1;
+}
+
 .playground__preview {
    display: flex;
    align-items: center;

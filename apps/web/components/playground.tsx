@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { CodeIcon, XIcon } from "@phosphor-icons/react";
 import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
 
+import { CodeCloseIcon } from "./animated-icons/code-close-icon";
 import { ColorSelect } from "./color-select";
+import { CopyButton } from "./copy-button";
 import { DisabledSelect } from "./disabled-select";
 import { ElasticSlider } from "./elastic-slider";
 import { MotionSelect, type MotionValue } from "./motion-select";
@@ -63,16 +64,29 @@ export function Playground() {
                }}
                transition={CODE_SPRING}
             >
-               {showCode ? <XIcon size={16} weight="bold" /> : <CodeIcon size={16} weight="bold" />}
+               <CodeCloseIcon open={showCode} />
             </motion.button>
 
             <AnimatePresence>
                {showCode && (
                   <motion.div
+                     key="copy"
+                     className="playground__code-copy"
+                     initial={{ opacity: 0, filter: "blur(6px)" }}
+                     animate={{ opacity: 1, filter: "blur(0px)" }}
+                     exit={{ opacity: 0, filter: "blur(6px)" }}
+                     transition={{ duration: 0.32 }}
+                  >
+                     <CopyButton text={codeSnippet} label="Copy code" />
+                  </motion.div>
+               )}
+               {showCode && (
+                  <motion.div
+                     key="content"
                      className="playground__code-content"
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     exit={{ opacity: 0 }}
+                     initial={{ opacity: 0, filter: "blur(3px)" }}
+                     animate={{ opacity: 1, filter: "blur(0px)" }}
+                     exit={{ opacity: 0, filter: "blur(3px)" }}
                      transition={{ duration: 0.32 }}
                   >
                      <pre className="playground__code-snippet scroll-mask-x scroll-mask-y">{codeSnippet}</pre>
