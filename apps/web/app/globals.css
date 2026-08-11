@@ -440,13 +440,18 @@ body {
    position: relative;
    grid-column: 2 / span 2;
    grid-row: 1;
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 0;
    overflow: hidden;
    background-color: var(--card);
    background-image: radial-gradient(var(--card-border) 1px, transparent 1px);
    background-size: 32px 32px;
+}
+
+.playground__content {
+   width: 100%;
+   height: 100%;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 0;
 }
 
 .playground__code-panel {

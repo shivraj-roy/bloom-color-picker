@@ -95,53 +95,60 @@ export function Playground() {
             </AnimatePresence>
          </motion.div>
 
-         <div className="playground__preview">
-            <BloomColorPicker
-               size={size}
-               palette={palette}
-               value={color}
-               onChange={setColor}
-               disabled={disabled}
-               motion={motionValue}
-            />
-         </div>
+         <motion.div
+            className="playground__content"
+            initial={false}
+            animate={{ x: showCode ? "50%" : "0%" }}
+            transition={CODE_SPRING}
+         >
+            <div className="playground__preview">
+               <BloomColorPicker
+                  size={size}
+                  palette={palette}
+                  value={color}
+                  onChange={setColor}
+                  disabled={disabled}
+                  motion={motionValue}
+               />
+            </div>
 
-         <div className="playground__settings">
-            <div className="playground__settings-box">
-               <div className="control">
-                  <ElasticSlider
-                     label="Size"
-                     min={20}
-                     max={64}
-                     step={1}
-                     value={size}
-                     onValueChange={setSize}
-                     formatValue={(v) => `${Math.round(v)}px`}
-                  />
-               </div>
+            <div className="playground__settings">
+               <div className="playground__settings-box">
+                  <div className="control">
+                     <ElasticSlider
+                        label="Size"
+                        min={20}
+                        max={64}
+                        step={1}
+                        value={size}
+                        onValueChange={setSize}
+                        formatValue={(v) => `${Math.round(v)}px`}
+                     />
+                  </div>
 
-               <div className="control">
-                  <Selector
-                     label="Palette"
-                     value={palette}
-                     options={PALETTES}
-                     onValueChange={(v) => setPalette(v as BloomColorPickerPalette)}
-                  />
-               </div>
+                  <div className="control">
+                     <Selector
+                        label="Palette"
+                        value={palette}
+                        options={PALETTES}
+                        onValueChange={(v) => setPalette(v as BloomColorPickerPalette)}
+                     />
+                  </div>
 
-               <div className="control">
-                  <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
-               </div>
+                  <div className="control">
+                     <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
+                  </div>
 
-               <div className="control">
-                  <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
-               </div>
+                  <div className="control">
+                     <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
+                  </div>
 
-               <div className="control">
-                  <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
+                  <div className="control">
+                     <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
+                  </div>
                </div>
             </div>
-         </div>
+         </motion.div>
       </section>
    );
 }
