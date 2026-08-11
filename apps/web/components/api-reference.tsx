@@ -14,8 +14,8 @@ const PROPS: AccordionRow[] = [
       meta: [{ label: "Type", value: "string | undefined" }],
    },
    {
-      key: "swatchColor",
-      name: "swatchColor?",
+      key: "defaultValue",
+      name: "defaultValue?",
       type: "string",
       description: "Initial hex value when uncontrolled.",
       meta: [

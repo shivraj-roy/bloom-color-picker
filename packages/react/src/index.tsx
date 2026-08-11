@@ -93,7 +93,7 @@ const FALLBACK_HEX = "#F5B81E";
 export function BloomColorPicker(props: BloomColorPickerProps) {
    const {
       value: valueProp,
-      swatchColor = FALLBACK_HEX,
+      defaultValue = FALLBACK_HEX,
       onChange,
       open: openProp,
       defaultOpen = false,
@@ -131,7 +131,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       outlineOffset: `${-2 * scale}px`,
    });
 
-   const [rawValue, setValue] = useControllableState(valueProp, swatchColor, onChange);
+   const [rawValue, setValue] = useControllableState(valueProp, defaultValue, onChange);
    const hex = normalizeHex(rawValue) ?? FALLBACK_HEX;
    const { base, lightPos } = React.useMemo(() => deriveFromHex(hex), [hex]);
 

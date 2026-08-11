@@ -8,7 +8,7 @@ export interface BloomColorPickerProps {
    /** Controlled hex value, e.g. "#F5B81E". */
    value?: string;
    /** Initial hex value when uncontrolled. @default "#F5B81E" */
-   swatchColor?: string;
+   defaultValue?: string;
    /** Fired with the new hex (uppercase "#RRGGBB") on every petal pick or brightness drag. */
    onChange?: (hex: string) => void;
 

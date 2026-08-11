@@ -32,7 +32,7 @@ export function Example() {
 | Prop           | Type                      | Default          | Description                                                        |
 | -------------- | ------------------------- | ---------------- | ------------------------------------------------------------------ |
 | `value`        | `string`                  | —                | Controlled hex value (`"#RRGGBB"`).                                |
-| `swatchColor`  | `string`                  | `"#F5B81E"`      | Initial value when uncontrolled.                                   |
+| `defaultValue` | `string`                  | `"#F5B81E"`      | Initial value when uncontrolled.                                   |
 | `onChange`     | `(hex: string) => void`   | —                | Fired with the new uppercase hex on every pick or brightness drag. |
 | `open`         | `boolean`                 | —                | Controlled open state of the bloom.                                |
 | `defaultOpen`  | `boolean`                 | `false`          | Initial open state when uncontrolled.                              |

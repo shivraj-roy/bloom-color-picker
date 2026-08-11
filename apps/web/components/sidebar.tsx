@@ -16,7 +16,7 @@ const USAGE = `import { BloomColorPicker } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
 
 <BloomColorPicker
-   swatchColor="#FFB1EE"
+   defaultValue="#FFB1EE"
    onChange={(hex) => console.log(hex)}
 />`;
 
