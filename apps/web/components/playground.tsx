@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
@@ -26,6 +26,35 @@ export function Playground() {
    const [motionValue, setMotionValue] = useState<MotionValue>("subtle");
    const [inputVariant, setInputVariant] = useState<InputVariant>("split");
    const [showCode, setShowCode] = useState(false);
+   const previewRef = useRef<HTMLDivElement>(null);
+   const [centerOffset, setCenterOffset] = useState(0);
+
+   // The picker's swatch sits at its own true center, but the hex input hangs
+   // off to the right (positioned outside the swatch's box so the bloom still
+   // opens from the swatch, not the group). To center the whole visible group
+   // in this column, measure the actual rendered gap past the swatch and
+   // shift left by half of it — recomputed whenever size/layout could change it.
+   useLayoutEffect(() => {
+      const container = previewRef.current;
+      if (!container) return;
+
+      const measure = () => {
+         const bcp = container.querySelector<HTMLElement>(".bcp");
+         const inputWrap = container.querySelector<HTMLElement>(".bcp__input-wrap");
+         if (!bcp) return;
+         const bcpRect = bcp.getBoundingClientRect();
+         const rightEdge = inputWrap ? inputWrap.getBoundingClientRect().right : bcpRect.right;
+         setCenterOffset((rightEdge - bcpRect.right) / 2);
+      };
+
+      measure();
+      const raf = window.requestAnimationFrame(measure); // re-check after fonts/layout settle
+      window.addEventListener("resize", measure);
+      return () => {
+         window.cancelAnimationFrame(raf);
+         window.removeEventListener("resize", measure);
+      };
+   }, [size, inputVariant]);
 
    const codeSnippet = [
       'import { BloomColorPicker } from "bloom-color-picker";',
@@ -104,16 +133,18 @@ export function Playground() {
             animate={{ x: showCode ? "50%" : "0%" }}
             transition={CODE_SPRING}
          >
-            <div className="playground__preview">
-               <BloomColorPicker
-                  size={size}
-                  palette={palette}
-                  value={color}
-                  onChange={setColor}
-                  disabled={disabled}
-                  inputVariant={inputVariant}
-                  motion={motionValue}
-               />
+            <div className="playground__preview" ref={previewRef}>
+               <div style={{ transform: `translateX(${-centerOffset}px)` }}>
+                  <BloomColorPicker
+                     size={size}
+                     palette={palette}
+                     value={color}
+                     onChange={setColor}
+                     disabled={disabled}
+                     inputVariant={inputVariant}
+                     motion={motionValue}
+                  />
+               </div>
             </div>
 
             <div className="playground__settings">
