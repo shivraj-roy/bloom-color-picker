@@ -4,7 +4,7 @@ A flower-inspired color picker for React. A small swatch blooms open into a dahl
 
 - Zero runtime dependencies (only React as a peer).
 - Spring-quality animations in pure CSS (`linear()` easings), no animation library.
-- Headless value API — bring your own hex input/display.
+- Built-in hex input beside the swatch (`hexInput`, on by default), or opt out for your own display.
 - Controlled or uncontrolled `value` and `open` state.
 - Custom palettes, proportional sizing, per-part class overrides.
 
@@ -42,9 +42,10 @@ export function Example() {
 | `innerColors`  | `string[]`                | from `palette`   | Inner petal ring, clockwise from the top. Hex only. Overrides `palette`. |
 | `size`         | `number`                  | `32`             | Closed swatch diameter in px; the whole bloom scales with it.      |
 | `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
+| `hexInput`     | `boolean`                 | `true`           | Shows an editable hex text field beside the closed swatch. Invalid characters can't be typed. Set `false` to hide it. |
 | `motion`       | `"none" \| "subtle" \| "bouncy"` | `"subtle"` | Spring intensity for open/close and pick animations. `"none"` is instant, applied explicitly regardless of the visitor's OS motion preference (which is otherwise respected automatically). |
 | `className`    | `string`                  | —                | Class for the root element.                                        |
-| `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`. |
+| `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`, `input`. |
 | `aria-label`   | `string`                  | `"Pick a color"` | Accessible label for the closed swatch.                            |
 
 ## Palettes

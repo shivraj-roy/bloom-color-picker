@@ -103,6 +103,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       innerColors,
       size = 32,
       disabled = false,
+      hexInput = true,
       motion = "subtle",
       className,
       classNames,
@@ -134,6 +135,14 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
    const [rawValue, setValue] = useControllableState(valueProp, defaultValue, onChange);
    const hex = normalizeHex(rawValue) ?? FALLBACK_HEX;
    const { base, lightPos } = React.useMemo(() => deriveFromHex(hex), [hex]);
+
+   // Draft text for the optional hex input: lets the field hold invalid/partial
+   // text while typing, but stays in sync when the color changes elsewhere
+   // (petal pick, arc drag) without fighting an in-progress keystroke.
+   const [hexDraft, setHexDraft] = React.useState(hex);
+   React.useEffect(() => {
+      if (normalizeHex(hexDraft) !== hex) setHexDraft(hex);
+   }, [hex]);
 
    const [open, setOpen] = useControllableState(openProp, defaultOpen, onOpenChange);
 
@@ -391,6 +400,28 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                aria-label={ariaLabel}
                aria-haspopup="dialog"
                aria-expanded={open}
+            />
+         )}
+
+         {hexInput && (
+            <input
+               type="text"
+               size={7}
+               className={cx("bcp__input", part("input"))}
+               value={hexDraft}
+               onChange={(e) => {
+                  const raw = e.target.value.toUpperCase();
+                  const hasHash = raw.startsWith("#");
+                  const digits = raw.replace(/[^0-9A-F]/g, "").slice(0, 6);
+                  const next = (hasHash ? "#" : "") + digits;
+                  setHexDraft(next);
+                  const valid = normalizeHex(next);
+                  if (valid) setValue(valid);
+               }}
+               disabled={disabled}
+               spellCheck={false}
+               placeholder="#RRGGBB"
+               aria-label="Hex color value"
             />
          )}
       </div>

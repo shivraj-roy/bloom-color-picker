@@ -10,12 +10,6 @@ export default function Home() {
 
             <Playground />
 
-            <div className="lofi lofi--code">
-               CODE
-               <br />
-               live JSX for current config
-            </div>
-
             <ApiReference />
          </main>
 

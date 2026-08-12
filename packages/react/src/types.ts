@@ -1,6 +1,14 @@
 import type { BloomColorPickerPalette } from "./palettes";
 
-export type BloomColorPickerPart = "root" | "swatch" | "bloom" | "dish" | "petal" | "arc" | "knob";
+export type BloomColorPickerPart =
+   | "root"
+   | "swatch"
+   | "bloom"
+   | "dish"
+   | "petal"
+   | "arc"
+   | "knob"
+   | "input";
 
 export type BloomColorPickerMotion = "none" | "subtle" | "bouncy";
 
@@ -37,6 +45,13 @@ export interface BloomColorPickerProps {
 
    /** Disables opening the picker. @default false */
    disabled?: boolean;
+
+   /**
+    * Shows an editable hex text field next to the closed swatch. Typed
+    * values are validated live; invalid characters can't be typed at all.
+    * Set to `false` to hide it. @default true
+    */
+   hexInput?: boolean;
 
    /**
     * Spring intensity for the open/close and pick animations.

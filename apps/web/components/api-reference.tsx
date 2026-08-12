@@ -107,6 +107,16 @@ const PROPS: AccordionRow[] = [
       ],
    },
    {
+      key: "hexInput",
+      name: "hexInput?",
+      type: "boolean",
+      description: "Editable hex text field beside the closed swatch. Invalid characters can't be typed.",
+      meta: [
+         { label: "Type", value: "boolean | undefined" },
+         { label: "Default", value: "true" },
+      ],
+   },
+   {
       key: "motion",
       name: "motion?",
       type: "string",
@@ -184,6 +194,12 @@ const SLOTS: AccordionRow[] = [
       name: "knob",
       type: "Knob",
       description: "The draggable circle on the arc (halo + core), inside the arc SVG.",
+   },
+   {
+      key: "input",
+      name: "input",
+      type: "Hex text field",
+      description: "The editable hex text field beside the closed swatch, when hexInput is on.",
    },
 ];
 

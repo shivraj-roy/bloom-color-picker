@@ -23,6 +23,7 @@
    --bcp-scale: 1;
 
    position: relative;
+   isolation: isolate;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -632,6 +633,38 @@
 }
 
 .bcp__swatch:disabled {
+   cursor: not-allowed;
+   opacity: 0.55;
+}
+
+/* --- Hex input ---
+   Positioned absolutely, outside the swatch's box, so it never shifts what
+   the bloom considers "center" — the bloom always opens from the swatch.
+   Stays mounted (not hidden) while open. z-index sits below the arc(0),
+   bloom(1), and petals(2) so the bloom opens over it, not under it. */
+.bcp__input {
+   position: absolute;
+   z-index: -1;
+   top: 50%;
+   left: calc(100% + 14px * var(--bcp-scale));
+   transform: translateY(-50%);
+   border: 1px solid #e4e4e9;
+   background: #f2f2f4;
+   border-radius: calc(16px * var(--bcp-scale));
+   padding: calc(10px * var(--bcp-scale)) calc(14px * var(--bcp-scale));
+   font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+   font-size: calc(21px * var(--bcp-scale));
+   font-weight: 400;
+   color: #8a8a92;
+   transition: color 0.15s ease-out;
+   animation: bcp-swatch-in 0.18s ease-out;
+}
+
+.bcp__input:focus {
+   color: #1a1a1a;
+}
+
+.bcp__input:disabled {
    cursor: not-allowed;
    opacity: 0.55;
 }

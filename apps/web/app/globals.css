@@ -201,22 +201,6 @@ body {
    gap: 14px;
 }
 
-.lofi {
-   border: 1.5px dashed #c7c7cf;
-   border-radius: 20px;
-   background: #fbfbfb;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 13px;
-   font-weight: 700;
-   letter-spacing: 0.3px;
-   color: #6b6b73;
-   text-align: center;
-   padding: 12px;
-   min-height: 0;
-}
-
 .box {
    background: var(--card);
    border: 1px solid var(--card-border);
@@ -1138,12 +1122,6 @@ body {
    color: var(--ink);
 }
 
-/* code — bottom middle */
-.lofi--code {
-   grid-column: 2;
-   grid-row: 2;
-}
-
 .props-panel {
    grid-column: 3;
    grid-row: 2;
@@ -1389,20 +1367,14 @@ body {
       grid-template-rows: none;
    }
 
-   .lofi {
-      min-height: 140px;
-   }
-
    .sidebar,
    .playground,
-   .lofi--code,
    .props-panel {
       grid-column: 1;
       grid-row: auto;
    }
 
-   .playground {
+   .playground__content {
       grid-template-columns: 1fr;
    }
-
 }
