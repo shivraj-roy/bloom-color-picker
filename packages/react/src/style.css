@@ -652,7 +652,7 @@
    background: #f2f2f4;
    border-radius: calc(16px * var(--bcp-scale));
    padding: calc(10px * var(--bcp-scale)) calc(14px * var(--bcp-scale));
-   font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+   font-family: var(--bcp-font-input, ui-monospace, "SF Mono", "Cascadia Code", monospace);
    font-size: calc(21px * var(--bcp-scale));
    font-weight: 400;
    color: #8a8a92;

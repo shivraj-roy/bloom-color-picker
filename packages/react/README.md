@@ -56,6 +56,20 @@ export function Example() {
 
 Four built-in palettes: `warm` (default), `ocean`, `blossom`, `pastel`. Import `bloomPalettes` to inspect or remix their raw hex arrays.
 
+## Theming
+
+The hex input's font defaults to a monospace stack (matches how hex values read elsewhere — GitHub, VSCode, Figma). Override it with the `--bcp-font-input` CSS variable, which works regardless of stylesheet load order:
+
+```css
+.my-picker {
+   --bcp-font-input: inherit; /* adopt your site's font instead */
+}
+```
+
+```tsx
+<BloomColorPicker className="my-picker" />
+```
+
 ## License
 
 MIT
