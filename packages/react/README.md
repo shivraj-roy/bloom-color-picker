@@ -71,6 +71,14 @@ The hex input's font defaults to a monospace stack (matches how hex values read 
 <BloomColorPicker className="my-picker" />
 ```
 
+In `inputVariant="grouped"`, the focus ring around the swatch+input pill also uses a CSS variable, `--bcp-color-focus` (defaults to a neutral blue). Set it to match your brand:
+
+```css
+.my-picker {
+   --bcp-color-focus: #22c55e;
+}
+```
+
 ## License
 
 MIT

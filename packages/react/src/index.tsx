@@ -406,25 +406,27 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          )}
 
          {hexInput && (
-            <input
-               type="text"
-               size={7}
-               className={cx("bcp__input", part("input"))}
-               value={hexDraft}
-               onChange={(e) => {
-                  const raw = e.target.value.toUpperCase();
-                  const hasHash = raw.startsWith("#");
-                  const digits = raw.replace(/[^0-9A-F]/g, "").slice(0, 6);
-                  const next = (hasHash ? "#" : "") + digits;
-                  setHexDraft(next);
-                  const valid = normalizeHex(next);
-                  if (valid) setValue(valid);
-               }}
-               disabled={disabled}
-               spellCheck={false}
-               placeholder="#RRGGBB"
-               aria-label="Hex color value"
-            />
+            <div className="bcp__input-wrap">
+               <input
+                  type="text"
+                  size={7}
+                  className={cx("bcp__input", part("input"))}
+                  value={hexDraft}
+                  onChange={(e) => {
+                     const raw = e.target.value.toUpperCase();
+                     const hasHash = raw.startsWith("#");
+                     const digits = raw.replace(/[^0-9A-F]/g, "").slice(0, 6);
+                     const next = (hasHash ? "#" : "") + digits;
+                     setHexDraft(next);
+                     const valid = normalizeHex(next);
+                     if (valid) setValue(valid);
+                  }}
+                  disabled={disabled}
+                  spellCheck={false}
+                  placeholder="#RRGGBB"
+                  aria-label="Hex color value"
+               />
+            </div>
          )}
       </div>
    );

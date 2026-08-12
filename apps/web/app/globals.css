@@ -510,6 +510,7 @@ body {
    justify-content: center;
    padding: 24px;
    min-width: 0;
+   --bcp-color-focus: var(--accent);
 }
 
 .playground__settings {

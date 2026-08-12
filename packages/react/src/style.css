@@ -638,16 +638,22 @@
 }
 
 /* --- Hex input ---
-   Positioned absolutely, outside the swatch's box, so it never shifts what
-   the bloom considers "center" — the bloom always opens from the swatch.
+   The wrap is what's actually positioned/z-indexed (outside the swatch's
+   box, so it never shifts what the bloom considers "center" — the bloom
+   always opens from the swatch). It shrink-wraps to the input's real
+   rendered width (no JS measurement) since only `left` is set, not `right`.
    Stays mounted (not hidden) while open. z-index sits below the arc(0),
    bloom(1), and petals(2) so the bloom opens over it, not under it. */
-.bcp__input {
+.bcp__input-wrap {
    position: absolute;
    z-index: -1;
    top: 50%;
-   left: calc(100% + 14px * var(--bcp-scale));
+   left: 0;
    transform: translateY(-50%);
+   padding-left: calc(50px * var(--bcp-scale) + 14px * var(--bcp-scale));
+}
+
+.bcp__input {
    border: 1px solid #e4e4e9;
    background: #f2f2f4;
    border-radius: calc(16px * var(--bcp-scale));
@@ -667,6 +673,41 @@
 .bcp__input:disabled {
    cursor: not-allowed;
    opacity: 0.55;
+}
+
+/* grouped: swatch + input share one pill background instead of two boxes.
+   The wrap's padding-left already reaches back under the swatch, so the
+   shared background just needs its own bg/border/height — the swatch
+   itself (a later, higher z-indexed sibling) paints over the left end. */
+.bcp[data-input-variant="grouped"] .bcp__input-wrap {
+   display: flex;
+   align-items: center;
+   left: calc(-12px * var(--bcp-scale));
+   height: calc(70px * var(--bcp-scale));
+   padding-left: calc(50px * var(--bcp-scale) + 16px * var(--bcp-scale));
+   padding-right: calc(10px * var(--bcp-scale));
+   background: #f2f2f4;
+   border: 1px solid #e4e4e9;
+   border-radius: calc(22px * var(--bcp-scale));
+}
+
+.bcp[data-input-variant="grouped"] .bcp__input {
+   background: transparent;
+   border-color: transparent;
+   padding: calc(16px * var(--bcp-scale)) calc(6px * var(--bcp-scale));
+   font-size: calc(29px * var(--bcp-scale));
+}
+
+/* The input's own box sits smaller/offset inside the visible pill in grouped
+   mode, so a focus ring on the input itself doesn't trace the pill's actual
+   shape. Ring the wrap instead (its real border-radius) via :focus-within. */
+.bcp[data-input-variant="grouped"] .bcp__input:focus-visible {
+   outline: none;
+}
+
+.bcp[data-input-variant="grouped"] .bcp__input-wrap:focus-within {
+   outline: 2px solid var(--bcp-color-focus, #4e72d6);
+   outline-offset: 2px;
 }
 
 /* bouncy: the swatch springs back in (scale overshoot) when the bloom
