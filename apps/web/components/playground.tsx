@@ -15,7 +15,7 @@ import { MotionSelect, type MotionValue } from "./motion-select";
 import { Selector } from "./selector";
 
 const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
-const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440"];
+const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440", "#B5D2F0", "#D4C0EC", "#F5C6CC"];
 const CODE_SPRING = { type: "spring" as const, stiffness: 320, damping: 30 };
 
 export function Playground() {
@@ -123,7 +123,7 @@ export function Playground() {
                         <ElasticSlider
                            label="Size"
                            min={20}
-                           max={64}
+                           max={40}
                            step={1}
                            value={size}
                            onValueChange={setSize}
