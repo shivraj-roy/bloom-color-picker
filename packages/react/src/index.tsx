@@ -104,6 +104,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       size = 32,
       disabled = false,
       hexInput = true,
+      inputVariant = "split",
       motion = "subtle",
       className,
       classNames,
@@ -293,6 +294,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          data-state={open ? "open" : "closed"}
          data-disabled={disabled || undefined}
          data-motion={motion}
+         data-input-variant={hexInput ? inputVariant : undefined}
          onPointerMove={handleDishMove}
          onPointerLeave={() => setHovered(null)}
       >
@@ -430,7 +432,12 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
 
 export default BloomColorPicker;
 
-export type { BloomColorPickerMotion, BloomColorPickerPart, BloomColorPickerProps } from "./types";
+export type {
+   BloomColorPickerInputVariant,
+   BloomColorPickerMotion,
+   BloomColorPickerPart,
+   BloomColorPickerProps,
+} from "./types";
 export { deriveFromHex, hexToHsl, hslToHex, normalizeHex, shadeOf } from "./color";
 export {
    bloomPalettes,

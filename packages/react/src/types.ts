@@ -12,6 +12,8 @@ export type BloomColorPickerPart =
 
 export type BloomColorPickerMotion = "none" | "subtle" | "bouncy";
 
+export type BloomColorPickerInputVariant = "split" | "grouped";
+
 export interface BloomColorPickerProps {
    /** Controlled hex value, e.g. "#F5B81E". */
    value?: string;
@@ -52,6 +54,14 @@ export interface BloomColorPickerProps {
     * Set to `false` to hide it. @default true
     */
    hexInput?: boolean;
+
+   /**
+    * Layout for the swatch + hex input: "split" keeps them as separate
+    * elements (default), "grouped" wraps both in one shared box.
+    * Ignored when `hexInput` is false.
+    * @default "split"
+    */
+   inputVariant?: BloomColorPickerInputVariant;
 
    /**
     * Spring intensity for the open/close and pick animations.

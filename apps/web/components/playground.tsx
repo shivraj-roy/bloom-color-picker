@@ -10,6 +10,7 @@ import { ColorSelect } from "./color-select";
 import { CopyButton } from "./copy-button";
 import { DisabledSelect } from "./disabled-select";
 import { ElasticSlider } from "./elastic-slider";
+import { InputVariantSelect, type InputVariant } from "./input-variant-select";
 import { MotionSelect, type MotionValue } from "./motion-select";
 import { Selector } from "./selector";
 
@@ -23,6 +24,7 @@ export function Playground() {
    const [palette, setPalette] = useState<BloomColorPickerPalette>("warm");
    const [disabled, setDisabled] = useState(false);
    const [motionValue, setMotionValue] = useState<MotionValue>("subtle");
+   const [inputVariant, setInputVariant] = useState<InputVariant>("split");
    const [showCode, setShowCode] = useState(false);
 
    const codeSnippet = [
@@ -34,6 +36,7 @@ export function Playground() {
       `   palette="${palette}"`,
       `   value="${color}"`,
       `   disabled={${disabled}}`,
+      `   inputVariant="${inputVariant}"`,
       `   motion="${motionValue}"`,
       "/>",
    ].join("\n");
@@ -108,43 +111,54 @@ export function Playground() {
                   value={color}
                   onChange={setColor}
                   disabled={disabled}
+                  inputVariant={inputVariant}
                   motion={motionValue}
                />
             </div>
 
             <div className="playground__settings">
                <div className="playground__settings-box">
-                  <div className="control">
-                     <ElasticSlider
-                        label="Size"
-                        min={20}
-                        max={64}
-                        step={1}
-                        value={size}
-                        onValueChange={setSize}
-                        formatValue={(v) => `${Math.round(v)}px`}
-                     />
-                  </div>
+                  <div className="playground__settings-scroll scroll-mask-y">
+                     <div className="control">
+                        <ElasticSlider
+                           label="Size"
+                           min={20}
+                           max={64}
+                           step={1}
+                           value={size}
+                           onValueChange={setSize}
+                           formatValue={(v) => `${Math.round(v)}px`}
+                        />
+                     </div>
 
-                  <div className="control">
-                     <Selector
-                        label="Palette"
-                        value={palette}
-                        options={PALETTES}
-                        onValueChange={(v) => setPalette(v as BloomColorPickerPalette)}
-                     />
-                  </div>
+                     <div className="control">
+                        <Selector
+                           label="Palette"
+                           value={palette}
+                           options={PALETTES}
+                           onValueChange={(v) => setPalette(v as BloomColorPickerPalette)}
+                        />
+                     </div>
 
-                  <div className="control">
-                     <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
-                  </div>
+                     <div className="control">
+                        <InputVariantSelect
+                           label="Input layout"
+                           value={inputVariant}
+                           onValueChange={setInputVariant}
+                        />
+                     </div>
 
-                  <div className="control">
-                     <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
-                  </div>
+                     <div className="control">
+                        <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
+                     </div>
 
-                  <div className="control">
-                     <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
+                     <div className="control">
+                        <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
+                     </div>
+
+                     <div className="control">
+                        <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
+                     </div>
                   </div>
                </div>
             </div>

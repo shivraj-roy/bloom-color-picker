@@ -43,6 +43,7 @@ export function Example() {
 | `size`         | `number`                  | `32`             | Closed swatch diameter in px; the whole bloom scales with it.      |
 | `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
 | `hexInput`     | `boolean`                 | `true`           | Shows an editable hex text field beside the closed swatch. Invalid characters can't be typed. Set `false` to hide it. |
+| `inputVariant` | `"split" \| "grouped"`    | `"split"`        | Layout for the swatch + hex input. Ignored when `hexInput` is false. |
 | `motion`       | `"none" \| "subtle" \| "bouncy"` | `"subtle"` | Spring intensity for open/close and pick animations. `"none"` is instant, applied explicitly regardless of the visitor's OS motion preference (which is otherwise respected automatically). |
 | `className`    | `string`                  | —                | Class for the root element.                                        |
 | `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`, `input`. |
