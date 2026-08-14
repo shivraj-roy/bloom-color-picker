@@ -1,4 +1,5 @@
 import { ApiReference } from "../components/api-reference";
+import { FlowerVideo } from "../components/flower-video";
 import { Playground } from "../components/playground";
 import { Sidebar } from "../components/sidebar";
 
@@ -9,6 +10,8 @@ export default function Home() {
             <Sidebar />
 
             <Playground />
+
+            <FlowerVideo />
 
             <ApiReference />
          </main>

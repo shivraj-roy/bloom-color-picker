@@ -1092,6 +1092,40 @@ body {
    color: var(--ink);
 }
 
+.flower-video {
+   grid-column: 2;
+   grid-row: 2;
+   padding: 20px;
+   overflow: hidden;
+}
+
+.flower-video__inner {
+   position: relative;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   border: 1px solid var(--card-border);
+   border-radius: var(--r-inner);
+   background: #000;
+}
+
+.flower-video__source {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   opacity: 0;
+   overflow: hidden;
+   pointer-events: none;
+}
+
+.flower-video__canvas {
+   display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   image-rendering: pixelated;
+}
+
 .props-panel {
    grid-column: 3;
    grid-row: 2;
@@ -1339,9 +1373,14 @@ body {
 
    .sidebar,
    .playground,
+   .flower-video,
    .props-panel {
       grid-column: 1;
       grid-row: auto;
+   }
+
+   .flower-video {
+      min-height: 200px;
    }
 
    .playground__content {
