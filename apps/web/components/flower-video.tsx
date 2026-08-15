@@ -157,8 +157,24 @@ export function FlowerVideo() {
 
    return (
       <div className="box flower-video">
-         <div className="flower-video__header">
-            <span className="sidebar__label">Flower</span>
+         <div className="flower-video__inner">
+            <div className="flower-video__media">
+               <video
+                  ref={videoRef}
+                  className="flower-video__source"
+                  src="/flower-and-butterfly.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+               />
+               <canvas
+                  ref={canvasRef}
+                  className="flower-video__canvas"
+                  data-style={style}
+               />
+            </div>
+
             <div className="tabs flower-video__tabs">
                {(["dither", "halftone"] as const).map((s) => (
                   <button
@@ -177,24 +193,10 @@ export function FlowerVideo() {
                      )}
                   </button>
                ))}
-            </div>
-         </div>
 
-         <div className="flower-video__inner">
-            <video
-               ref={videoRef}
-               className="flower-video__source"
-               src="/flower-and-butterfly.mp4"
-               autoPlay
-               loop
-               muted
-               playsInline
-            />
-            <canvas
-               ref={canvasRef}
-               className="flower-video__canvas"
-               data-style={style}
-            />
+               <span className="flower-video__notch flower-video__notch--bl" />
+               <span className="flower-video__notch flower-video__notch--tr" />
+            </div>
          </div>
       </div>
    );
