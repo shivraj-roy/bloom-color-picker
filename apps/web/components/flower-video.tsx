@@ -13,10 +13,11 @@ const BAYER_4X4 = [
 
 // low-res sampling grid — the canvas is CSS-scaled up with pixelated
 // rendering, so this is what actually controls the dither "block" size.
-const DITHER_SIZE = 400;
-// luminance above this renders solid white, skipping the dither entirely —
-// keeps the background clean while darker areas still dither normally
-const HIGHLIGHT_CLIP = 0.72;
+const DITHER_SIZE = 440;
+// contrast curve around mid-gray, applied before thresholding: >1 pulls more
+// pixels toward the noisy mid-tone zone (more dither, background especially),
+// <1 pushes them out toward solid black/white (cleaner, less dither).
+const GAMMA = 0.8;
 
 export function FlowerVideo() {
    const videoRef = useRef<HTMLVideoElement>(null);
@@ -63,13 +64,9 @@ export function FlowerVideo() {
                for (let x = 0; x < width; x++) {
                   const i = (y * width + x) * 4;
                   const luminance = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
-                  let value: number;
-                  if (luminance > HIGHLIGHT_CLIP) {
-                     value = 255;
-                  } else {
-                     const threshold = (BAYER_4X4[y % 4][x % 4] + 0.5) / 16;
-                     value = luminance > threshold ? 20 : 255;
-                  }
+                  const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
+                  const threshold = (BAYER_4X4[y % 4][x % 4] + 0.5) / 16;
+                  const value = adjusted > threshold ? 20 : 255;
                   outData[i] = value;
                   outData[i + 1] = value;
                   outData[i + 2] = value;
