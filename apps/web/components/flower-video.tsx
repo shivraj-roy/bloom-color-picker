@@ -22,6 +22,15 @@ const DITHER_SIZE = 520;
 // gives a blocky/mosaic structure *within* which the fine dither still
 // textures normally, rather than changing the dither pixel size itself.
 const CELL_SIZE = 2;
+// click ripple: each click spawns one expanding ring (in sample-space units)
+// that travels outward over time and displaces which video pixels the cells
+// it currently passes through sample from — a moving band of disturbance
+// riding along with the dither, not a static always-on distortion.
+const RING_SPEED = 260; // sample-space units/sec the ring expands outward
+const RING_BAND = 22; // thickness of the active displacement band
+const RING_AMPLITUDE = 12;
+const RING_LIFE = 1.1; // seconds before a ring is discarded
+const RING_TEXTURE_MIX = 0.2; // how much the ring's own mid-gray texture shows through (0-1)
 // contrast curve around mid-gray, applied before thresholding (dither) or
 // before sizing dots (halftone): >1 pulls more values toward the noisy
 // mid-tone zone, <1 pushes them toward the extremes (cleaner, less texture).
@@ -42,6 +51,8 @@ export function FlowerVideo() {
    const [style, setStyle] = useState<Style>("dither");
    const videoRef = useRef<HTMLVideoElement>(null);
    const canvasRef = useRef<HTMLCanvasElement>(null);
+   // active click ripples, in sample-space coordinates
+   const ripplesRef = useRef<{ x: number; y: number; time: number }[]>([]);
 
    useEffect(() => {
       const video = videoRef.current;
@@ -107,18 +118,59 @@ export function FlowerVideo() {
          const cellsY = Math.ceil(sampleHeight / CELL_SIZE);
          const cellLuminance = new Float32Array(cellsX * cellsY);
 
+         // prune expired rings, then keep only the still-active ones for this frame
+         const now = performance.now() / 1000;
+         const ripples = ripplesRef.current.filter((r) => now - r.time < RING_LIFE);
+         ripplesRef.current = ripples;
+
          for (let cy = 0; cy < cellsY; cy++) {
             for (let cx = 0; cx < cellsX; cx++) {
                const w = Math.min(CELL_SIZE, sampleWidth - cx * CELL_SIZE);
                const h = Math.min(CELL_SIZE, sampleHeight - cy * CELL_SIZE);
+
+               // each active ring: radially offset which video pixels this
+               // cell reads from, but only in the thin expanding band the
+               // ring currently occupies — a moving disturbance, not a
+               // static field. Fades out as the ring ages toward RING_LIFE.
+               let offsetX = 0;
+               let offsetY = 0;
+               let ringStrength = 0;
+               const centerX = cx * CELL_SIZE + w / 2;
+               const centerY = cy * CELL_SIZE + h / 2;
+               for (const ripple of ripples) {
+                  const age = now - ripple.time;
+                  const ringRadius = age * RING_SPEED;
+                  const dx = centerX - ripple.x;
+                  const dy = centerY - ripple.y;
+                  const dist = Math.sqrt(dx * dx + dy * dy);
+                  const bandDist = Math.abs(dist - ringRadius);
+                  if (bandDist < RING_BAND && dist > 0.001) {
+                     const bandFalloff = 1 - bandDist / RING_BAND;
+                     const ageFade = 1 - age / RING_LIFE;
+                     const strength = bandFalloff * ageFade;
+                     const push = RING_AMPLITUDE * strength;
+                     offsetX += (dx / dist) * push;
+                     offsetY += (dy / dist) * push;
+                     ringStrength = Math.max(ringStrength, strength);
+                  }
+               }
+
                let sum = 0;
                for (let dy = 0; dy < h; dy++) {
                   for (let dx = 0; dx < w; dx++) {
-                     const i = ((cy * CELL_SIZE + dy) * sampleWidth + (cx * CELL_SIZE + dx)) * 4;
+                     const sx = Math.min(sampleWidth - 1, Math.max(0, Math.round(cx * CELL_SIZE + dx + offsetX)));
+                     const sy = Math.min(sampleHeight - 1, Math.max(0, Math.round(cy * CELL_SIZE + dy + offsetY)));
+                     const i = (sy * sampleWidth + sx) * 4;
                      sum += (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
                   }
                }
-               cellLuminance[cy * cellsX + cx] = sum / (w * h);
+               const baseLuminance = sum / (w * h);
+               // blend toward mid-gray within the ring — that's the tone
+               // the Bayer matrix dithers most busily, so the ring reads as
+               // its own visible texture instead of a warp of what's already
+               // there. Capped well below full strength to keep it subtle.
+               const blend = ringStrength * RING_TEXTURE_MIX;
+               cellLuminance[cy * cellsX + cx] = baseLuminance * (1 - blend) + 0.5 * blend;
             }
          }
 
@@ -176,12 +228,32 @@ export function FlowerVideo() {
          raf = requestAnimationFrame(draw);
       };
 
+      // canvas is CSS-scaled (object-fit: cover) to fill its box, so convert
+      // the click's on-screen position into sample-space by matching that
+      // same scale-and-crop math, not just a plain rect-relative percentage.
+      const onPointerDown = (e: PointerEvent) => {
+         if (style !== "dither") return;
+         const rect = canvas.getBoundingClientRect();
+         // "cover" scales up to the LARGER ratio so one axis overflows/crops,
+         // unlike "contain" (which would use the smaller ratio + letterbox).
+         const scale = Math.max(rect.width / sampleWidth, rect.height / sampleHeight);
+         const offsetX = (rect.width - sampleWidth * scale) / 2;
+         const offsetY = (rect.height - sampleHeight * scale) / 2;
+         ripplesRef.current.push({
+            x: (e.clientX - rect.left - offsetX) / scale,
+            y: (e.clientY - rect.top - offsetY) / scale,
+            time: performance.now() / 1000,
+         });
+      };
+
       video.addEventListener("loadedmetadata", setup);
       if (video.readyState >= 1) setup();
       raf = requestAnimationFrame(draw);
+      canvas.addEventListener("pointerdown", onPointerDown);
 
       return () => {
          cancelAnimationFrame(raf);
+         canvas.removeEventListener("pointerdown", onPointerDown);
          video.removeEventListener("loadedmetadata", setup);
       };
    }, [style]);
