@@ -13,8 +13,15 @@ const BAYER_4X4 = [
 ];
 
 // low-res sampling grid — the canvas is CSS-scaled up with pixelated
-// rendering, so this is what actually controls the dither "block" size.
-const DITHER_SIZE = 440;
+// rendering, so this is what actually controls the dither "pixel" size.
+// Fixed: independent of cell size below, exactly like the reference tool
+// (dragging cell size doesn't change how fine the dither texture itself is).
+const DITHER_SIZE = 520;
+// dither pixels are grouped into cells this many pixels wide/tall, sharing
+// one averaged luminance before the per-pixel Bayer threshold is applied —
+// gives a blocky/mosaic structure *within* which the fine dither still
+// textures normally, rather than changing the dither pixel size itself.
+const CELL_SIZE = 2;
 // contrast curve around mid-gray, applied before thresholding (dither) or
 // before sizing dots (halftone): >1 pulls more values toward the noisy
 // mid-tone zone, <1 pushes them toward the extremes (cleaner, less texture).
@@ -92,10 +99,34 @@ export function FlowerVideo() {
          const out = drawCtx.createImageData(sampleWidth, sampleHeight);
          const outData = out.data;
 
+         // per-cell average luminance — computed once per cell, then shared
+         // by every pixel inside it, so the Bayer threshold still varies
+         // per pixel (keeping the dither texture) but the underlying
+         // brightness it's dithering is blocky/mosaic'd by CELL_SIZE.
+         const cellsX = Math.ceil(sampleWidth / CELL_SIZE);
+         const cellsY = Math.ceil(sampleHeight / CELL_SIZE);
+         const cellLuminance = new Float32Array(cellsX * cellsY);
+
+         for (let cy = 0; cy < cellsY; cy++) {
+            for (let cx = 0; cx < cellsX; cx++) {
+               const w = Math.min(CELL_SIZE, sampleWidth - cx * CELL_SIZE);
+               const h = Math.min(CELL_SIZE, sampleHeight - cy * CELL_SIZE);
+               let sum = 0;
+               for (let dy = 0; dy < h; dy++) {
+                  for (let dx = 0; dx < w; dx++) {
+                     const i = ((cy * CELL_SIZE + dy) * sampleWidth + (cx * CELL_SIZE + dx)) * 4;
+                     sum += (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
+                  }
+               }
+               cellLuminance[cy * cellsX + cx] = sum / (w * h);
+            }
+         }
+
          for (let y = 0; y < sampleHeight; y++) {
             for (let x = 0; x < sampleWidth; x++) {
                const i = (y * sampleWidth + x) * 4;
-               const luminance = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
+               const cellIndex = Math.floor(y / CELL_SIZE) * cellsX + Math.floor(x / CELL_SIZE);
+               const luminance = cellLuminance[cellIndex];
                const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
                const threshold = (BAYER_4X4[y % 4][x % 4] + 0.5) / 16;
                const value = adjusted > threshold ? 20 : 255;
@@ -119,14 +150,14 @@ export function FlowerVideo() {
 
          const cellW = outWidth / sampleWidth;
          const cellH = outHeight / sampleHeight;
-         const cellSize = Math.min(cellW, cellH);
+         const cellPx = Math.min(cellW, cellH);
 
          for (let y = 0; y < sampleHeight; y++) {
             for (let x = 0; x < sampleWidth; x++) {
                const i = (y * sampleWidth + x) * 4;
                const luminance = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
                const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
-               const radius = adjusted * cellSize * HALFTONE_MAX_RADIUS;
+               const radius = adjusted * cellPx * HALFTONE_MAX_RADIUS;
                if (radius < 0.15) continue;
                const cx = (x + 0.5) * cellW;
                const cy = (y + 0.5) * cellH;
