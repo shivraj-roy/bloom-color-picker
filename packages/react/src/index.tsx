@@ -101,7 +101,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       palette = "warm",
       outerColors,
       innerColors,
-      size = 32,
+      size = 28,
       disabled = false,
       hexInput = true,
       inputVariant = "split",

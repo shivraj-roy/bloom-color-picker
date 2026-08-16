@@ -21,7 +21,7 @@ const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440", "#B5D2F0", "#D4C0EC", "#
 const CODE_SPRING = { type: "spring" as const, stiffness: 320, damping: 30 };
 
 export function Playground() {
-   const [size, setSize] = usePersistedState("size", 32);
+   const [size, setSize] = usePersistedState("size", 28);
    const [color, setColor] = usePersistedState("color", "#FFB1EE");
    const [palette, setPalette] = usePersistedState<BloomColorPickerPalette>("palette", "warm");
    const [disabled, setDisabled] = usePersistedState("disabled", false);

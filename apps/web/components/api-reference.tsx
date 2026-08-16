@@ -93,7 +93,7 @@ const PROPS: AccordionRow[] = [
       description: "Closed swatch diameter in px; the whole bloom scales with it.",
       meta: [
          { label: "Type", value: "number | undefined" },
-         { label: "Default", value: "32" },
+         { label: "Default", value: "28" },
       ],
    },
    {
