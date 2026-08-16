@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "motion/react";
 
+import { usePersistedState } from "../lib/use-persisted-state";
 import { CopyButton } from "./copy-button";
 
 const INSTALL: Record<string, string> = {
@@ -21,7 +21,7 @@ import "bloom-color-picker/style.css";
 />`;
 
 export function Sidebar() {
-   const [manager, setManager] = useState<keyof typeof INSTALL>("npm");
+   const [manager, setManager] = usePersistedState<keyof typeof INSTALL>("package-manager", "npm");
 
    return (
       <aside className="box sidebar">

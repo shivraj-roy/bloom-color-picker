@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
 
+import { usePersistedState } from "../lib/use-persisted-state";
 import { CodeCloseIcon } from "./animated-icons/code-close-icon";
 import { ColorSelect } from "./color-select";
 import { CopyButton } from "./copy-button";
@@ -20,12 +21,12 @@ const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440", "#B5D2F0", "#D4C0EC", "#
 const CODE_SPRING = { type: "spring" as const, stiffness: 320, damping: 30 };
 
 export function Playground() {
-   const [size, setSize] = useState(32);
-   const [color, setColor] = useState("#FFB1EE");
-   const [palette, setPalette] = useState<BloomColorPickerPalette>("warm");
-   const [disabled, setDisabled] = useState(false);
-   const [motionValue, setMotionValue] = useState<MotionValue>("subtle");
-   const [inputVariant, setInputVariant] = useState<InputVariant>("split");
+   const [size, setSize] = usePersistedState("size", 32);
+   const [color, setColor] = usePersistedState("color", "#FFB1EE");
+   const [palette, setPalette] = usePersistedState<BloomColorPickerPalette>("palette", "warm");
+   const [disabled, setDisabled] = usePersistedState("disabled", false);
+   const [motionValue, setMotionValue] = usePersistedState<MotionValue>("motion", "subtle");
+   const [inputVariant, setInputVariant] = usePersistedState<InputVariant>("input-variant", "split");
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
    const [centerOffset, setCenterOffset] = useState(0);
