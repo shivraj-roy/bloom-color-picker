@@ -1198,10 +1198,14 @@ body {
 /* one shared loop timeline — outer rectangle perimeter as a relay (center,
    bottom, left, top-left, top-right, right, bottom-right, closing back to
    the center line's start), then each nested square's own divider, then
-   all 9 spiral arcs largest to smallest, ending at the spiral's eye.
-   Windows are weighted by each segment's actual path length so the stroke
-   moves at a constant speed instead of pausing/rushing at any segment;
-   same total duration on all keeps them in sync. */
+   all 9 spiral arcs largest to smallest, ending at the spiral's eye. Each
+   segment draws in during the first half of the loop (weighted by actual
+   path length, so the stroke moves at a constant speed) then erases again
+   during the second half, in the same relay order AND the same
+   start-to-end direction each segment drew in — animating dashoffset past
+   0 into negative territory (rather than back up past 1) sweeps the
+   visible start point forward instead of retracting the tail, so the
+   erase reads as "the same stroke, wiped away the way it was drawn." */
 .golden-ratio-icon__center-line,
 .golden-ratio-icon__bottom-line,
 .golden-ratio-icon__left-line,
@@ -1224,7 +1228,7 @@ body {
    stroke: var(--ink);
    stroke-dasharray: 1;
    stroke-dashoffset: 1;
-   animation-duration: 4.5s;
+   animation-duration: 7s;
    animation-timing-function: ease-in;
    animation-iteration-count: infinite;
 }
@@ -1305,11 +1309,17 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   8.9% {
+   4.45% {
       stroke-dashoffset: 0;
    }
-   100% {
+   50% {
       stroke-dashoffset: 0;
+   }
+   54.45% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1317,14 +1327,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   8.9% {
+   4.45% {
       stroke-dashoffset: 1;
    }
-   17.7% {
+   8.85% {
       stroke-dashoffset: 0;
    }
-   100% {
+   54.45% {
       stroke-dashoffset: 0;
+   }
+   58.85% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1332,14 +1348,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   17.7% {
+   8.85% {
       stroke-dashoffset: 1;
    }
-   26.6% {
+   13.3% {
       stroke-dashoffset: 0;
    }
-   100% {
+   58.85% {
       stroke-dashoffset: 0;
+   }
+   63.3% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1347,14 +1369,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   26.6% {
+   13.3% {
       stroke-dashoffset: 1;
    }
-   35.4% {
+   17.7% {
       stroke-dashoffset: 0;
    }
-   100% {
+   63.3% {
       stroke-dashoffset: 0;
+   }
+   67.7% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1362,14 +1390,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   35.4% {
+   17.7% {
       stroke-dashoffset: 1;
    }
-   40.9% {
+   20.45% {
       stroke-dashoffset: 0;
    }
-   100% {
+   67.7% {
       stroke-dashoffset: 0;
+   }
+   70.45% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1377,14 +1411,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   40.9% {
+   20.45% {
       stroke-dashoffset: 1;
    }
-   49.8% {
+   24.9% {
       stroke-dashoffset: 0;
    }
-   100% {
+   70.45% {
       stroke-dashoffset: 0;
+   }
+   74.9% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1392,14 +1432,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   49.8% {
+   24.9% {
       stroke-dashoffset: 1;
    }
-   55.2% {
+   27.6% {
       stroke-dashoffset: 0;
    }
-   100% {
+   74.9% {
       stroke-dashoffset: 0;
+   }
+   77.6% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1407,14 +1453,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   55.2% {
+   27.6% {
       stroke-dashoffset: 1;
    }
-   60.7% {
+   30.35% {
       stroke-dashoffset: 0;
    }
-   100% {
+   77.6% {
       stroke-dashoffset: 0;
+   }
+   80.35% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1422,14 +1474,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   60.7% {
+   30.35% {
       stroke-dashoffset: 1;
    }
-   64.1% {
+   32.05% {
       stroke-dashoffset: 0;
    }
-   100% {
+   80.35% {
       stroke-dashoffset: 0;
+   }
+   82.05% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1437,14 +1495,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   64.1% {
+   32.05% {
       stroke-dashoffset: 1;
    }
-   78% {
+   39% {
       stroke-dashoffset: 0;
    }
-   100% {
+   82.05% {
       stroke-dashoffset: 0;
+   }
+   89% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1452,14 +1516,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   78% {
+   39% {
       stroke-dashoffset: 1;
    }
-   86.6% {
+   43.3% {
       stroke-dashoffset: 0;
    }
-   100% {
+   89% {
       stroke-dashoffset: 0;
+   }
+   93.3% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1467,14 +1537,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   86.6% {
+   43.3% {
       stroke-dashoffset: 1;
    }
-   91.9% {
+   45.95% {
       stroke-dashoffset: 0;
    }
-   100% {
+   93.3% {
       stroke-dashoffset: 0;
+   }
+   95.95% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1482,14 +1558,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   91.9% {
+   45.95% {
       stroke-dashoffset: 1;
    }
-   95.2% {
+   47.6% {
       stroke-dashoffset: 0;
    }
-   100% {
+   95.95% {
       stroke-dashoffset: 0;
+   }
+   97.6% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1497,14 +1579,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   95.2% {
+   47.6% {
       stroke-dashoffset: 1;
    }
-   97.2% {
+   48.6% {
       stroke-dashoffset: 0;
    }
-   100% {
+   97.6% {
       stroke-dashoffset: 0;
+   }
+   98.6% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1512,14 +1600,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   97.2% {
+   48.6% {
       stroke-dashoffset: 1;
    }
-   98.5% {
+   49.25% {
       stroke-dashoffset: 0;
    }
-   100% {
+   98.6% {
       stroke-dashoffset: 0;
+   }
+   99.25% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1527,14 +1621,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   98.5% {
+   49.25% {
       stroke-dashoffset: 1;
    }
-   99.2% {
+   49.6% {
       stroke-dashoffset: 0;
    }
-   100% {
+   99.25% {
       stroke-dashoffset: 0;
+   }
+   99.6% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1542,14 +1642,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   99.2% {
+   49.6% {
       stroke-dashoffset: 1;
    }
-   99.7% {
+   49.85% {
       stroke-dashoffset: 0;
    }
-   100% {
+   99.6% {
       stroke-dashoffset: 0;
+   }
+   99.85% {
+      stroke-dashoffset: -1;
+   }
+   100% {
+      stroke-dashoffset: -1;
    }
 }
 
@@ -1557,13 +1663,20 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   99.7% {
+   49.85% {
       stroke-dashoffset: 1;
    }
-   100% {
+   50% {
       stroke-dashoffset: 0;
    }
+   99.85% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: -1;
+   }
 }
+
 
 .props-panel {
    grid-column: 3;
