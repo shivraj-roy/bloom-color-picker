@@ -31,6 +31,11 @@ const RING_BAND = 22; // thickness of the active displacement band
 const RING_AMPLITUDE = 12;
 const RING_LIFE = 1.1; // seconds before a ring is discarded
 const RING_TEXTURE_MIX = 0.2; // how much the ring's own mid-gray texture shows through (0-1)
+// halftone's ring texture is a continuous dot-size blend rather than a
+// binary threshold flip, so the same small mix that reads clearly in dither
+// is nearly invisible here — needs a much stronger pull toward the target
+// dot size to actually read as the ring's own texture.
+const HALFTONE_RING_MIX = 0.85;
 // contrast curve around mid-gray, applied before thresholding (dither) or
 // before sizing dots (halftone): >1 pulls more values toward the noisy
 // mid-tone zone, <1 pushes them toward the extremes (cleaner, less texture).
@@ -204,12 +209,59 @@ export function FlowerVideo() {
          const cellH = outHeight / sampleHeight;
          const cellPx = Math.min(cellW, cellH);
 
+         // same expanding rings as dither, but halftone's sample-space is a
+         // much coarser grid (HALFTONE_GRID_COLS vs DITHER_SIZE) — the ring's
+         // constants were tuned for dither's grid, so scale them down here or
+         // the band/speed swallow the whole (tiny) grid in one frame and read
+         // as a blink instead of a traveling ring.
+         const gridScale = sampleWidth / DITHER_SIZE;
+         const ringSpeed = RING_SPEED * gridScale;
+         const ringBand = RING_BAND * gridScale;
+         const ringAmplitude = RING_AMPLITUDE * gridScale;
+
+         const now = performance.now() / 1000;
+         const ripples = ripplesRef.current.filter((r) => now - r.time < RING_LIFE);
+         ripplesRef.current = ripples;
+
          for (let y = 0; y < sampleHeight; y++) {
             for (let x = 0; x < sampleWidth; x++) {
-               const i = (y * sampleWidth + x) * 4;
+               // radially offset which video pixel this dot samples from,
+               // and boost its size within the ring's expanding band — bigger
+               // dots there read as the ring's own texture, not just a warp
+               let offsetX = 0;
+               let offsetY = 0;
+               let ringStrength = 0;
+               for (const ripple of ripples) {
+                  const age = now - ripple.time;
+                  const ringRadius = age * ringSpeed;
+                  const dx = x - ripple.x;
+                  const dy = y - ripple.y;
+                  const dist = Math.sqrt(dx * dx + dy * dy);
+                  const bandDist = Math.abs(dist - ringRadius);
+                  if (bandDist < ringBand && dist > 0.001) {
+                     const bandFalloff = 1 - bandDist / ringBand;
+                     const ageFade = 1 - age / RING_LIFE;
+                     const strength = bandFalloff * ageFade;
+                     const push = ringAmplitude * strength;
+                     offsetX += (dx / dist) * push;
+                     offsetY += (dy / dist) * push;
+                     ringStrength = Math.max(ringStrength, strength);
+                  }
+               }
+
+               const sx = Math.min(sampleWidth - 1, Math.max(0, Math.round(x + offsetX)));
+               const sy = Math.min(sampleHeight - 1, Math.max(0, Math.round(y + offsetY)));
+               const i = (sy * sampleWidth + sx) * 4;
                const luminance = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
                const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
-               const radius = adjusted * cellPx * HALFTONE_MAX_RADIUS;
+               const baseRadius = adjusted * cellPx * HALFTONE_MAX_RADIUS;
+               // blend toward a fixed mid-size dot within the ring — same idea
+               // as dither's mid-gray blend, so the ring reads as its own dot
+               // pattern even over near-black/near-white video where boosting
+               // the existing (near-zero) radius would do nothing.
+               const targetRadius = cellPx * HALFTONE_MAX_RADIUS * 0.6;
+               const blend = ringStrength * HALFTONE_RING_MIX;
+               const radius = baseRadius * (1 - blend) + targetRadius * blend;
                if (radius < 0.15) continue;
                const cx = (x + 0.5) * cellW;
                const cy = (y + 0.5) * cellH;
@@ -232,7 +284,6 @@ export function FlowerVideo() {
       // the click's on-screen position into sample-space by matching that
       // same scale-and-crop math, not just a plain rect-relative percentage.
       const onPointerDown = (e: PointerEvent) => {
-         if (style !== "dither") return;
          const rect = canvas.getBoundingClientRect();
          // "cover" scales up to the LARGER ratio so one axis overflows/crops,
          // unlike "contain" (which would use the smaller ratio + letterbox).
