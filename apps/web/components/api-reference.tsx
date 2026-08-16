@@ -117,6 +117,16 @@ const PROPS: AccordionRow[] = [
       ],
    },
    {
+      key: "inputVariant",
+      name: "inputVariant?",
+      type: "string",
+      description: 'Layout for the swatch + hex input. Ignored when hexInput is false.',
+      meta: [
+         { label: "Type", value: '"split" | "grouped"' },
+         { label: "Default", value: '"split"' },
+      ],
+   },
+   {
       key: "motion",
       name: "motion?",
       type: "string",
