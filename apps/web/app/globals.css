@@ -1129,6 +1129,12 @@ body {
    border-radius: var(--r-inner) 0 var(--r-inner) 0;
 }
 
+.flower-video__tabs .tab {
+   display: flex;
+   align-items: center;
+   padding: 4px 2px 6px;
+}
+
 /* concave "squircle" notches where the pill's outer corners meet the
    panel's straight edges. A single radial-gradient circle (same radius as
    --r-inner, so it matches the pill's own corner curve exactly) does both
