@@ -1309,375 +1309,217 @@ body {
    0% {
       stroke-dashoffset: 1;
    }
-   4.45% {
+   4.45%, 50% {
       stroke-dashoffset: 0;
    }
-   50% {
-      stroke-dashoffset: 0;
-   }
-   54.45% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   54.45%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-bottom {
-   0% {
+   0%, 4.45% {
       stroke-dashoffset: 1;
    }
-   4.45% {
-      stroke-dashoffset: 1;
-   }
-   8.85% {
+   8.85%, 54.45% {
       stroke-dashoffset: 0;
    }
-   54.45% {
-      stroke-dashoffset: 0;
-   }
-   58.85% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   58.85%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-left {
-   0% {
+   0%, 8.85% {
       stroke-dashoffset: 1;
    }
-   8.85% {
-      stroke-dashoffset: 1;
-   }
-   13.3% {
+   13.3%, 58.85% {
       stroke-dashoffset: 0;
    }
-   58.85% {
-      stroke-dashoffset: 0;
-   }
-   63.3% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   63.3%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-top {
-   0% {
+   0%, 13.3% {
       stroke-dashoffset: 1;
    }
-   13.3% {
-      stroke-dashoffset: 1;
-   }
-   17.7% {
+   17.7%, 63.3% {
       stroke-dashoffset: 0;
    }
-   63.3% {
-      stroke-dashoffset: 0;
-   }
-   67.7% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   67.7%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-top-right {
-   0% {
+   0%, 17.7% {
       stroke-dashoffset: 1;
    }
-   17.7% {
-      stroke-dashoffset: 1;
-   }
-   20.45% {
+   20.45%, 67.7% {
       stroke-dashoffset: 0;
    }
-   67.7% {
-      stroke-dashoffset: 0;
-   }
-   70.45% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   70.45%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-right {
-   0% {
+   0%, 20.45% {
       stroke-dashoffset: 1;
    }
-   20.45% {
-      stroke-dashoffset: 1;
-   }
-   24.9% {
+   24.9%, 70.45% {
       stroke-dashoffset: 0;
    }
-   70.45% {
-      stroke-dashoffset: 0;
-   }
-   74.9% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   74.9%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-bottom-right {
-   0% {
+   0%, 24.9% {
       stroke-dashoffset: 1;
    }
-   24.9% {
-      stroke-dashoffset: 1;
-   }
-   27.6% {
+   27.6%, 74.9% {
       stroke-dashoffset: 0;
    }
-   74.9% {
-      stroke-dashoffset: 0;
-   }
-   77.6% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   77.6%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-mid {
-   0% {
+   0%, 27.6% {
       stroke-dashoffset: 1;
    }
-   27.6% {
-      stroke-dashoffset: 1;
-   }
-   30.35% {
+   30.35%, 77.6% {
       stroke-dashoffset: 0;
    }
-   77.6% {
-      stroke-dashoffset: 0;
-   }
-   80.35% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   80.35%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-small-center {
-   0% {
+   0%, 30.35% {
       stroke-dashoffset: 1;
    }
-   30.35% {
-      stroke-dashoffset: 1;
-   }
-   32.05% {
+   32.05%, 80.35% {
       stroke-dashoffset: 0;
    }
-   80.35% {
-      stroke-dashoffset: 0;
-   }
-   82.05% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   82.05%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-1 {
-   0% {
+   0%, 32.05% {
       stroke-dashoffset: 1;
    }
-   32.05% {
-      stroke-dashoffset: 1;
-   }
-   39% {
+   39%, 82.05% {
       stroke-dashoffset: 0;
    }
-   82.05% {
-      stroke-dashoffset: 0;
-   }
-   89% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   89%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-2 {
-   0% {
+   0%, 39% {
       stroke-dashoffset: 1;
    }
-   39% {
-      stroke-dashoffset: 1;
-   }
-   43.3% {
+   43.3%, 89% {
       stroke-dashoffset: 0;
    }
-   89% {
-      stroke-dashoffset: 0;
-   }
-   93.3% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   93.3%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-3 {
-   0% {
+   0%, 43.3% {
       stroke-dashoffset: 1;
    }
-   43.3% {
-      stroke-dashoffset: 1;
-   }
-   45.95% {
+   45.95%, 93.3% {
       stroke-dashoffset: 0;
    }
-   93.3% {
-      stroke-dashoffset: 0;
-   }
-   95.95% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   95.95%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-4 {
-   0% {
+   0%, 45.95% {
       stroke-dashoffset: 1;
    }
-   45.95% {
-      stroke-dashoffset: 1;
-   }
-   47.6% {
+   47.6%, 95.95% {
       stroke-dashoffset: 0;
    }
-   95.95% {
-      stroke-dashoffset: 0;
-   }
-   97.6% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   97.6%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-5 {
-   0% {
+   0%, 47.6% {
       stroke-dashoffset: 1;
    }
-   47.6% {
-      stroke-dashoffset: 1;
-   }
-   48.6% {
+   48.6%, 97.6% {
       stroke-dashoffset: 0;
    }
-   97.6% {
-      stroke-dashoffset: 0;
-   }
-   98.6% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   98.6%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-6 {
-   0% {
+   0%, 48.6% {
       stroke-dashoffset: 1;
    }
-   48.6% {
-      stroke-dashoffset: 1;
-   }
-   49.25% {
+   49.25%, 98.6% {
       stroke-dashoffset: 0;
    }
-   98.6% {
-      stroke-dashoffset: 0;
-   }
-   99.25% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   99.25%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-7 {
-   0% {
+   0%, 49.25% {
       stroke-dashoffset: 1;
    }
-   49.25% {
-      stroke-dashoffset: 1;
-   }
-   49.6% {
+   49.6%, 99.25% {
       stroke-dashoffset: 0;
    }
-   99.25% {
-      stroke-dashoffset: 0;
-   }
-   99.6% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   99.6%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-8 {
-   0% {
+   0%, 49.6% {
       stroke-dashoffset: 1;
    }
-   49.6% {
-      stroke-dashoffset: 1;
-   }
-   49.85% {
+   49.85%, 99.6% {
       stroke-dashoffset: 0;
    }
-   99.6% {
-      stroke-dashoffset: 0;
-   }
-   99.85% {
-      stroke-dashoffset: -1;
-   }
-   100% {
+   99.85%, 100% {
       stroke-dashoffset: -1;
    }
 }
 
 @keyframes golden-ratio-draw-spiral-9 {
-   0% {
+   0%, 49.85% {
       stroke-dashoffset: 1;
    }
-   49.85% {
-      stroke-dashoffset: 1;
-   }
-   50% {
-      stroke-dashoffset: 0;
-   }
-   99.85% {
+   50%, 99.85% {
       stroke-dashoffset: 0;
    }
    100% {
       stroke-dashoffset: -1;
    }
 }
-
-
 .props-panel {
    grid-column: 3;
    grid-row: 2;
