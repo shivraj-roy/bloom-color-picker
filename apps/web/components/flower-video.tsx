@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 
+import { GoldenRatioIcon } from "./animated-icons/golden-ratio-icon";
+
 // classic 4x4 ordered (Bayer) dither matrix — cheap per-pixel threshold, no
 // error diffusion needed, so it stays fast enough for real-time video.
 const BAYER_4X4 = [
@@ -54,10 +56,26 @@ type Style = "dither" | "halftone";
 
 export function FlowerVideo() {
    const [style, setStyle] = useState<Style>("dither");
+   const [loaded, setLoaded] = useState(false);
    const videoRef = useRef<HTMLVideoElement>(null);
    const canvasRef = useRef<HTMLCanvasElement>(null);
    // active click ripples, in sample-space coordinates
    const ripplesRef = useRef<{ x: number; y: number; time: number }[]>([]);
+
+   // separate from the style-dependent effect below (which re-attaches on
+   // every dither/halftone toggle) — this only needs to fire once, the
+   // first time the video actually has a frame to show.
+   useEffect(() => {
+      const video = videoRef.current;
+      if (!video) return;
+      if (video.readyState >= 2) {
+         setLoaded(true);
+         return;
+      }
+      const onLoadedData = () => setLoaded(true);
+      video.addEventListener("loadeddata", onLoadedData);
+      return () => video.removeEventListener("loadeddata", onLoadedData);
+   }, []);
 
    useEffect(() => {
       const video = videoRef.current;
@@ -327,6 +345,11 @@ export function FlowerVideo() {
                   className="flower-video__canvas"
                   data-style={style}
                />
+               {!loaded && (
+                  <div className="flower-video__loading">
+                     <GoldenRatioIcon />
+                  </div>
+               )}
             </div>
 
             <div className="tabs flower-video__tabs">

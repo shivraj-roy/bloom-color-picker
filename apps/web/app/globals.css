@@ -1180,6 +1180,391 @@ body {
    image-rendering: auto;
 }
 
+.flower-video__loading {
+   position: absolute;
+   inset: 0;
+   z-index: 1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: #fff;
+}
+
+.golden-ratio-icon {
+   width: min(40%, 160px);
+   height: auto;
+}
+
+/* one shared loop timeline — outer rectangle perimeter as a relay (center,
+   bottom, left, top-left, top-right, right, bottom-right, closing back to
+   the center line's start), then each nested square's own divider, then
+   all 9 spiral arcs largest to smallest, ending at the spiral's eye.
+   Windows are weighted by each segment's actual path length so the stroke
+   moves at a constant speed instead of pausing/rushing at any segment;
+   same total duration on all keeps them in sync. */
+.golden-ratio-icon__center-line,
+.golden-ratio-icon__bottom-line,
+.golden-ratio-icon__left-line,
+.golden-ratio-icon__top-line,
+.golden-ratio-icon__top-right-line,
+.golden-ratio-icon__right-line,
+.golden-ratio-icon__bottom-right-line,
+.golden-ratio-icon__mid-line,
+.golden-ratio-icon__small-center-line,
+.golden-ratio-icon__spiral-arc-1,
+.golden-ratio-icon__spiral-arc-2,
+.golden-ratio-icon__spiral-arc-3,
+.golden-ratio-icon__spiral-arc-4,
+.golden-ratio-icon__spiral-arc-5,
+.golden-ratio-icon__spiral-arc-6,
+.golden-ratio-icon__spiral-arc-7,
+.golden-ratio-icon__spiral-arc-8,
+.golden-ratio-icon__spiral-arc-9 {
+   fill: none;
+   stroke: var(--ink);
+   stroke-dasharray: 1;
+   stroke-dashoffset: 1;
+   animation-duration: 4.5s;
+   animation-timing-function: ease-in;
+   animation-iteration-count: infinite;
+}
+
+.golden-ratio-icon__center-line {
+   animation-name: golden-ratio-draw-center;
+}
+
+.golden-ratio-icon__bottom-line {
+   animation-name: golden-ratio-draw-bottom;
+}
+
+.golden-ratio-icon__left-line {
+   animation-name: golden-ratio-draw-left;
+}
+
+.golden-ratio-icon__top-line {
+   animation-name: golden-ratio-draw-top;
+}
+
+.golden-ratio-icon__top-right-line {
+   animation-name: golden-ratio-draw-top-right;
+}
+
+.golden-ratio-icon__right-line {
+   animation-name: golden-ratio-draw-right;
+}
+
+.golden-ratio-icon__bottom-right-line {
+   animation-name: golden-ratio-draw-bottom-right;
+}
+
+.golden-ratio-icon__mid-line {
+   animation-name: golden-ratio-draw-mid;
+}
+
+.golden-ratio-icon__small-center-line {
+   animation-name: golden-ratio-draw-small-center;
+}
+
+.golden-ratio-icon__spiral-arc-1 {
+   animation-name: golden-ratio-draw-spiral-1;
+}
+
+.golden-ratio-icon__spiral-arc-2 {
+   animation-name: golden-ratio-draw-spiral-2;
+}
+
+.golden-ratio-icon__spiral-arc-3 {
+   animation-name: golden-ratio-draw-spiral-3;
+}
+
+.golden-ratio-icon__spiral-arc-4 {
+   animation-name: golden-ratio-draw-spiral-4;
+}
+
+.golden-ratio-icon__spiral-arc-5 {
+   animation-name: golden-ratio-draw-spiral-5;
+}
+
+.golden-ratio-icon__spiral-arc-6 {
+   animation-name: golden-ratio-draw-spiral-6;
+}
+
+.golden-ratio-icon__spiral-arc-7 {
+   animation-name: golden-ratio-draw-spiral-7;
+}
+
+.golden-ratio-icon__spiral-arc-8 {
+   animation-name: golden-ratio-draw-spiral-8;
+}
+
+.golden-ratio-icon__spiral-arc-9 {
+   animation-name: golden-ratio-draw-spiral-9;
+}
+
+@keyframes golden-ratio-draw-center {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   8.9% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-bottom {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   8.9% {
+      stroke-dashoffset: 1;
+   }
+   17.7% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-left {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   17.7% {
+      stroke-dashoffset: 1;
+   }
+   26.6% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-top {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   26.6% {
+      stroke-dashoffset: 1;
+   }
+   35.4% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-top-right {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   35.4% {
+      stroke-dashoffset: 1;
+   }
+   40.9% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-right {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   40.9% {
+      stroke-dashoffset: 1;
+   }
+   49.8% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-bottom-right {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   49.8% {
+      stroke-dashoffset: 1;
+   }
+   55.2% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-mid {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   55.2% {
+      stroke-dashoffset: 1;
+   }
+   60.7% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-small-center {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   60.7% {
+      stroke-dashoffset: 1;
+   }
+   64.1% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-1 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   64.1% {
+      stroke-dashoffset: 1;
+   }
+   78% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-2 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   78% {
+      stroke-dashoffset: 1;
+   }
+   86.6% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-3 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   86.6% {
+      stroke-dashoffset: 1;
+   }
+   91.9% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-4 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   91.9% {
+      stroke-dashoffset: 1;
+   }
+   95.2% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-5 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   95.2% {
+      stroke-dashoffset: 1;
+   }
+   97.2% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-6 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   97.2% {
+      stroke-dashoffset: 1;
+   }
+   98.5% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-7 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   98.5% {
+      stroke-dashoffset: 1;
+   }
+   99.2% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-8 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   99.2% {
+      stroke-dashoffset: 1;
+   }
+   99.7% {
+      stroke-dashoffset: 0;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
+@keyframes golden-ratio-draw-spiral-9 {
+   0% {
+      stroke-dashoffset: 1;
+   }
+   99.7% {
+      stroke-dashoffset: 1;
+   }
+   100% {
+      stroke-dashoffset: 0;
+   }
+}
+
 .props-panel {
    grid-column: 3;
    grid-row: 2;
