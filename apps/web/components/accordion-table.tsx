@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { CaretDownIcon } from "@phosphor-icons/react";
+
+import { ChevronDownIcon } from "./animated-icons/chevron-down-icon";
 
 export interface AccordionRow {
    key: string;
@@ -62,7 +63,7 @@ export function AccordionRows({
                         animate={{ rotate: isOpen ? 180 : 0 }}
                         transition={EXPAND_SPRING}
                      >
-                        <CaretDownIcon size={13} weight="bold" />
+                        <ChevronDownIcon size={18} />
                      </motion.span>
                   </button>
 

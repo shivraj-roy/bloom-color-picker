@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { CheckIcon } from "@phosphor-icons/react";
 
 import { CaretUpDownIcon } from "./animated-icons/caret-up-down";
+import { CheckIcon } from "./animated-icons/check-icon";
 
 export interface ColorSelectProps {
    label: string;
@@ -69,7 +69,7 @@ export function ColorSelect({ label, value, colors, onValueChange }: ColorSelect
                                              exit={{ opacity: 0, scale: 0.4 }}
                                              transition={CHECK_SPRING}
                                           >
-                                             <CheckIcon size={11} weight="bold" />
+                                             <CheckIcon size={11} />
                                           </motion.span>
                                        )}
                                     </AnimatePresence>

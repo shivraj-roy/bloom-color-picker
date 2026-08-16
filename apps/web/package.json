@@ -8,7 +8,6 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.7",
     "bloom-color-picker": "workspace:*",
     "motion": "^12.0.0",
     "next": "^15.3.0",

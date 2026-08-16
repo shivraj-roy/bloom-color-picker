@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { CheckCircleIcon, CopyIcon } from "@phosphor-icons/react";
+
+import { CheckCircleIcon } from "./animated-icons/check-circle-icon";
+import { CopyIcon } from "./animated-icons/copy-icon";
 
 type Phase = "idle" | "loading" | "success";
 
@@ -114,7 +116,7 @@ export function CopyButton({ text, label = "Copy" }: { text: string; label?: str
                   animate="animate"
                   exit="exit"
                >
-                  <CopyIcon size={16} weight="duotone" />
+                  <CopyIcon size={16} />
                </motion.span>
             )}
             {phase === "loading" && (
@@ -133,12 +135,13 @@ export function CopyButton({ text, label = "Copy" }: { text: string; label?: str
                <motion.span
                   key="check"
                   className="copy__icon"
+                  style={{ color: "var(--accent)" }}
                   variants={checkVariants}
                   initial="initial"
                   animate="animate"
                   exit="exit"
                >
-                  <CheckCircleIcon size={16} weight="fill" color="var(--accent)" />
+                  <CheckCircleIcon size={16} />
                </motion.span>
             )}
          </AnimatePresence>

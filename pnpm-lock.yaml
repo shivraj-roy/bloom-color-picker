@@ -20,9 +20,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@phosphor-icons/react':
-        specifier: ^2.1.7
-        version: 2.1.10(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       bloom-color-picker:
         specifier: workspace:*
         version: link:../../packages/react
@@ -448,13 +445,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
-
-  '@phosphor-icons/react@2.1.10':
-    resolution: {integrity: sha512-vt8Tvq8GLjheAZZYa+YG/pW7HDbov8El/MANW8pOAz4eGxrwhnbfrQZq0Cp4q8zBEu8NIhHdnr+r8thnfRSNYA==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>= 16.8'
-      react-dom: '>= 16.8'
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
     resolution: {integrity: sha512-6o7ZLZK+BeenkZCFNDXqpbjw9bD6nuWonvS/lwQJp7NoVVxm6p3qE7qQ5jGuBjiFsgvqjD8mZAU5oWxTmbOeOg==}
@@ -1209,11 +1199,6 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@15.5.20':
     optional: true
-
-  '@phosphor-icons/react@2.1.10(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
     optional: true

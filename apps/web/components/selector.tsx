@@ -2,7 +2,9 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { CaretUpDownIcon, CheckIcon } from "@phosphor-icons/react";
+
+import { CaretUpDownIcon } from "./animated-icons/caret-up-down";
+import { CheckIcon } from "./animated-icons/check-icon";
 
 export interface SelectorProps {
    label: string;
@@ -153,7 +155,7 @@ export function Selector({ label, value, options, onValueChange }: SelectorProps
                         animate="animate"
                         exit="exit"
                      >
-                        <CheckIcon size={14} weight="bold" />
+                        <CheckIcon size={14} />
                      </motion.span>
                   ) : (
                      <motion.span
@@ -164,7 +166,7 @@ export function Selector({ label, value, options, onValueChange }: SelectorProps
                         animate="animate"
                         exit="exit"
                      >
-                        <CaretUpDownIcon size={14} weight="bold" />
+                        <CaretUpDownIcon size={14} />
                      </motion.span>
                   )}
                </AnimatePresence>
