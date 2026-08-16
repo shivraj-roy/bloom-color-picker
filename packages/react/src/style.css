@@ -22,6 +22,19 @@
 
    --bcp-scale: 1;
 
+   /* public theming variables — override any of these to restyle without
+      touching the component's own classes. Defaults match the original look. */
+   --bcp-color-focus: #4e72d6;
+   --bcp-swatch-ring: #fff;
+   --bcp-swatch-shadow: rgba(0, 0, 0, 0.08);
+   --bcp-bloom-shadow: rgba(0, 0, 0, 0.12);
+   --bcp-dish-bg: rgba(233, 234, 236, 0.8);
+   --bcp-petal-shadow: rgba(0, 0, 0, 0.06);
+   --bcp-input-bg: #f2f2f4;
+   --bcp-input-border: #e4e4e9;
+   --bcp-input-color: #8a8a92;
+   --bcp-input-color-focus: #1a1a1a;
+
    position: relative;
    isolation: isolate;
    display: flex;
@@ -620,8 +633,8 @@
    padding: 0;
    cursor: pointer;
    flex-shrink: 0;
-   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-   outline: calc(1.5px * var(--bcp-scale)) solid #fff;
+   box-shadow: 0 2px 8px var(--bcp-swatch-shadow);
+   outline: calc(1.5px * var(--bcp-scale)) solid var(--bcp-swatch-ring);
    transition:
       transform var(--bcp-dur-press) var(--bcp-ease-press),
       background-color 0.25s ease-out;
@@ -654,20 +667,20 @@
 }
 
 .bcp__input {
-   border: 1px solid #e4e4e9;
-   background: #f2f2f4;
+   border: 1px solid var(--bcp-input-border);
+   background: var(--bcp-input-bg);
    border-radius: calc(16px * var(--bcp-scale));
    padding: calc(10px * var(--bcp-scale)) calc(14px * var(--bcp-scale));
    font-family: var(--bcp-font-input, ui-monospace, "SF Mono", "Cascadia Code", monospace);
    font-size: calc(21px * var(--bcp-scale));
    font-weight: 400;
-   color: #8a8a92;
+   color: var(--bcp-input-color);
    transition: color 0.15s ease-out;
    animation: bcp-swatch-in 0.18s ease-out;
 }
 
 .bcp__input:focus {
-   color: #1a1a1a;
+   color: var(--bcp-input-color-focus);
 }
 
 .bcp__input:disabled {
@@ -686,8 +699,8 @@
    height: calc(70px * var(--bcp-scale));
    padding-left: calc(50px * var(--bcp-scale) + 16px * var(--bcp-scale));
    padding-right: calc(10px * var(--bcp-scale));
-   background: #f2f2f4;
-   border: 1px solid #e4e4e9;
+   background: var(--bcp-input-bg);
+   border: 1px solid var(--bcp-input-border);
    border-radius: calc(22px * var(--bcp-scale));
 }
 
@@ -706,7 +719,7 @@
 }
 
 .bcp[data-input-variant="grouped"] .bcp__input-wrap:focus-within {
-   outline: 2px solid var(--bcp-color-focus, #4e72d6);
+   outline: 2px solid var(--bcp-color-focus);
    outline-offset: 2px;
 }
 
@@ -747,7 +760,7 @@
    margin: calc(-140px * var(--bcp-scale)) 0 0 calc(-140px * var(--bcp-scale));
    border-radius: 50%;
    box-sizing: border-box;
-   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+   box-shadow: 0 8px 28px var(--bcp-bloom-shadow);
    /* opens from swatch size (50/280) at the same center */
    animation:
       bcp-bloom-in var(--bcp-dur-bloom) var(--bcp-ease-bloom) backwards,
@@ -795,7 +808,7 @@
    position: absolute;
    inset: calc(20px * var(--bcp-scale));
    border-radius: 50%;
-   background: rgba(233, 234, 236, 0.8);
+   background: var(--bcp-dish-bg);
    overflow: hidden;
    animation: bcp-dish-in var(--bcp-dur-dish) var(--bcp-ease-dish) 0.05s backwards;
 }
@@ -888,7 +901,7 @@
    border-radius: 50%;
    padding: 0;
    cursor: pointer;
-   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+   box-shadow: 0 1px 4px var(--bcp-petal-shadow);
    /* spiral entrance from the center, staggered per petal */
    animation: bcp-petal-in var(--bcp-dur-petal) var(--bcp-ease-petal) var(--bcp-petal-delay)
       backwards;

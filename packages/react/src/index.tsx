@@ -291,6 +291,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          ref={containerRef}
          className={cx("bcp", dragging && "bcp--dragging", className, part("root"))}
          style={{ "--bcp-scale": scale } as React.CSSProperties}
+         data-slot="bcp-root"
          data-state={open ? "open" : "closed"}
          data-disabled={disabled || undefined}
          data-motion={motion}
@@ -303,6 +304,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                <svg
                   ref={svgRef}
                   className={cx("bcp__arc", closing && "bcp__arc--closing", part("arc"))}
+                  data-slot="bcp-arc"
                   width={ARC_CANVAS * scale}
                   height={ARC_CANVAS * scale}
                   viewBox={`0 0 ${ARC_CANVAS} ${ARC_CANVAS}`}
@@ -340,6 +342,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                   {/* Knob: selected shade with a white ring */}
                   <g
                      className={cx("bcp__knob", part("knob"))}
+                     data-slot="bcp-knob"
                      onPointerDown={onKnobDown}
                      style={{ cursor: dragging ? "grabbing" : "grab" }}
                   >
@@ -350,11 +353,13 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
 
                <div
                   className={cx("bcp__bloom", closing && "bcp__bloom--closing", part("bloom"))}
+                  data-slot="bcp-bloom"
                   style={{ background: shade, ...ring(ringColor) }}
                >
                   <div
                      ref={dishRef}
                      className={cx("bcp__dish", part("dish"))}
+                     data-slot="bcp-dish"
                      style={ring(ringColor)}
                   />
                </div>
@@ -370,6 +375,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                         petalsHome && "bcp__petal--home",
                         part("petal")
                      )}
+                     data-slot="bcp-petal"
                      style={
                         {
                            width: PETAL_SIZE * scale,
@@ -396,6 +402,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
             <button
                type="button"
                className={cx("bcp__swatch", pressing && "bcp__swatch--pressing", part("swatch"))}
+               data-slot="bcp-swatch"
                style={{ backgroundColor: shade }}
                onClick={openPicker}
                disabled={disabled}
@@ -411,6 +418,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                   type="text"
                   size={7}
                   className={cx("bcp__input", part("input"))}
+                  data-slot="bcp-input"
                   value={hexDraft}
                   onChange={(e) => {
                      const raw = e.target.value.toUpperCase();
