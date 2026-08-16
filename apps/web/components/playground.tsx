@@ -8,11 +8,12 @@ import "bloom-color-picker/style.css";
 import { CodeCloseIcon } from "./animated-icons/code-close-icon";
 import { ColorSelect } from "./color-select";
 import { CopyButton } from "./copy-button";
-import { DisabledSelect } from "./disabled-select";
+import { DISABLED_OPTIONS } from "./disabled-select";
 import { ElasticSlider } from "./elastic-slider";
-import { InputVariantSelect, type InputVariant } from "./input-variant-select";
-import { MotionSelect, type MotionValue } from "./motion-select";
+import { INPUT_VARIANT_OPTIONS, type InputVariant } from "./input-variant-select";
+import { MOTION_OPTIONS, type MotionValue } from "./motion-select";
 import { Selector } from "./selector";
+import { ToggleSelect } from "./toggle-select";
 
 const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
 const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440", "#B5D2F0", "#D4C0EC", "#F5C6CC"];
@@ -172,15 +173,21 @@ export function Playground() {
                      </div>
 
                      <div className="control">
-                        <InputVariantSelect
+                        <ToggleSelect
                            label="Input layout"
                            value={inputVariant}
                            onValueChange={setInputVariant}
+                           options={INPUT_VARIANT_OPTIONS}
                         />
                      </div>
 
                      <div className="control">
-                        <MotionSelect label="Motion" value={motionValue} onValueChange={setMotionValue} />
+                        <ToggleSelect
+                           label="Motion"
+                           value={motionValue}
+                           onValueChange={setMotionValue}
+                           options={MOTION_OPTIONS}
+                        />
                      </div>
 
                      <div className="control">
@@ -188,7 +195,12 @@ export function Playground() {
                      </div>
 
                      <div className="control">
-                        <DisabledSelect label="Disabled" value={disabled} onValueChange={setDisabled} />
+                        <ToggleSelect
+                           label="Disabled"
+                           value={disabled}
+                           onValueChange={setDisabled}
+                           options={DISABLED_OPTIONS}
+                        />
                      </div>
                   </div>
                </div>

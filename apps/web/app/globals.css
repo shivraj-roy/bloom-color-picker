@@ -679,9 +679,9 @@ body {
    color: #fff;
 }
 
-/* ---------- disabled select ---------- */
+/* ---------- toggle select (input layout / motion / disabled controls) ---------- */
 
-.disabled-select {
+.toggle-select {
    position: relative;
    height: 46px;
    display: flex;
@@ -693,7 +693,7 @@ body {
    padding: 0 6px 0 12px;
 }
 
-.disabled-select__label {
+.toggle-select__label {
    position: absolute;
    top: 50%;
    left: 12px;
@@ -704,7 +704,7 @@ body {
    color: var(--muted);
 }
 
-.disabled-select__group {
+.toggle-select__group {
    position: relative;
    display: flex;
    align-items: center;
@@ -715,7 +715,7 @@ body {
    padding: 0 6px;
 }
 
-.disabled-select__option {
+.toggle-select__option {
    position: relative;
    display: flex;
    align-items: center;
@@ -730,86 +730,16 @@ body {
    transition: color 0.15s ease-out;
 }
 
-.disabled-select__option[data-active] {
+.toggle-select__option[data-active] {
    color: var(--ink);
 }
 
-.disabled-select__option:focus-visible {
+.toggle-select__option:focus-visible {
    box-shadow: 0 0 0 2px var(--accent);
    border-radius: calc(var(--r-inner) - 8px);
 }
 
-.disabled-select__underline {
-   position: absolute;
-   left: 0;
-   bottom: 3px;
-   height: 2px;
-   border-radius: var(--r-pill);
-   background: var(--accent);
-   pointer-events: none;
-}
-
-/* ---------- motion select ---------- */
-
-.motion-select {
-   position: relative;
-   height: 46px;
-   display: flex;
-   align-items: center;
-   justify-content: flex-end;
-   border-radius: var(--r-inner);
-   background: var(--canvas);
-   border: 1px solid var(--card-border);
-   padding: 0 6px 0 12px;
-}
-
-.motion-select__label {
-   position: absolute;
-   top: 50%;
-   left: 12px;
-   transform: translateY(-50%);
-   font-family: var(--font-nunito), sans-serif;
-   font-size: 12.5px;
-   font-weight: 600;
-   color: var(--muted);
-}
-
-.motion-select__group {
-   position: relative;
-   display: flex;
-   align-items: center;
-   gap: 4px;
-   height: 30px;
-   background: var(--card);
-   border-radius: calc(var(--r-inner) - 4px);
-   padding: 0 6px;
-}
-
-.motion-select__option {
-   position: relative;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 30px;
-   height: 30px;
-   background: none;
-   border: none;
-   outline: none;
-   color: var(--muted-soft);
-   cursor: pointer;
-   transition: color 0.15s ease-out;
-}
-
-.motion-select__option[data-active] {
-   color: var(--ink);
-}
-
-.motion-select__option:focus-visible {
-   box-shadow: 0 0 0 2px var(--accent);
-   border-radius: calc(var(--r-inner) - 8px);
-}
-
-.motion-select__underline {
+.toggle-select__underline {
    position: absolute;
    left: 0;
    bottom: 3px;

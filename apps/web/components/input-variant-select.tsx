@@ -1,18 +1,8 @@
-"use client";
-
 import type { SVGProps } from "react";
-import { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+
+import type { ToggleSelectOption } from "./toggle-select";
 
 export type InputVariant = "split" | "grouped";
-
-export interface InputVariantSelectProps {
-   label: string;
-   value: InputVariant;
-   onValueChange: (value: InputVariant) => void;
-}
-
-const UNDERLINE_SPRING = { type: "spring" as const, stiffness: 500, damping: 34 };
 
 // swatch and input as separate elements
 function SplitIcon(props: SVGProps<SVGSVGElement>) {
@@ -46,61 +36,7 @@ function GroupedIcon(props: SVGProps<SVGSVGElement>) {
    );
 }
 
-export function InputVariantSelect({ label, value, onValueChange }: InputVariantSelectProps) {
-   const rowRef = useRef<HTMLDivElement>(null);
-   const splitRef = useRef<HTMLButtonElement>(null);
-   const groupedRef = useRef<HTMLButtonElement>(null);
-   const [underline, setUnderline] = useState<{ x: number; width: number } | null>(null);
-
-   useLayoutEffect(() => {
-      const btn = value === "grouped" ? groupedRef.current : splitRef.current;
-      const row = rowRef.current;
-      if (!btn || !row) return;
-      const btnRect = btn.getBoundingClientRect();
-      const rowRect = row.getBoundingClientRect();
-      const INSET = 8;
-      setUnderline({
-         x: btnRect.left - rowRect.left + INSET,
-         width: btnRect.width - INSET * 2,
-      });
-   }, [value]);
-
-   return (
-      <div className="disabled-select">
-         <span className="disabled-select__label">{label}</span>
-         <div className="disabled-select__group" ref={rowRef}>
-            <button
-               ref={splitRef}
-               type="button"
-               className="disabled-select__option"
-               data-active={value === "split" || undefined}
-               onClick={() => onValueChange("split")}
-               aria-pressed={value === "split"}
-               aria-label="Split swatch and input"
-            >
-               <SplitIcon />
-            </button>
-            <button
-               ref={groupedRef}
-               type="button"
-               className="disabled-select__option"
-               data-active={value === "grouped" || undefined}
-               onClick={() => onValueChange("grouped")}
-               aria-pressed={value === "grouped"}
-               aria-label="Group swatch and input"
-            >
-               <GroupedIcon />
-            </button>
-
-            {underline && (
-               <motion.span
-                  className="disabled-select__underline"
-                  initial={false}
-                  animate={{ x: underline.x, width: underline.width }}
-                  transition={UNDERLINE_SPRING}
-               />
-            )}
-         </div>
-      </div>
-   );
-}
+export const INPUT_VARIANT_OPTIONS: ToggleSelectOption<InputVariant>[] = [
+   { value: "split", label: "Split swatch and input", icon: <SplitIcon /> },
+   { value: "grouped", label: "Group swatch and input", icon: <GroupedIcon /> },
+];

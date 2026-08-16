@@ -1,18 +1,8 @@
-"use client";
+import type { SVGProps } from "react";
 
-import type { ReactElement, SVGProps } from "react";
-import { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import type { ToggleSelectOption } from "./toggle-select";
 
 export type MotionValue = "none" | "subtle" | "bouncy";
-
-export interface MotionSelectProps {
-   label: string;
-   value: MotionValue;
-   onValueChange: (value: MotionValue) => void;
-}
-
-const UNDERLINE_SPRING = { type: "spring" as const, stiffness: 500, damping: 34 };
 
 function NoneMotionIcon(props: SVGProps<SVGSVGElement>) {
    return (
@@ -84,60 +74,8 @@ function BouncyMotionIcon(props: SVGProps<SVGSVGElement>) {
    );
 }
 
-const OPTIONS: { value: MotionValue; label: string; Icon: (props: SVGProps<SVGSVGElement>) => ReactElement }[] = [
-   { value: "none", label: "No motion", Icon: NoneMotionIcon },
-   { value: "subtle", label: "Subtle motion", Icon: SubtleMotionIcon },
-   { value: "bouncy", label: "Bouncy motion", Icon: BouncyMotionIcon },
+export const MOTION_OPTIONS: ToggleSelectOption<MotionValue>[] = [
+   { value: "none", label: "No motion", icon: <NoneMotionIcon /> },
+   { value: "subtle", label: "Subtle motion", icon: <SubtleMotionIcon /> },
+   { value: "bouncy", label: "Bouncy motion", icon: <BouncyMotionIcon /> },
 ];
-
-export function MotionSelect({ label, value, onValueChange }: MotionSelectProps) {
-   const rowRef = useRef<HTMLDivElement>(null);
-   const optionRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-   const [underline, setUnderline] = useState<{ x: number; width: number } | null>(null);
-
-   useLayoutEffect(() => {
-      const btn = optionRefs.current[value];
-      const row = rowRef.current;
-      if (!btn || !row) return;
-      const btnRect = btn.getBoundingClientRect();
-      const rowRect = row.getBoundingClientRect();
-      const INSET = 8;
-      setUnderline({
-         x: btnRect.left - rowRect.left + INSET,
-         width: btnRect.width - INSET * 2,
-      });
-   }, [value]);
-
-   return (
-      <div className="motion-select">
-         <span className="motion-select__label">{label}</span>
-         <div className="motion-select__group" ref={rowRef}>
-            {OPTIONS.map(({ value: v, label: optionLabel, Icon }) => (
-               <button
-                  key={v}
-                  ref={(el) => {
-                     optionRefs.current[v] = el;
-                  }}
-                  type="button"
-                  className="motion-select__option"
-                  data-active={value === v || undefined}
-                  onClick={() => onValueChange(v)}
-                  aria-pressed={value === v}
-                  aria-label={optionLabel}
-               >
-                  <Icon />
-               </button>
-            ))}
-
-            {underline && (
-               <motion.span
-                  className="motion-select__underline"
-                  initial={false}
-                  animate={{ x: underline.x, width: underline.width }}
-                  transition={UNDERLINE_SPRING}
-               />
-            )}
-         </div>
-      </div>
-   );
-}
