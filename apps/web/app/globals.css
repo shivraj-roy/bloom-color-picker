@@ -211,6 +211,7 @@ body {
 
 /* left sidebar — title, tagline, install, usage. full height. */
 .sidebar {
+   position: relative;
    grid-column: 1;
    grid-row: 1 / span 2;
    display: flex;
@@ -218,6 +219,50 @@ body {
    gap: 22px;
    padding: 26px 24px;
    overflow: hidden;
+}
+
+.sponsor-link {
+   position: absolute;
+   right: 16px;
+   bottom: 16px;
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   color: var(--muted);
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.sponsor-link__label {
+   font-family: var(--font-nunito), sans-serif;
+   font-size: 12px;
+   font-weight: 700;
+}
+
+.sponsor-btn {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 28px;
+   height: 28px;
+   flex-shrink: 0;
+   border: 1px solid var(--card-border);
+   border-radius: 8px;
+   background: var(--card);
+   color: var(--muted);
+}
+
+.sponsor-btn svg {
+   display: block;
+}
+
+.sponsor-link:hover {
+   color: var(--accent);
+}
+
+.sponsor-link:hover .sponsor-btn {
+   border-color: var(--accent);
+   color: var(--accent);
 }
 
 .sidebar__title {

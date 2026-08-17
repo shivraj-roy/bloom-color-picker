@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
 import { GitHubIcon } from "./animated-icons/github-icon";
+import { HeartIcon } from "./animated-icons/heart-icon";
 import { CopyButton } from "./copy-button";
 
 const INSTALL: Record<string, string> = {
@@ -89,6 +90,18 @@ export function Sidebar() {
                <pre className="code-block__scroll scroll-mask-x">{USAGE}</pre>
             </div>
          </div>
+
+         <a
+            className="sponsor-link"
+            href="https://github.com/sponsors/shivraj-roy"
+            target="_blank"
+            rel="noreferrer"
+         >
+            <span className="sponsor-btn">
+               <HeartIcon size={17} />
+            </span>
+            <span className="sponsor-link__label">Sponsor</span>
+         </a>
       </aside>
    );
 }
