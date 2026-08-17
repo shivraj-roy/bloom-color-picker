@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
+import { GitHubIcon } from "./animated-icons/github-icon";
 import { CopyButton } from "./copy-button";
 
 const INSTALL: Record<string, string> = {
@@ -43,6 +44,7 @@ export function Sidebar() {
                   target="_blank"
                   rel="noreferrer"
                >
+                  <GitHubIcon />
                   GitHub
                </a>
                <span className="badge">MIT</span>
