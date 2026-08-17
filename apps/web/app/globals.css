@@ -367,20 +367,12 @@ body {
    white-space: pre;
    line-height: 1.6;
    overflow-x: auto;
-   scrollbar-color: transparent transparent;
+   scrollbar-width: none;
    padding-bottom: 6px;
 }
 
-.code-block:hover .code-block__scroll {
-   scrollbar-color: var(--card-border) transparent;
-}
-
-.code-block__scroll::-webkit-scrollbar-thumb {
-   background: transparent;
-}
-
-.code-block:hover .code-block__scroll::-webkit-scrollbar-thumb {
-   background: var(--card-border);
+.code-block__scroll::-webkit-scrollbar {
+   display: none;
 }
 
 .copy {
