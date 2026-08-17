@@ -32,8 +32,8 @@ export function Sidebar() {
                Color Picker
             </h1>
             <p className="sidebar__tagline">
-               A color picker for React that blooms — a tiny swatch opens into a dahlia of petal
-               swatches. Zero dependencies.
+               A color picker that blooms. A tiny swatch opens into a dahlia of petal swatches.
+               Zero dependencies.
             </p>
             <div className="badges">
                <span className="badge badge--accent">v0.1.0</span>
