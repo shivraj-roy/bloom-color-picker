@@ -391,6 +391,7 @@ body {
 
 .code-row code {
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12.5px;
    color: var(--ink);
    white-space: pre;
@@ -407,6 +408,7 @@ body {
 /* inner: the actual scroll container — mask/fade applies only here */
 .code-block__scroll {
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12.5px;
    color: var(--ink);
    white-space: pre;
@@ -508,6 +510,7 @@ body {
    box-sizing: border-box;
    padding: 12px 14px;
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12.5px;
    color: var(--ink);
    white-space: pre;
@@ -1055,6 +1058,7 @@ body {
    transform: translateY(-50%);
    pointer-events: none;
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12px;
    font-weight: 600;
    color: var(--es-label);
@@ -1649,6 +1653,7 @@ body {
 
 .props-panel__name {
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12.5px;
    font-weight: 600;
    color: var(--ink);
@@ -1674,6 +1679,7 @@ body {
 
 .props-panel__type {
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12px;
    color: var(--ink);
 }
@@ -1722,6 +1728,7 @@ body {
 
 .props-panel__meta-value {
    font-family: var(--font-mono), ui-monospace, monospace;
+   letter-spacing: 0.05em;
    font-size: 12px;
    color: var(--muted);
 }

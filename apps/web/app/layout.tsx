@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Nunito } from "next/font/google";
+import { Nunito } from "next/font/google";
+import localFont from "next/font/local";
 
 import "./globals.css";
 
@@ -9,9 +10,8 @@ const nunito = Nunito({
    variable: "--font-nunito",
 });
 
-const mono = JetBrains_Mono({
-   subsets: ["latin"],
-   weight: ["400", "500"],
+const mono = localFont({
+   src: "../public/font/Stack Sans Notch/StackSansNotch-VariableFont_wght.ttf",
    variable: "--font-mono",
 });
 
