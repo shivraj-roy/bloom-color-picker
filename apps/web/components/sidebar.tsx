@@ -91,17 +91,20 @@ export function Sidebar() {
             </div>
          </div>
 
-         <a
+         <motion.a
             className="sponsor-link"
             href="https://github.com/sponsors/shivraj-roy"
             target="_blank"
             rel="noreferrer"
+            initial="rest"
+            whileHover="hover"
+            animate="rest"
          >
             <span className="sponsor-btn">
                <HeartIcon size={17} />
             </span>
             <span className="sponsor-link__label">Sponsor</span>
-         </a>
+         </motion.a>
       </aside>
    );
 }
