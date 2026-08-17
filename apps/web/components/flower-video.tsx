@@ -206,7 +206,7 @@ export function FlowerVideo() {
                const luminance = cellLuminance[cellIndex];
                const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
                const threshold = (BAYER_4X4[y % 4][x % 4] + 0.5) / 16;
-               const value = adjusted > threshold ? 20 : 255;
+               const value = adjusted > threshold ? 20 : 251;
                outData[i] = value;
                outData[i + 1] = value;
                outData[i + 2] = value;
@@ -221,7 +221,7 @@ export function FlowerVideo() {
          const frame = sampleCtx.getImageData(0, 0, sampleWidth, sampleHeight);
          const data = frame.data;
 
-         drawCtx.fillStyle = "#fff";
+         drawCtx.fillStyle = "#fbfbfb";
          drawCtx.fillRect(0, 0, outWidth, outHeight);
          drawCtx.fillStyle = "#141414";
 
