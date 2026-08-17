@@ -7,6 +7,7 @@ import { GitHubIcon } from "./animated-icons/github-icon";
 import { HeartIcon } from "./animated-icons/heart-icon";
 import { BloomLogo } from "./bloom-logo";
 import { CopyButton } from "./copy-button";
+import { ThemeButton } from "./theme-button";
 
 const INSTALL: Record<string, string> = {
    npm: "npm install bloom-color-picker",
@@ -101,10 +102,12 @@ export function Sidebar() {
             animate="rest"
          >
             <span className="sponsor-btn">
-               <HeartIcon size={17} />
+               <HeartIcon size={20} />
             </span>
             <span className="sponsor-link__label">Sponsor</span>
          </motion.a>
+
+         <ThemeButton />
       </aside>
    );
 }

@@ -223,8 +223,8 @@ body {
 
 .sponsor-link {
    position: absolute;
-   right: 16px;
-   bottom: 16px;
+   right: 24px;
+   bottom: 26px;
    display: inline-flex;
    align-items: center;
    gap: 8px;
@@ -243,8 +243,8 @@ body {
    display: inline-flex;
    align-items: center;
    justify-content: center;
-   width: 28px;
-   height: 28px;
+   width: 34px;
+   height: 34px;
    flex-shrink: 0;
    border: 1px solid var(--card-border);
    border-radius: 8px;
@@ -448,6 +448,14 @@ body {
 .copy:hover {
    border-color: var(--accent);
    color: var(--ink);
+}
+
+.theme-btn {
+   position: absolute;
+   left: 24px;
+   bottom: 26px;
+   width: 34px;
+   height: 34px;
 }
 
 .copy__icon {
