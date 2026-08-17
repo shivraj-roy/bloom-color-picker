@@ -265,12 +265,19 @@ body {
    color: var(--accent);
 }
 
+.sidebar__title-row {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
 .sidebar__title {
-   font-size: 34px;
+   font-size: 25px;
    font-weight: 800;
    letter-spacing: -0.3px;
    line-height: 1.1;
    text-transform: capitalize;
+   white-space: nowrap;
 }
 
 .sidebar__tagline {

@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { usePersistedState } from "../lib/use-persisted-state";
 import { GitHubIcon } from "./animated-icons/github-icon";
 import { HeartIcon } from "./animated-icons/heart-icon";
+import { BloomLogo } from "./bloom-logo";
 import { CopyButton } from "./copy-button";
 
 const INSTALL: Record<string, string> = {
@@ -28,11 +29,10 @@ export function Sidebar() {
    return (
       <aside className="box sidebar">
          <div>
-            <h1 className="sidebar__title">
-               Bloom
-               <br />
-               Color Picker
-            </h1>
+            <div className="sidebar__title-row">
+               <BloomLogo size={56} />
+               <h1 className="sidebar__title">Bloom Color Picker</h1>
+            </div>
             <p className="sidebar__tagline">
                A color picker that blooms. A tiny swatch opens into a dahlia of petal swatches.
                Zero dependencies.
