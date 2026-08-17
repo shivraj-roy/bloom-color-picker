@@ -257,12 +257,11 @@ body {
 }
 
 .sponsor-link:hover {
-   color: var(--accent);
+   color: var(--ink);
 }
 
 .sponsor-link:hover .sponsor-btn {
    border-color: var(--accent);
-   color: var(--accent);
 }
 
 .sidebar__title-row {
