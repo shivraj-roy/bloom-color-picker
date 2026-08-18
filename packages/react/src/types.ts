@@ -76,9 +76,9 @@ export interface BloomColorPickerProps {
    /**
     * "light" or "dark" pins the picker's own chrome (input field, dish,
     * shadows — not petal colors, which come from `palette`/`outerColors`/
-    * `innerColors`) to that theme. "auto" follows the visitor's OS
-    * `prefers-color-scheme` instead of any explicit override.
-    * @default "auto"
+    * `innerColors`) to that theme. "auto" follows the visitor's system/OS
+    * `prefers-color-scheme` setting instead of any explicit override.
+    * @default "light"
     */
    theme?: BloomColorPickerTheme;
 

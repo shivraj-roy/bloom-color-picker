@@ -106,7 +106,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       hexInput = true,
       inputVariant = "split",
       motion = "subtle",
-      theme = "auto",
+      theme = "light",
       className,
       classNames,
       "aria-label": ariaLabel = "Pick a color",
