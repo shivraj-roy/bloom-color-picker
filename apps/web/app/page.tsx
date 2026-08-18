@@ -30,7 +30,14 @@ export default function Home() {
             <ApiReference />
          </main>
 
-         <div className="footer-strip">@your-x-handle</div>
+         <div className="footer-strip">
+            <span>
+               {"Built by "}
+               <a href="https://x.com/shivraj_roy10" target="_blank" rel="noreferrer">
+                  Shivraj…
+               </a>
+            </span>
+         </div>
       </div>
    );
 }

@@ -1790,6 +1790,16 @@ body {
    color: #9a9aa2;
 }
 
+.footer-strip a {
+   color: inherit;
+   font-weight: 700;
+   text-decoration: underline;
+}
+
+[data-theme="dark"] .footer-strip a {
+   color: var(--accent);
+}
+
 /* tablet — same 3-column desktop grid, but the fixed 380px sidebar eats too
    much of a narrower width (e.g. an iPad in portrait is only 1024px wide),
    squeezing the other two columns until their contents overlap. Shrink the
