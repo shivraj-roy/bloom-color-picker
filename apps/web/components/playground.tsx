@@ -7,6 +7,7 @@ import "bloom-color-picker/style.css";
 
 import { usePersistedState } from "../lib/use-persisted-state";
 import { CodeCloseIcon } from "./animated-icons/code-close-icon";
+import { BLOOM_THEME_OPTIONS, type BloomTheme } from "./bloom-theme-select";
 import { ColorSelect } from "./color-select";
 import { CopyButton } from "./copy-button";
 import { DISABLED_OPTIONS } from "./disabled-select";
@@ -27,6 +28,8 @@ export function Playground() {
    const [disabled, setDisabled] = usePersistedState("disabled", false);
    const [motionValue, setMotionValue] = usePersistedState<MotionValue>("motion", "subtle");
    const [inputVariant, setInputVariant] = usePersistedState<InputVariant>("input-variant", "split");
+   // control only for now — the picker doesn't have a theme prop yet
+   const [bloomTheme, setBloomTheme] = usePersistedState<BloomTheme>("bloom-theme", "auto");
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
    const [centerOffset, setCenterOffset] = useState(0);
@@ -193,6 +196,15 @@ export function Playground() {
 
                      <div className="control">
                         <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
+                     </div>
+
+                     <div className="control">
+                        <ToggleSelect
+                           label="Theme"
+                           value={bloomTheme}
+                           onValueChange={setBloomTheme}
+                           options={BLOOM_THEME_OPTIONS}
+                        />
                      </div>
 
                      <div className="control">
