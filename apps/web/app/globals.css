@@ -192,6 +192,7 @@ body {
       24px 24px,
       120px 120px,
       120px 120px;
+   background-position: left bottom;
    color: var(--ink);
    font-family: var(--font-nunito), sans-serif;
    -webkit-font-smoothing: antialiased;
