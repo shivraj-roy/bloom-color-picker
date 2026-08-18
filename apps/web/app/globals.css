@@ -1126,7 +1126,7 @@ body {
    inset: 0;
    overflow: hidden;
    border-radius: var(--r-inner);
-   background: #000;
+   background: var(--card);
 }
 
 .flower-video__tabs {
