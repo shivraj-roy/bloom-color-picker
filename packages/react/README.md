@@ -40,11 +40,12 @@ export function Example() {
 | `palette`      | `"warm" \| "ocean" \| "blossom" \| "pastel"` | `"warm"` | Built-in petal color scheme.                        |
 | `outerColors`  | `string[]`                | from `palette`   | Outer petal ring, clockwise from the top. Hex only. Overrides `palette`. |
 | `innerColors`  | `string[]`                | from `palette`   | Inner petal ring, clockwise from the top. Hex only. Overrides `palette`. |
-| `size`         | `number`                  | `32`             | Closed swatch diameter in px; the whole bloom scales with it.      |
+| `size`         | `number`                  | `28`             | Closed swatch diameter in px; the whole bloom scales with it.      |
 | `disabled`     | `boolean`                 | `false`          | Prevents opening the picker.                                       |
 | `hexInput`     | `boolean`                 | `true`           | Shows an editable hex text field beside the closed swatch. Invalid characters can't be typed. Set `false` to hide it. |
 | `inputVariant` | `"split" \| "grouped"`    | `"split"`        | Layout for the swatch + hex input. Ignored when `hexInput` is false. |
 | `motion`       | `"none" \| "subtle" \| "bouncy"` | `"subtle"` | Spring intensity for open/close and pick animations. `"none"` is instant, applied explicitly regardless of the visitor's OS motion preference (which is otherwise respected automatically). |
+| `theme`        | `"auto" \| "light" \| "dark"` | `"light"`    | Pins the picker's own chrome (input field, dish, shadows — not petal colors) to a theme. `"auto"` follows the visitor's system/OS `prefers-color-scheme` setting instead. |
 | `className`    | `string`                  | —                | Class for the root element.                                        |
 | `classNames`   | `Partial<Record<part, string>>` | —          | Per-part classes: `root`, `swatch`, `bloom`, `dish`, `petal`, `arc`, `knob`, `input`. |
 | `aria-label`   | `string`                  | `"Pick a color"` | Accessible label for the closed swatch.                            |
@@ -58,6 +59,12 @@ export function Example() {
 Four built-in palettes: `warm` (default), `ocean`, `blossom`, `pastel`. Import `bloomPalettes` to inspect or remix their raw hex arrays.
 
 ## Theming
+
+By default the picker's chrome (input field, dish, shadows) renders light regardless of the visitor's OS setting. Pass `theme="dark"` to pin it dark, or `theme="auto"` to follow `prefers-color-scheme` instead:
+
+```tsx
+<BloomColorPicker theme="dark" />
+```
 
 The hex input's font defaults to a monospace stack (matches how hex values read elsewhere — GitHub, VSCode, Figma). Override it with the `--bcp-font-input` CSS variable, which works regardless of stylesheet load order:
 
