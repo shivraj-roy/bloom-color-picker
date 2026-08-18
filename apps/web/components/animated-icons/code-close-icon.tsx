@@ -34,6 +34,7 @@ export function CodeCloseIcon({ open }: { open: boolean }) {
             strokeLinecap="round"
          />
          <motion.path
+            d={CHEVRONS_CODE_D}
             animate={{ d: open ? CHEVRONS_CLOSE_D : CHEVRONS_CODE_D }}
             transition={MORPH_SPRING}
             stroke="currentColor"
