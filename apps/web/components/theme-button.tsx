@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useTheme } from "next-themes";
 
 import { DarkThemeIcon } from "./animated-icons/dark-theme-icon";
 import { LightThemeIcon } from "./animated-icons/light-theme-icon";
-
-type Theme = "light" | "dark";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const EASE_IN = [0.4, 0, 1, 1] as const;
@@ -27,15 +26,20 @@ const darkVariants = {
    exit: { y: -8, opacity: 0, scale: 0.85, transition: { duration: 0.2, ease: EASE_IN } },
 };
 
-// UI/animation only for now — doesn't apply a theme to the document yet.
 export function ThemeButton() {
-   const [theme, setTheme] = useState<Theme>("light");
+   const { resolvedTheme, setTheme } = useTheme();
+   // Sidebar renders client-only (ssr: false) already, but next-themes still
+   // recommends this guard — the provider's real value may not be settled
+   // on the very first tick after mount.
+   const [mounted, setMounted] = useState(false);
+   useEffect(() => setMounted(true), []);
+   const theme = mounted ? resolvedTheme : "light";
 
    return (
       <button
          type="button"
          className="copy theme-btn"
-         onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))}
+         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
          aria-label={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
       >
          <AnimatePresence mode="wait" initial={false}>
