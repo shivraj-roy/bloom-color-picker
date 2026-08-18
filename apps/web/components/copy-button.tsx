@@ -62,6 +62,7 @@ function CopyRing() {
       <svg className="copy-ring" viewBox="0 0 16 16" fill="none" aria-hidden="true">
          <circle cx="8" cy="8" r="6.5" stroke="var(--card-border)" strokeWidth="1.3" />
          <circle
+            className="copy-ring__progress"
             cx="8"
             cy="8"
             r="6.5"

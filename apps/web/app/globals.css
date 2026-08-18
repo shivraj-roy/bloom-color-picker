@@ -263,6 +263,10 @@ body {
    color: var(--muted);
 }
 
+[data-theme="dark"] .sponsor-btn {
+   color: var(--accent);
+}
+
 .sponsor-btn svg {
    display: block;
 }
@@ -468,6 +472,10 @@ body {
    height: 34px;
 }
 
+[data-theme="dark"] .theme-btn {
+   color: var(--accent);
+}
+
 .copy__icon {
    position: absolute;
    inset: 0;
@@ -481,6 +489,10 @@ body {
    height: 16px;
    transform-origin: 50% 50%;
    animation: copy-ring-spin 0.75s linear infinite;
+}
+
+[data-theme="dark"] .copy-ring__progress {
+   stroke: var(--accent);
 }
 
 @keyframes copy-ring-spin {
