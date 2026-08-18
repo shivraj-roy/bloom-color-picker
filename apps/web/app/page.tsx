@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import { ApiReference } from "../components/api-reference";
+import { BlueprintAngleGuide } from "../components/blueprint-angle-guide";
 import { FlowerVideo } from "../components/flower-video";
 
 // these two read persisted settings from localStorage on first render —
@@ -20,6 +21,8 @@ const Sidebar = dynamic(() => import("../components/sidebar").then((m) => m.Side
 export default function Home() {
    return (
       <div className="page">
+         <BlueprintAngleGuide />
+
          <main className="bento">
             <Sidebar />
 

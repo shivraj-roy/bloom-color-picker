@@ -178,7 +178,20 @@ body {
 }
 
 body {
-   background: var(--canvas);
+   background-color: var(--canvas);
+   /* blueprint grid: fine 1px lines every 24px, a bolder line every 5th
+      (120px) — the bento boxes sit as opaque cards on top of it, so it only
+      reads in the canvas margin around them. */
+   background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to right, color-mix(in srgb, var(--ink) 12%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--ink) 12%, transparent) 1px, transparent 1px);
+   background-size:
+      24px 24px,
+      24px 24px,
+      120px 120px,
+      120px 120px;
    color: var(--ink);
    font-family: var(--font-nunito), sans-serif;
    -webkit-font-smoothing: antialiased;
@@ -1778,6 +1791,18 @@ body {
    letter-spacing: 0.05em;
    font-size: 12px;
    color: var(--muted);
+}
+
+.blueprint-angle-guide {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   /* negative, not 0/auto — a positioned element with z-index:auto still
+      paints after normal in-flow content (the bento boxes), so without
+      this the guide would sit on top of them wherever they overlap. */
+   z-index: -1;
+   pointer-events: none;
+   color: var(--ink);
 }
 
 .footer-strip {
