@@ -1783,6 +1783,7 @@ body {
 @media (max-width: 900px) {
    .page {
       height: auto;
+      padding: 20px;
       overflow: auto;
    }
 
@@ -1799,11 +1800,51 @@ body {
       grid-row: auto;
    }
 
+   /* DOM order is sidebar, playground, flower-video, props-panel — reorder
+      so the api reference bento comes before the video bento on mobile. */
+   .sidebar {
+      order: 1;
+      /* reserve room for the absolutely-positioned sponsor/theme buttons —
+         on desktop the sidebar spans the full column height so they always
+         clear the flowing content, but on mobile the box shrinks to fit its
+         content and the buttons would otherwise sit on top of it. */
+      padding-bottom: 92px;
+   }
+
+   .playground {
+      order: 2;
+      /* a fixed height (not just min-height) is required here — the mobile
+         bento row is auto-sized, so without a definite height the
+         playground__content grid below has nothing to resolve its 100%
+         height against and balloons to fit all of its content instead of
+         splitting into two equal, scrollable halves. */
+      height: 640px;
+   }
+
+   .props-panel {
+      order: 3;
+      /* fixed height, not min-height — same reason as .playground above:
+         without a definite height the internal flex:1/min-height:0 scroll
+         chain has nothing to constrain against and grows to fit every row. */
+      height: 420px;
+   }
+
    .flower-video {
+      order: 4;
       min-height: 200px;
    }
 
    .playground__content {
       grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+   }
+
+   .playground__settings {
+      padding: 16px;
+   }
+
+   .playground__settings-scroll {
+      padding: 16px;
+      gap: 8px;
    }
 }

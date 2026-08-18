@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "bloom-color-picker";
 import "bloom-color-picker/style.css";
@@ -20,6 +20,7 @@ import { ToggleSelect } from "./toggle-select";
 const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
 const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440", "#B5D2F0", "#D4C0EC", "#F5C6CC"];
 const CODE_SPRING = { type: "spring" as const, stiffness: 320, damping: 30 };
+const MOBILE_QUERY = "(max-width: 900px)";
 
 export function Playground() {
    const [size, setSize] = usePersistedState("size", 28);
@@ -33,6 +34,15 @@ export function Playground() {
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
    const [centerOffset, setCenterOffset] = useState(0);
+   const [isMobile, setIsMobile] = useState(false);
+
+   useEffect(() => {
+      const mq = window.matchMedia(MOBILE_QUERY);
+      const update = () => setIsMobile(mq.matches);
+      update();
+      mq.addEventListener("change", update);
+      return () => mq.removeEventListener("change", update);
+   }, []);
 
    // The picker's swatch sits at its own true center, but the hex input hangs
    // off to the right (positioned outside the swatch's box so the bloom still
@@ -84,8 +94,8 @@ export function Playground() {
             animate={{
                top: 20,
                left: 20,
-               width: showCode ? "calc(50% - 40px)" : 32,
-               height: showCode ? "calc(100% - 40px)" : 32,
+               width: showCode ? (isMobile ? "calc(100% - 40px)" : "calc(50% - 40px)") : 32,
+               height: showCode ? (isMobile ? "calc(50% - 40px)" : "calc(100% - 40px)") : 32,
                borderRadius: showCode ? 12 : 10,
             }}
             transition={CODE_SPRING}
@@ -136,7 +146,10 @@ export function Playground() {
          <motion.div
             className="playground__content"
             initial={false}
-            animate={{ x: showCode ? "50%" : "0%" }}
+            animate={{
+               x: isMobile ? "0%" : showCode ? "50%" : "0%",
+               y: isMobile ? (showCode ? "50%" : "0%") : "0%",
+            }}
             transition={CODE_SPRING}
          >
             <div className="playground__preview" ref={previewRef}>
