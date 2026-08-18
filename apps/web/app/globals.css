@@ -198,7 +198,10 @@ body {
    height: 100dvh;
    display: flex;
    flex-direction: column;
-   padding: 40px 240px;
+   /* fluid between the 1200px tablet cutoff (~40px, matching the tablet
+      breakpoint below) and a 1920px reference desktop width (280px) —
+      capped at 280px beyond that so nothing changes on larger screens. */
+   padding: 40px clamp(40px, calc(33.33vw - 360px), 280px);
    gap: 10px;
    overflow: hidden;
 }
@@ -283,6 +286,10 @@ body {
    display: flex;
    align-items: center;
    gap: 10px;
+}
+
+.sidebar__title-row svg {
+   flex-shrink: 0;
 }
 
 .sidebar__title {
@@ -416,6 +423,9 @@ body {
    font-size: 12.5px;
    color: var(--ink);
    white-space: pre;
+   min-width: 0;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 /* outer: border + background, stays crisp — never masked */
@@ -1778,6 +1788,29 @@ body {
    justify-content: center;
    font-size: 12px;
    color: #9a9aa2;
+}
+
+/* tablet — same 3-column desktop grid, but the fixed 380px sidebar eats too
+   much of a narrower width (e.g. an iPad in portrait is only 1024px wide),
+   squeezing the other two columns until their contents overlap. Shrink the
+   sidebar column and the canvas padding so they have room to breathe. */
+@media (max-width: 1200px) and (min-width: 901px) {
+   .page {
+      padding: 40px 20px;
+   }
+
+   .bento {
+      grid-template-columns: 280px 1fr 1fr;
+      gap: 10px;
+   }
+
+   .sidebar {
+      padding: 22px 18px;
+   }
+
+   .sidebar__title {
+      font-size: 20px;
+   }
 }
 
 @media (max-width: 900px) {
