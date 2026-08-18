@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { useTheme } from "next-themes";
 
 import { DitherIcon } from "./animated-icons/dither-icon";
 import { GoldenRatioIcon } from "./animated-icons/golden-ratio-icon";
@@ -63,6 +64,15 @@ export function FlowerVideo() {
    const canvasRef = useRef<HTMLCanvasElement>(null);
    // active click ripples, in sample-space coordinates
    const ripplesRef = useRef<{ x: number; y: number; time: number }[]>([]);
+
+   // read via a ref (not a draw-effect dependency) so toggling the theme
+   // doesn't tear down and re-attach the whole video/canvas setup — the
+   // draw loop just picks up the new value on its next frame.
+   const { resolvedTheme } = useTheme();
+   const isDarkRef = useRef(false);
+   useEffect(() => {
+      isDarkRef.current = resolvedTheme === "dark";
+   }, [resolvedTheme]);
 
    // separate from the style-dependent effect below (which re-attaches on
    // every dither/halftone toggle) — this only needs to fire once, the
@@ -199,6 +209,13 @@ export function FlowerVideo() {
             }
          }
 
+         // grayscale stand-ins for --ink/--card per theme (outData channels
+         // must be equal, so these are approximations of the tinted hex
+         // tokens, not exact matches).
+         const isDark = isDarkRef.current;
+         const inkValue = isDark ? 242 : 20;
+         const cardValue = isDark ? 23 : 251;
+
          for (let y = 0; y < sampleHeight; y++) {
             for (let x = 0; x < sampleWidth; x++) {
                const i = (y * sampleWidth + x) * 4;
@@ -206,7 +223,7 @@ export function FlowerVideo() {
                const luminance = cellLuminance[cellIndex];
                const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
                const threshold = (BAYER_4X4[y % 4][x % 4] + 0.5) / 16;
-               const value = adjusted > threshold ? 20 : 251;
+               const value = adjusted > threshold ? inkValue : cardValue;
                outData[i] = value;
                outData[i + 1] = value;
                outData[i + 2] = value;
@@ -221,9 +238,10 @@ export function FlowerVideo() {
          const frame = sampleCtx.getImageData(0, 0, sampleWidth, sampleHeight);
          const data = frame.data;
 
-         drawCtx.fillStyle = "#fbfbfb";
+         const isDark = isDarkRef.current;
+         drawCtx.fillStyle = isDark ? "#17171a" : "#fbfbfb";
          drawCtx.fillRect(0, 0, outWidth, outHeight);
-         drawCtx.fillStyle = "#141414";
+         drawCtx.fillStyle = isDark ? "#f2f2f4" : "#141414";
 
          const cellW = outWidth / sampleWidth;
          const cellH = outHeight / sampleHeight;
