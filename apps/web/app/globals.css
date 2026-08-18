@@ -1005,9 +1005,9 @@ body {
    --es-height: 46px;
    --es-radius: var(--r-inner);
    --es-bg: var(--canvas);
-   --es-fill: rgba(26, 26, 26, 0.05);
-   --es-fill-active: rgba(26, 26, 26, 0.09);
-   --es-hash: rgba(26, 26, 26, 0.16);
+   --es-fill: color-mix(in srgb, var(--ink) 5%, transparent);
+   --es-fill-active: color-mix(in srgb, var(--ink) 9%, transparent);
+   --es-hash: color-mix(in srgb, var(--ink) 16%, transparent);
    --es-handle: var(--ink);
    --es-label: var(--muted);
    --es-focus: var(--accent);
