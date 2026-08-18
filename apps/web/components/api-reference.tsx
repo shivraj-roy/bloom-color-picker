@@ -137,6 +137,17 @@ const PROPS: AccordionRow[] = [
       ],
    },
    {
+      key: "theme",
+      name: "theme?",
+      type: "string",
+      description:
+         'Pins the picker\'s own chrome (input field, dish, shadows) to a theme. "auto" follows prefers-color-scheme.',
+      meta: [
+         { label: "Type", value: '"auto" | "light" | "dark"' },
+         { label: "Default", value: '"auto"' },
+      ],
+   },
+   {
       key: "className",
       name: "className?",
       type: "string",

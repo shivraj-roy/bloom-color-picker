@@ -72,6 +72,7 @@ export function Playground() {
       `   disabled={${disabled}}`,
       `   inputVariant="${inputVariant}"`,
       `   motion="${motionValue}"`,
+      `   theme="${bloomTheme}"`,
       "/>",
    ].join("\n");
 
@@ -148,6 +149,7 @@ export function Playground() {
                      disabled={disabled}
                      inputVariant={inputVariant}
                      motion={motionValue}
+                     theme={bloomTheme}
                   />
                </div>
             </div>

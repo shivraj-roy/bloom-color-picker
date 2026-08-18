@@ -12,6 +12,8 @@ export type BloomColorPickerPart =
 
 export type BloomColorPickerMotion = "none" | "subtle" | "bouncy";
 
+export type BloomColorPickerTheme = "auto" | "light" | "dark";
+
 export type BloomColorPickerInputVariant = "split" | "grouped";
 
 export interface BloomColorPickerProps {
@@ -70,6 +72,15 @@ export interface BloomColorPickerProps {
     * @default "subtle"
     */
    motion?: BloomColorPickerMotion;
+
+   /**
+    * "light" or "dark" pins the picker's own chrome (input field, dish,
+    * shadows — not petal colors, which come from `palette`/`outerColors`/
+    * `innerColors`) to that theme. "auto" follows the visitor's OS
+    * `prefers-color-scheme` instead of any explicit override.
+    * @default "auto"
+    */
+   theme?: BloomColorPickerTheme;
 
    /** Class applied to the root element. */
    className?: string;

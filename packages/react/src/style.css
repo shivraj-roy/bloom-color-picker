@@ -42,6 +42,21 @@
    justify-content: center;
 }
 
+/* dark theme — only via an explicit theme="dark" prop (sets data-theme
+   directly); prefers-color-scheme-driven "auto" is a separate, later pass.
+   Shadows get bumped opacity since a plain black shadow barely reads
+   against an already-dark surrounding page. */
+.bcp[data-theme="dark"] {
+   --bcp-swatch-ring: rgba(255, 255, 255, 0.6);
+   --bcp-swatch-shadow: rgba(0, 0, 0, 0.4);
+   --bcp-bloom-shadow: rgba(0, 0, 0, 0.45);
+   --bcp-petal-shadow: rgba(0, 0, 0, 0.35);
+   --bcp-input-bg: #2a2a2f;
+   --bcp-input-border: #3a3a40;
+   --bcp-input-color: #a0a0a8;
+   --bcp-input-color-focus: #f2f2f4;
+}
+
 /* Spring easings: pre-computed linear() curves matching the original motion
    springs (stiffness/damping noted on each). */
 @supports (transition-timing-function: linear(0, 1)) {

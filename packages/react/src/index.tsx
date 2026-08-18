@@ -106,6 +106,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
       hexInput = true,
       inputVariant = "split",
       motion = "subtle",
+      theme = "auto",
       className,
       classNames,
       "aria-label": ariaLabel = "Pick a color",
@@ -296,6 +297,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          data-disabled={disabled || undefined}
          data-motion={motion}
          data-input-variant={hexInput ? inputVariant : undefined}
+         data-theme={theme !== "auto" ? theme : undefined}
          onPointerMove={handleDishMove}
          onPointerLeave={() => setHovered(null)}
       >
@@ -447,6 +449,7 @@ export type {
    BloomColorPickerMotion,
    BloomColorPickerPart,
    BloomColorPickerProps,
+   BloomColorPickerTheme,
 } from "./types";
 export { deriveFromHex, hexToHsl, hslToHex, normalizeHex, shadeOf } from "./color";
 export {
