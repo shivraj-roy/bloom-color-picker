@@ -21,7 +21,7 @@ const BAYER_4X4 = [
 // rendering, so this is what actually controls the dither "pixel" size.
 // Fixed: independent of cell size below, exactly like the reference tool
 // (dragging cell size doesn't change how fine the dither texture itself is).
-const DITHER_SIZE = 520;
+const DITHER_SIZE = 400;
 // dither pixels are grouped into cells this many pixels wide/tall, sharing
 // one averaged luminance before the per-pixel Bayer threshold is applied —
 // gives a blocky/mosaic structure *within* which the fine dither still
@@ -87,6 +87,25 @@ export function FlowerVideo() {
       const onLoadedData = () => setLoaded(true);
       video.addEventListener("loadeddata", onLoadedData);
       return () => video.removeEventListener("loadeddata", onLoadedData);
+   }, []);
+
+   // Safari is unreliable about honoring the `autoPlay` attribute alone for
+   // a <video> mounted via React (vs. present in the initial HTML parse) —
+   // it'll happily report readyState >= 2 (so the canvas draws one real
+   // frame) without ever actually starting playback, leaving every
+   // subsequent draw redrawing that same static frame. An explicit .play()
+   // call is what Safari actually honors.
+   useEffect(() => {
+      const video = videoRef.current;
+      if (!video) return;
+      // Safari's autoplay heuristic checks the muted IDL property at the
+      // moment .play() is called — the muted *attribute* (and React's
+      // rendering of it) isn't always enough on its own.
+      video.muted = true;
+      video.play().catch(() => {
+         // autoplay blocked (e.g. low power mode) — the static first frame
+         // still renders via the canvas draw loop above.
+      });
    }, []);
 
    useEffect(() => {
@@ -310,10 +329,23 @@ export function FlowerVideo() {
          }
       };
 
-      const draw = () => {
-         if (video.readyState >= 2) {
-            if (style === "dither") drawDither();
-            else drawHalftone();
+      // Capped well under the display's refresh rate — this loop does real
+      // per-pixel getImageData/putImageData work every call, uncapped that's
+      // enough synchronous main-thread JS on every animation frame to
+      // starve the rest of the page (Safari's JS engine handles this kind
+      // of workload noticeably worse than Chrome's, showing up as both a
+      // frozen-looking video and lag in unrelated framer-motion animations
+      // elsewhere on the page).
+      const FRAME_INTERVAL = 1000 / 24;
+      let lastDrawTime = 0;
+
+      const draw = (time: number) => {
+         if (time - lastDrawTime >= FRAME_INTERVAL) {
+            lastDrawTime = time;
+            if (video.readyState >= 2) {
+               if (style === "dither") drawDither();
+               else drawHalftone();
+            }
          }
          raf = requestAnimationFrame(draw);
       };
@@ -322,6 +354,12 @@ export function FlowerVideo() {
       // the click's on-screen position into sample-space by matching that
       // same scale-and-crop math, not just a plain rect-relative percentage.
       const onPointerDown = (e: PointerEvent) => {
+         // if autoplay never took effect (e.g. Safari's per-site/global
+         // "Never Auto-Play" setting, which no programmatic .play() call
+         // can override on its own), a real user gesture like this click
+         // is what Safari actually honors.
+         if (video.paused) video.play().catch(() => {});
+
          const rect = canvas.getBoundingClientRect();
          // "cover" scales up to the LARGER ratio so one axis overflows/crops,
          // unlike "contain" (which would use the smaller ratio + letterbox).

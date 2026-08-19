@@ -1303,15 +1303,26 @@ body.blueprint-visible::before {
 }
 
 .flower-video__source {
+   /* full-size, not 1x1px, and NOT hidden via opacity — Safari throttles or
+      fully suspends actual frame decoding for video elements it considers
+      invisible or negligibly small (still lets one frame through, which is
+      what made it look "paused" on a static frame). The canvas paints every
+      pixel opaquely on top of it (z-index below, explicit stacking so this
+      holds regardless of DOM/position-type paint-order quirks), so it's
+      fully hidden from view without ever being invisible to the browser. */
    position: absolute;
-   width: 1px;
-   height: 1px;
-   opacity: 0;
+   inset: 0;
+   z-index: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
    overflow: hidden;
    pointer-events: none;
 }
 
 .flower-video__canvas {
+   position: relative;
+   z-index: 1;
    display: block;
    width: 100%;
    height: 100%;
