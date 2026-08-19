@@ -179,9 +179,22 @@ body {
 
 body {
    background-color: var(--canvas);
-   /* blueprint grid: fine 1px lines every 24px, a bolder line every 5th
-      (120px) — the bento boxes sit as opaque cards on top of it, so it only
-      reads in the canvas margin around them. */
+   color: var(--ink);
+   font-family: var(--font-nunito), sans-serif;
+   -webkit-font-smoothing: antialiased;
+}
+
+/* blueprint grid, on a pseudo-element rather than body's own background so
+   its visibility can cross-fade — background-image itself can't be
+   transitioned smoothly, but opacity can. Fine 1px lines every 24px, a
+   bolder line every 5th (120px) — the bento boxes sit as opaque cards on
+   top of it, so it only reads in the canvas margin around them. */
+body::before {
+   content: "";
+   position: fixed;
+   inset: 0;
+   z-index: -1;
+   pointer-events: none;
    background-image:
       linear-gradient(to right, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
       linear-gradient(to bottom, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
@@ -193,19 +206,22 @@ body {
       120px 120px,
       120px 120px;
    background-position: left bottom;
-   color: var(--ink);
-   font-family: var(--font-nunito), sans-serif;
-   -webkit-font-smoothing: antialiased;
+   opacity: 1;
+   transition: opacity 0.4s ease;
 }
 
 /* toggled via BlueprintButton, a plain body.classList mutation (not a React
    attribute) so there's no SSR/hydration mismatch to worry about. */
-body.blueprint-hidden {
-   background-image: none;
+body.blueprint-hidden::before {
+   opacity: 0;
+}
+
+.blueprint-angle-guide {
+   transition: opacity 0.4s ease;
 }
 
 .blueprint-hidden .blueprint-angle-guide {
-   display: none;
+   opacity: 0;
 }
 
 ::selection {
