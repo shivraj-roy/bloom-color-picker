@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-import type { ToggleSelectOption } from "./toggle-select";
+import type { ToggleSelectOption } from "../toggle-select";
 
 export type MotionValue = "none" | "subtle" | "bouncy";
 

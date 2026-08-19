@@ -7,14 +7,14 @@ import "bloom-color-picker/style.css";
 
 import { usePersistedState } from "../lib/use-persisted-state";
 import { CodeCloseIcon } from "./icons/code-close-icon";
-import { BLOOM_THEME_OPTIONS, type BloomTheme } from "./bloom-theme-select";
+import { BLOOM_THEME_OPTIONS, type BloomTheme } from "./controls/bloom-theme-select";
 import { BracketAnnotation } from "./annotations/bracket-annotation";
-import { ColorSelect } from "./color-select";
+import { ColorSelect } from "./controls/color-select";
 import { CopyButton } from "./copy-button";
-import { DISABLED_OPTIONS } from "./disabled-select";
+import { DISABLED_OPTIONS } from "./controls/disabled-select";
 import { ElasticSlider } from "./elastic-slider";
-import { INPUT_VARIANT_OPTIONS, type InputVariant } from "./input-variant-select";
-import { MOTION_OPTIONS, type MotionValue } from "./motion-select";
+import { INPUT_VARIANT_OPTIONS, type InputVariant } from "./controls/input-variant-select";
+import { MOTION_OPTIONS, type MotionValue } from "./controls/motion-select";
 import { Selector } from "./selector";
 import { ToggleSelect } from "./toggle-select";
 

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-import { CaretUpDownIcon } from "./icons/caret-up-down";
-import { CheckIcon } from "./icons/check-icon";
+import { CaretUpDownIcon } from "../icons/caret-up-down";
+import { CheckIcon } from "../icons/check-icon";
 
 export interface ColorSelectProps {
    label: string;
