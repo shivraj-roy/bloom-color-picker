@@ -22,6 +22,10 @@ const PALETTES = Object.keys(bloomPalettes) as BloomColorPickerPalette[];
 const SWATCH_COLORS = ["#FFB1EE", "#F7C13F", "#EE8440", "#B5D2F0", "#D4C0EC", "#F5C6CC"];
 const CODE_SPRING = { type: "spring" as const, stiffness: 320, damping: 30 };
 const MOBILE_QUERY = "(max-width: 900px)";
+// bracket width + gaps + "tweak it live" in the handwritten font, plus
+// margin — below this there isn't enough canvas margin to show it without
+// the text getting clipped by the viewport edge.
+const BRACKET_MIN_MARGIN = 160;
 
 export function Playground() {
    const [size, setSize] = usePersistedState("size", 28);
@@ -37,7 +41,7 @@ export function Playground() {
    const sectionRef = useRef<HTMLElement>(null);
    const [centerOffset, setCenterOffset] = useState(0);
    const [isMobile, setIsMobile] = useState(false);
-   const [bracketRect, setBracketRect] = useState({ top: 0, left: 0, height: 0 });
+   const [bracketRect, setBracketRect] = useState({ top: 0, left: 0, height: 0, hasRoom: true });
 
    useEffect(() => {
       const mq = window.matchMedia(MOBILE_QUERY);
@@ -57,7 +61,8 @@ export function Playground() {
 
       const measure = () => {
          const rect = section.getBoundingClientRect();
-         setBracketRect({ top: rect.top, left: rect.right + 6, height: rect.height });
+         const hasRoom = window.innerWidth - rect.right >= BRACKET_MIN_MARGIN;
+         setBracketRect({ top: rect.top, left: rect.right + 6, height: rect.height, hasRoom });
       };
 
       measure();
@@ -116,7 +121,18 @@ export function Playground() {
 
    return (
       <section className="box playground" ref={sectionRef}>
-         <BracketAnnotation style={{ top: bracketRect.top, left: bracketRect.left, height: bracketRect.height }} />
+         <BracketAnnotation
+            style={{
+               top: bracketRect.top,
+               left: bracketRect.left,
+               height: bracketRect.height,
+               // inline opacity:0 overrides the blueprint-visible CSS rule
+               // (inline styles always win) when there's no room; leaving
+               // it undefined otherwise lets that rule — and its fade
+               // transition — control visibility as normal.
+               opacity: bracketRect.hasRoom ? undefined : 0,
+            }}
+         />
 
          <motion.div
             className="playground__code-panel"
