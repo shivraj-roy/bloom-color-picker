@@ -34,8 +34,7 @@ export function Playground() {
    const [disabled, setDisabled] = usePersistedState("disabled", false);
    const [motionValue, setMotionValue] = usePersistedState<MotionValue>("motion", "subtle");
    const [inputVariant, setInputVariant] = usePersistedState<InputVariant>("input-variant", "split");
-   // control only for now — the picker doesn't have a theme prop yet
-   const [bloomTheme, setBloomTheme] = usePersistedState<BloomTheme>("bloom-theme", "auto");
+   const [bloomTheme, setBloomTheme] = usePersistedState<BloomTheme>("bloom-theme", "light");
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
    const sectionRef = useRef<HTMLElement>(null);
