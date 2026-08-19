@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 
-import { DitherIcon } from "./animated-icons/dither-icon";
-import { GoldenRatioIcon } from "./animated-icons/golden-ratio-icon";
-import { HalftoneIcon } from "./animated-icons/halftone-icon";
+import { DitherIcon } from "./icons/dither-icon";
+import { GoldenRatioIcon } from "./icons/golden-ratio-icon";
+import { HalftoneIcon } from "./icons/halftone-icon";
 
 // classic 4x4 ordered (Bayer) dither matrix — cheap per-pixel threshold, no
 // error diffusion needed, so it stays fast enough for real-time video.

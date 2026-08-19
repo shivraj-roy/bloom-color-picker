@@ -6,7 +6,7 @@ import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "b
 import "bloom-color-picker/style.css";
 
 import { usePersistedState } from "../lib/use-persisted-state";
-import { CodeCloseIcon } from "./animated-icons/code-close-icon";
+import { CodeCloseIcon } from "./icons/code-close-icon";
 import { BLOOM_THEME_OPTIONS, type BloomTheme } from "./bloom-theme-select";
 import { BracketAnnotation } from "./annotations/bracket-annotation";
 import { ColorSelect } from "./color-select";

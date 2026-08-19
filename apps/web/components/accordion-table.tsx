@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-import { ChevronDownIcon } from "./animated-icons/chevron-down-icon";
+import { ChevronDownIcon } from "./icons/chevron-down-icon";
 
 export interface AccordionRow {
    key: string;

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
-import { DarkThemeIcon } from "./animated-icons/dark-theme-icon";
-import { LightThemeIcon } from "./animated-icons/light-theme-icon";
+import { DarkThemeIcon } from "./icons/dark-theme-icon";
+import { LightThemeIcon } from "./icons/light-theme-icon";
 import { IconToggle } from "./icon-toggle";
 
 export function ThemeButton() {

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-import { CheckCircleIcon } from "./animated-icons/check-circle-icon";
-import { CopyIcon } from "./animated-icons/copy-icon";
+import { CheckCircleIcon } from "./icons/check-circle-icon";
+import { CopyIcon } from "./icons/copy-icon";
 
 type Phase = "idle" | "loading" | "success";
 

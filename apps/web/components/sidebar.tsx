@@ -3,8 +3,8 @@
 import { motion } from "motion/react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
-import { GitHubIcon } from "./animated-icons/github-icon";
-import { HeartIcon } from "./animated-icons/heart-icon";
+import { GitHubIcon } from "./icons/github-icon";
+import { HeartIcon } from "./icons/heart-icon";
 import { BloomLogo } from "./bloom-logo";
 import { BlueprintButton } from "./blueprint-button";
 import { CopyButton } from "./copy-button";

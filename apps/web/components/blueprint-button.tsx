@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
-import { BlueprintOffIcon } from "./animated-icons/blueprint-off-icon";
-import { BlueprintOnIcon } from "./animated-icons/blueprint-on-icon";
+import { BlueprintOffIcon } from "./icons/blueprint-off-icon";
+import { BlueprintOnIcon } from "./icons/blueprint-on-icon";
 import { IconToggle } from "./icon-toggle";
 
 export function BlueprintButton() {

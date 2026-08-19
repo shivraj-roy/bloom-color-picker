@@ -3,8 +3,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-import { CaretUpDownIcon } from "./animated-icons/caret-up-down";
-import { CheckIcon } from "./animated-icons/check-icon";
+import { CaretUpDownIcon } from "./icons/caret-up-down";
+import { CheckIcon } from "./icons/check-icon";
 
 export interface SelectorProps {
    label: string;
