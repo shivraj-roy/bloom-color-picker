@@ -662,12 +662,12 @@ body.blueprint-visible::before {
    --bcp-color-focus: var(--accent);
 }
 
-/* blueprint-mode-only callout, same gating as .footer-annotation. Lands in
-   an implicit 4th bento column (grid-auto-columns defaults to auto, sized
-   just wide enough for it) right after the playground's own columns —
-   sitting in the page's outer canvas margin, not clipped by .playground's
-   own overflow:hidden, and matching row 1's height automatically since it
-   shares that row track. */
+/* blueprint-mode-only callout — desktop-only (unlike .footer-annotation,
+   which shows at any width), since it needs measured canvas margin next to
+   the playground that mobile/tablet don't have. Positioned via a measured
+   getBoundingClientRect in playground.tsx rather than as a grid item, so it
+   can't affect .bento's own column sizing, and position:fixed lets it
+   escape .playground's own overflow:hidden. */
 .bracket-annotation {
    position: fixed;
    width: 20px;
@@ -1956,11 +1956,9 @@ body.blueprint-visible::before {
    transform: translateY(12px) rotate(6deg);
 }
 
-@media (min-width: 1201px) {
-   body.blueprint-visible .footer-annotation {
-      opacity: 1;
-      transition-delay: 0.15s;
-   }
+body.blueprint-visible .footer-annotation {
+   opacity: 1;
+   transition-delay: 0.15s;
 }
 
 /* tablet — same 3-column desktop grid, but the fixed 380px sidebar eats too
