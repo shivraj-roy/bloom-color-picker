@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 
+import { AnnotationArrowIcon } from "../components/annotations/annotation-arrow-icon";
 import { ApiReference } from "../components/api-reference";
 import { BlueprintAngleGuide } from "../components/blueprint-angle-guide";
 import { FlowerVideo } from "../components/flower-video";
@@ -38,6 +39,10 @@ export default function Home() {
                {"Built by "}
                <a href="https://x.com/shivraj_roy10" target="_blank" rel="noreferrer">
                   Shivraj…
+                  <span className="footer-annotation" aria-hidden="true">
+                     <AnnotationArrowIcon width={56} height={19} />
+                     <span className="footer-annotation__text">The Crafter</span>
+                  </span>
                </a>
             </span>
          </div>

@@ -16,6 +16,11 @@ const mono = localFont({
    variable: "--font-mono",
 });
 
+const handwritten = localFont({
+   src: "../public/font/Graphy Note/Graphy Note.otf",
+   variable: "--font-handwritten",
+});
+
 export const metadata: Metadata = {
    title: "bloom-color-picker",
    description: "A flower-inspired color picker. A tiny swatch blooms open into petals. Zero dependencies.",
@@ -23,7 +28,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
-      <html lang="en" className={`${nunito.variable} ${mono.variable}`} suppressHydrationWarning>
+      <html
+         lang="en"
+         className={`${nunito.variable} ${mono.variable} ${handwritten.variable}`}
+         suppressHydrationWarning
+      >
          <body>
             <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
                {children}

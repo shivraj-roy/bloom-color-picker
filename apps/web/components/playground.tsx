@@ -8,6 +8,7 @@ import "bloom-color-picker/style.css";
 import { usePersistedState } from "../lib/use-persisted-state";
 import { CodeCloseIcon } from "./animated-icons/code-close-icon";
 import { BLOOM_THEME_OPTIONS, type BloomTheme } from "./bloom-theme-select";
+import { BracketAnnotation } from "./annotations/bracket-annotation";
 import { ColorSelect } from "./color-select";
 import { CopyButton } from "./copy-button";
 import { DISABLED_OPTIONS } from "./disabled-select";
@@ -33,8 +34,10 @@ export function Playground() {
    const [bloomTheme, setBloomTheme] = usePersistedState<BloomTheme>("bloom-theme", "auto");
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
+   const sectionRef = useRef<HTMLElement>(null);
    const [centerOffset, setCenterOffset] = useState(0);
    const [isMobile, setIsMobile] = useState(false);
+   const [bracketRect, setBracketRect] = useState({ top: 0, left: 0, height: 0 });
 
    useEffect(() => {
       const mq = window.matchMedia(MOBILE_QUERY);
@@ -42,6 +45,31 @@ export function Playground() {
       update();
       mq.addEventListener("change", update);
       return () => mq.removeEventListener("change", update);
+   }, []);
+
+   // Measured rather than placed as a grid item — a grid item participates
+   // in .bento's own track sizing (an implicit 4th column would steal width
+   // from the real columns), so instead the bracket is `position: fixed`,
+   // tracking the playground box's actual rendered edge.
+   useEffect(() => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const measure = () => {
+         const rect = section.getBoundingClientRect();
+         setBracketRect({ top: rect.top, left: rect.right + 6, height: rect.height });
+      };
+
+      measure();
+      const observer = new ResizeObserver(measure);
+      observer.observe(section);
+      window.addEventListener("resize", measure);
+      window.addEventListener("scroll", measure, true);
+      return () => {
+         observer.disconnect();
+         window.removeEventListener("resize", measure);
+         window.removeEventListener("scroll", measure, true);
+      };
    }, []);
 
    // The picker's swatch sits at its own true center, but the hex input hangs
@@ -87,7 +115,9 @@ export function Playground() {
    ].join("\n");
 
    return (
-      <section className="box playground">
+      <section className="box playground" ref={sectionRef}>
+         <BracketAnnotation style={{ top: bracketRect.top, left: bracketRect.left, height: bracketRect.height }} />
+
          <motion.div
             className="playground__code-panel"
             initial={false}

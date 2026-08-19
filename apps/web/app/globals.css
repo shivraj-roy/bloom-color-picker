@@ -252,6 +252,7 @@ body.blueprint-visible::before {
 .bento {
    flex: 1;
    min-height: 0;
+   min-width: 0;
    display: grid;
    grid-template-columns: 380px 1fr 1fr;
    grid-template-rows: 1fr 1.3fr;
@@ -659,6 +660,59 @@ body.blueprint-visible::before {
    padding: 24px;
    min-width: 0;
    --bcp-color-focus: var(--accent);
+}
+
+/* blueprint-mode-only callout, same gating as .footer-annotation. Lands in
+   an implicit 4th bento column (grid-auto-columns defaults to auto, sized
+   just wide enough for it) right after the playground's own columns —
+   sitting in the page's outer canvas margin, not clipped by .playground's
+   own overflow:hidden, and matching row 1's height automatically since it
+   shares that row track. */
+.bracket-annotation {
+   display: none;
+   position: fixed;
+   width: 20px;
+   color: color-mix(in srgb, var(--ink) 40%, transparent);
+   pointer-events: none;
+}
+
+.bracket-annotation__cap {
+   position: absolute;
+   left: 0;
+}
+
+.bracket-annotation__cap--top {
+   top: 0;
+}
+
+.bracket-annotation__cap--bottom {
+   bottom: 0;
+}
+
+.bracket-annotation__text {
+   position: absolute;
+   left: calc(100% + 12px);
+   top: 60%;
+   transform: translateY(-50%);
+   font-family: var(--font-handwritten), cursive;
+   font-size: 20px;
+   line-height: 1;
+   white-space: nowrap;
+}
+
+.bracket-annotation__line {
+   position: absolute;
+   top: 2.25px;
+   bottom: 2.25px;
+   left: 0;
+   width: 20px;
+   height: calc(100% - 4.5px);
+}
+
+@media (min-width: 1201px) {
+   body.blueprint-visible .bracket-annotation {
+      display: block;
+   }
 }
 
 .playground__settings {
@@ -1858,6 +1912,7 @@ body.blueprint-visible::before {
 }
 
 .footer-strip a {
+   position: relative;
    color: inherit;
    font-weight: 700;
    text-decoration: underline;
@@ -1865,6 +1920,40 @@ body.blueprint-visible::before {
 
 [data-theme="dark"] .footer-strip a {
    color: var(--accent);
+}
+
+/* blueprint-mode-only callout — hidden by default, shown only when the
+   blueprint grid is on and there's enough room beside the footer to read
+   it without crowding the link. */
+.footer-annotation {
+   display: none;
+   position: absolute;
+   left: calc(100% + 10px);
+   top: 100%;
+   transform: translateY(-70%) rotate(-4deg);
+   flex-direction: column-reverse;
+   align-items: flex-start;
+   gap: 2px;
+   color: color-mix(in srgb, var(--ink) 40%, transparent);
+   font-weight: 400;
+   text-decoration: none;
+   white-space: nowrap;
+   pointer-events: none;
+}
+
+.footer-annotation__text {
+   display: inline-block;
+   font-family: var(--font-handwritten), cursive;
+   font-size: 20px;
+   line-height: 1;
+   margin-left: 30px;
+   transform: translateY(12px) rotate(6deg);
+}
+
+@media (min-width: 1201px) {
+   body.blueprint-visible .footer-annotation {
+      display: inline-flex;
+   }
 }
 
 /* tablet — same 3-column desktop grid, but the fixed 380px sidebar eats too
