@@ -6,6 +6,7 @@ import { usePersistedState } from "../lib/use-persisted-state";
 import { GitHubIcon } from "./animated-icons/github-icon";
 import { HeartIcon } from "./animated-icons/heart-icon";
 import { BloomLogo } from "./bloom-logo";
+import { BlueprintButton } from "./blueprint-button";
 import { CopyButton } from "./copy-button";
 import { ThemeButton } from "./theme-button";
 
@@ -108,6 +109,7 @@ export function Sidebar() {
          </motion.a>
 
          <ThemeButton />
+         <BlueprintButton />
       </aside>
    );
 }
