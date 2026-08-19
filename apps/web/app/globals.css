@@ -206,22 +206,25 @@ body::before {
       120px 120px,
       120px 120px;
    background-position: left bottom;
-   opacity: 1;
+   /* hidden by default (matches BlueprintButton's default persisted state)
+      so there's no flash of the grid before the toggle class applies. */
+   opacity: 0;
    transition: opacity 0.4s ease;
 }
 
 /* toggled via BlueprintButton, a plain body.classList mutation (not a React
    attribute) so there's no SSR/hydration mismatch to worry about. */
-body.blueprint-hidden::before {
-   opacity: 0;
+body.blueprint-visible::before {
+   opacity: 1;
 }
 
 .blueprint-angle-guide {
+   opacity: 0;
    transition: opacity 0.4s ease;
 }
 
-.blueprint-hidden .blueprint-angle-guide {
-   opacity: 0;
+.blueprint-visible .blueprint-angle-guide {
+   opacity: 1;
 }
 
 ::selection {

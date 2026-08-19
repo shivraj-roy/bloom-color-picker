@@ -8,10 +8,10 @@ import { BlueprintOnIcon } from "./animated-icons/blueprint-on-icon";
 import { IconToggle } from "./icon-toggle";
 
 export function BlueprintButton() {
-   const [visible, setVisible] = usePersistedState("blueprint-visible", true);
+   const [visible, setVisible] = usePersistedState("blueprint-visible", false);
 
    useEffect(() => {
-      document.body.classList.toggle("blueprint-hidden", !visible);
+      document.body.classList.toggle("blueprint-visible", visible);
    }, [visible]);
 
    return (
