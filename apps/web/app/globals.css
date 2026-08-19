@@ -669,11 +669,12 @@ body.blueprint-visible::before {
    own overflow:hidden, and matching row 1's height automatically since it
    shares that row track. */
 .bracket-annotation {
-   display: none;
    position: fixed;
    width: 20px;
    color: color-mix(in srgb, var(--ink) 40%, transparent);
    pointer-events: none;
+   opacity: 0;
+   transition: opacity 0.4s ease;
 }
 
 .bracket-annotation__cap {
@@ -711,7 +712,10 @@ body.blueprint-visible::before {
 
 @media (min-width: 1201px) {
    body.blueprint-visible .bracket-annotation {
-      display: block;
+      opacity: 1;
+      /* fades in slightly after the grid/angle-guide (their transition has
+         no delay), so the blueprint reads as "arriving" before its notes. */
+      transition-delay: 0.15s;
    }
 }
 
@@ -1926,7 +1930,7 @@ body.blueprint-visible::before {
    blueprint grid is on and there's enough room beside the footer to read
    it without crowding the link. */
 .footer-annotation {
-   display: none;
+   display: inline-flex;
    position: absolute;
    left: calc(100% + 10px);
    top: 100%;
@@ -1939,6 +1943,8 @@ body.blueprint-visible::before {
    text-decoration: none;
    white-space: nowrap;
    pointer-events: none;
+   opacity: 0;
+   transition: opacity 0.4s ease;
 }
 
 .footer-annotation__text {
@@ -1952,7 +1958,8 @@ body.blueprint-visible::before {
 
 @media (min-width: 1201px) {
    body.blueprint-visible .footer-annotation {
-      display: inline-flex;
+      opacity: 1;
+      transition-delay: 0.15s;
    }
 }
 
