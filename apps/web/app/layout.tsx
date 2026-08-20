@@ -21,10 +21,30 @@ const handwritten = localFont({
    variable: "--font-handwritten",
 });
 
+const TITLE = "Bloom Color Picker";
+const DESCRIPTION =
+   "A flower-inspired color picker. A tiny swatch blooms open into petals. Zero dependencies.";
+
 export const metadata: Metadata = {
-   title: "bloom-color-picker",
-   description:
-      "A flower-inspired color picker. A tiny swatch blooms open into petals. Zero dependencies.",
+   metadataBase: new URL("https://bloom-color-picker.shivrajroy.in"),
+   title: TITLE,
+   description: DESCRIPTION,
+   keywords: ["color picker", "color", "picker", "bloom", "flower", "react"],
+   authors: [{ name: "Shivraj Roy", url: "https://www.shivrajroy.in" }],
+   creator: "Shivraj Roy",
+   openGraph: {
+      title: TITLE,
+      description: DESCRIPTION,
+      type: "website",
+      images: [{ url: "/bloom-og.png", width: 1200, height: 630, alt: TITLE }],
+   },
+   twitter: {
+      card: "summary_large_image",
+      title: TITLE,
+      description: DESCRIPTION,
+      creator: "@shivraj_roy10",
+      images: ["/bloom-og.png"],
+   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
