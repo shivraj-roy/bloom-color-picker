@@ -1,6 +1,6 @@
 # bloom-color-picker
 
-A flower-inspired color picker for React. A small swatch blooms open into a dahlia of petal swatches with a brightness arc — pick a petal, drag the arc, done.
+A flower-inspired color picker. A small swatch blooms open into a dahlia of petal swatches with a brightness arc — pick a petal, drag the arc, done.
 
 - Zero runtime dependencies (only React as a peer).
 - Spring-quality animations in pure CSS (`linear()` easings), no animation library.
