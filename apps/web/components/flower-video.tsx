@@ -21,7 +21,7 @@ const BAYER_4X4 = [
 // rendering, so this is what actually controls the dither "pixel" size.
 // Fixed: independent of cell size below, exactly like the reference tool
 // (dragging cell size doesn't change how fine the dither texture itself is).
-const DITHER_SIZE = 400;
+const DITHER_SIZE = 520;
 // dither pixels are grouped into cells this many pixels wide/tall, sharing
 // one averaged luminance before the per-pixel Bayer threshold is applied —
 // gives a blocky/mosaic structure *within* which the fine dither still
@@ -330,12 +330,9 @@ export function FlowerVideo() {
       };
 
       // Capped well under the display's refresh rate — this loop does real
-      // per-pixel getImageData/putImageData work every call, uncapped that's
-      // enough synchronous main-thread JS on every animation frame to
-      // starve the rest of the page (Safari's JS engine handles this kind
-      // of workload noticeably worse than Chrome's, showing up as both a
-      // frozen-looking video and lag in unrelated framer-motion animations
-      // elsewhere on the page).
+      // per-pixel getImageData/putImageData work every call, and the source
+      // video itself never exceeds ~24fps of meaningfully new content, so
+      // drawing at 60fps would just burn CPU/battery for no visible gain.
       const FRAME_INTERVAL = 1000 / 24;
       let lastDrawTime = 0;
 
