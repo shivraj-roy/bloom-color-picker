@@ -12,7 +12,7 @@
       "dependsOn": ["transit"]
     },
     "check-types": {
-      "dependsOn": ["transit"],
+      "dependsOn": ["transit", "^build"],
       "outputs": [".next/types/**"]
     },
     "dev": {
