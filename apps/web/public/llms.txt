@@ -1,0 +1,37 @@
+# Bloom Color Picker
+
+> A flower-inspired color picker for React. A small swatch blooms open into a dahlia of petal swatches with a brightness arc — pick a petal, drag the arc, done. Zero runtime dependencies (only React as a peer), spring-quality animations in pure CSS.
+
+This site (bloom-color-picker.shivrajroy.in) is the docs/marketing site for the `bloom-color-picker` npm package: an interactive playground, a live-generated code snippet, and a full props/CSS-variable reference. It is not itself an API — the package it documents is.
+
+## Package
+
+- [npm: bloom-color-picker](https://www.npmjs.com/package/bloom-color-picker): `npm install bloom-color-picker` (also available via pnpm/bun/yarn).
+- [GitHub repository](https://github.com/shivraj-roy/bloom-color-picker): source, issues, and a README with the complete props table, CSS variables, and data-slot reference.
+- License: MIT.
+
+## Usage
+
+```tsx
+import { BloomColorPicker } from "bloom-color-picker";
+import "bloom-color-picker/style.css";
+
+<BloomColorPicker defaultValue="#FFB1EE" onChange={(hex) => console.log(hex)} />;
+```
+
+## Key props
+
+- `value` / `defaultValue`: controlled/uncontrolled hex color (`"#RRGGBB"`).
+- `onChange`: `(hex: string) => void`, fired on every petal pick or brightness drag.
+- `palette`: `"warm" | "ocean" | "blossom" | "pastel"` — or pass `outerColors`/`innerColors` (hex arrays) for a fully custom ring.
+- `size`: closed swatch diameter in px. Default `28`.
+- `theme`: `"auto" | "light" | "dark"`. Default `"light"`. Pins the picker's own chrome (input, dish, shadows — not petal colors) to a theme; `"auto"` follows the visitor's system/OS `prefers-color-scheme`.
+- `motion`: `"none" | "subtle" | "bouncy"` — spring intensity for open/close and pick animations.
+- `inputVariant`: `"split" | "grouped"` — layout for the swatch + hex input.
+- `disabled`, `hexInput`, `open`/`defaultOpen`/`onOpenChange`, `className`, `classNames`, `aria-label`.
+
+Full details, defaults, and the `--bcp-*` CSS variable list are in the GitHub README.
+
+## Author
+
+- [Shivraj Roy](https://www.shivrajroy.in) — [@shivraj_roy10](https://x.com/shivraj_roy10) on X.
