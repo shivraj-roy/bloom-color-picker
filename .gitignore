@@ -22,3 +22,4 @@ build/
 
 # private reference material — never commit
 _ref/
+.vercel
