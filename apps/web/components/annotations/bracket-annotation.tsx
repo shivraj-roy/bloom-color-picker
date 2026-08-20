@@ -15,7 +15,12 @@ export function BracketAnnotation({ style }: { style?: React.CSSProperties }) {
             viewBox="0 0 20 2.25"
             fill="none"
          >
-            <path d="M1.5 1.125H16.5" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" />
+            <path
+               d="M1.5 1.125H16.5"
+               stroke="currentColor"
+               strokeWidth="2.25"
+               strokeLinecap="round"
+            />
          </svg>
 
          <svg
@@ -48,7 +53,12 @@ export function BracketAnnotation({ style }: { style?: React.CSSProperties }) {
             viewBox="0 0 20 2.25"
             fill="none"
          >
-            <path d="M3.5 1.125H18.5" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" />
+            <path
+               d="M3.5 1.125H18.5"
+               stroke="currentColor"
+               strokeWidth="2.25"
+               strokeLinecap="round"
+            />
          </svg>
 
          <span className="bracket-annotation__text">tweak it live</span>

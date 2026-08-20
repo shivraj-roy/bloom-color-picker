@@ -110,7 +110,8 @@ const PROPS: AccordionRow[] = [
       key: "hexInput",
       name: "hexInput?",
       type: "boolean",
-      description: "Editable hex text field beside the closed swatch. Invalid characters can't be typed.",
+      description:
+         "Editable hex text field beside the closed swatch. Invalid characters can't be typed.",
       meta: [
          { label: "Type", value: "boolean | undefined" },
          { label: "Default", value: "true" },
@@ -120,7 +121,7 @@ const PROPS: AccordionRow[] = [
       key: "inputVariant",
       name: "inputVariant?",
       type: "string",
-      description: 'Layout for the swatch + hex input. Ignored when hexInput is false.',
+      description: "Layout for the swatch + hex input. Ignored when hexInput is false.",
       meta: [
          { label: "Type", value: '"split" | "grouped"' },
          { label: "Default", value: '"split"' },
@@ -158,7 +159,8 @@ const PROPS: AccordionRow[] = [
       key: "classNames",
       name: "classNames?",
       type: "object",
-      description: "Per-part classes. Every part also carries a data-slot attribute, so plain CSS attribute selectors work without this prop — see the Styling tab.",
+      description:
+         "Per-part classes. Every part also carries a data-slot attribute, so plain CSS attribute selectors work without this prop — see the Styling tab.",
       meta: [{ label: "Type", value: "Partial<Record<part, string>>" }],
    },
    {
@@ -179,70 +181,100 @@ const CSS_VARIABLES: AccordionRow[] = [
       name: "--bcp-color-focus",
       type: "Hex text field",
       description: "Focus ring color for the grouped hex input.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "#4e72d6" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "#4e72d6" },
+      ],
    },
    {
       key: "--bcp-swatch-ring",
       name: "--bcp-swatch-ring",
       type: "Swatch button",
       description: "Outline ring drawn around the closed swatch.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "#fff" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "#fff" },
+      ],
    },
    {
       key: "--bcp-swatch-shadow",
       name: "--bcp-swatch-shadow",
       type: "Swatch button",
       description: "Drop shadow under the closed swatch.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "rgba(0,0,0,.08)" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "rgba(0,0,0,.08)" },
+      ],
    },
    {
       key: "--bcp-bloom-shadow",
       name: "--bcp-bloom-shadow",
       type: "Bloom circle",
       description: "Drop shadow under the open bloom circle.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "rgba(0,0,0,.12)" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "rgba(0,0,0,.12)" },
+      ],
    },
    {
       key: "--bcp-dish-bg",
       name: "--bcp-dish-bg",
       type: "Dish",
       description: "Background of the inset dish that holds the petals.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "rgba(233,234,236,.8)" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "rgba(233,234,236,.8)" },
+      ],
    },
    {
       key: "--bcp-petal-shadow",
       name: "--bcp-petal-shadow",
       type: "Petal button",
       description: "Drop shadow under each petal.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "rgba(0,0,0,.06)" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "rgba(0,0,0,.06)" },
+      ],
    },
    {
       key: "--bcp-input-bg",
       name: "--bcp-input-bg",
       type: "Hex text field",
-      description: "Background of the hex input, and the grouped pill in inputVariant=\"grouped\".",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "#f2f2f4" }],
+      description: 'Background of the hex input, and the grouped pill in inputVariant="grouped".',
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "#f2f2f4" },
+      ],
    },
    {
       key: "--bcp-input-border",
       name: "--bcp-input-border",
       type: "Hex text field",
-      description: "Border of the hex input, and the grouped pill in inputVariant=\"grouped\".",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "#e4e4e9" }],
+      description: 'Border of the hex input, and the grouped pill in inputVariant="grouped".',
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "#e4e4e9" },
+      ],
    },
    {
       key: "--bcp-input-color",
       name: "--bcp-input-color",
       type: "Hex text field",
       description: "Hex input text color while idle.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "#8a8a92" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "#8a8a92" },
+      ],
    },
    {
       key: "--bcp-input-color-focus",
       name: "--bcp-input-color-focus",
       type: "Hex text field",
       description: "Hex input text color while focused.",
-      meta: [{ label: "Kind", value: "CSS Variable" }, { label: "Default", value: "#1a1a1a" }],
+      meta: [
+         { label: "Kind", value: "CSS Variable" },
+         { label: "Default", value: "#1a1a1a" },
+      ],
    },
 ];
 

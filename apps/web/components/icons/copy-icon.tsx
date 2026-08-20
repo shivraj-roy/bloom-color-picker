@@ -1,6 +1,12 @@
 export function CopyIcon({ size = 16 }: { size?: number }) {
    return (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+         width={size}
+         height={size}
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+      >
          <path
             d="M8.75 8V8.75M8.75 5V4.75C8.75 3.64543 9.64543 2.75 10.75 2.75H11M19 2.75H19.25C20.3546 2.75 21.25 3.64543 21.25 4.75V5M14 2.75H16M21.25 8V10M21.25 13V13.25C21.25 14.3546 20.3546 15.25 19.25 15.25H19M16 15.25H15.25M14 8.75H4C3.30964 8.75 2.75 9.30964 2.75 10V20C2.75 20.6904 3.30964 21.25 4 21.25H14C14.6904 21.25 15.25 20.6904 15.25 20V10C15.25 9.30964 14.6904 8.75 14 8.75Z"
             stroke="currentColor"

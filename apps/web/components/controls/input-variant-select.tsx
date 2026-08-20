@@ -7,7 +7,14 @@ export type InputVariant = "split" | "grouped";
 // swatch and input as separate elements
 function SplitIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M9 12C9 13.6569 7.6569 15 6 15C4.3431 15 3 13.6569 3 12C3 10.3431 4.3431 9 6 9C7.6569 9 9 10.3431 9 12Z"
             stroke="currentColor"
@@ -21,7 +28,14 @@ function SplitIcon(props: SVGProps<SVGSVGElement>) {
 // swatch and input grouped in one shared box
 function GroupedIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M22 12C22 15.3137 19.3137 18 16 18H8C4.6863 18 2 15.3137 2 12C2 8.6863 4.6863 6 8 6H16C19.3137 6 22 8.6863 22 12Z"
             stroke="currentColor"

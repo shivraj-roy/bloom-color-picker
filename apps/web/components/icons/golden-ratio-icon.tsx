@@ -70,7 +70,12 @@ const SPIRAL_ARC_9_D =
 
 export function GoldenRatioIcon() {
    return (
-      <svg className="golden-ratio-icon" viewBox="0 0 915 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+         className="golden-ratio-icon"
+         viewBox="0 0 915 580"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+      >
          <path
             d={CENTER_LINE_D}
             pathLength={1}

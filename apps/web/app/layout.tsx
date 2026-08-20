@@ -23,7 +23,8 @@ const handwritten = localFont({
 
 export const metadata: Metadata = {
    title: "bloom-color-picker",
-   description: "A flower-inspired color picker. A tiny swatch blooms open into petals. Zero dependencies.",
+   description:
+      "A flower-inspired color picker. A tiny swatch blooms open into petals. Zero dependencies.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

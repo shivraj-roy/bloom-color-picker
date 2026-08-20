@@ -64,12 +64,17 @@ function buildPetals(outer: string[], inner: string[]): Petal[] {
 
    // Spiral reveal order: radius + angle so it winds outward (rings interleave)
    const orderOf = new Map<string, number>();
-   raw
-      .map((p) => ({ key: p.key, m: p.radius / OUTER_RADIUS + p.angleNorm }))
+   raw.map((p) => ({ key: p.key, m: p.radius / OUTER_RADIUS + p.angleNorm }))
       .sort((a, b) => a.m - b.m)
       .forEach((e, idx) => orderOf.set(e.key, idx));
 
-   return raw.map((p) => ({ key: p.key, x: p.x, y: p.y, color: p.color, order: orderOf.get(p.key)! }));
+   return raw.map((p) => ({
+      key: p.key,
+      x: p.x,
+      y: p.y,
+      color: p.color,
+      order: orderOf.get(p.key)!,
+   }));
 }
 
 function arcPath(): string {

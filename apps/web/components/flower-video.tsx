@@ -212,8 +212,14 @@ export function FlowerVideo() {
                let sum = 0;
                for (let dy = 0; dy < h; dy++) {
                   for (let dx = 0; dx < w; dx++) {
-                     const sx = Math.min(sampleWidth - 1, Math.max(0, Math.round(cx * CELL_SIZE + dx + offsetX)));
-                     const sy = Math.min(sampleHeight - 1, Math.max(0, Math.round(cy * CELL_SIZE + dy + offsetY)));
+                     const sx = Math.min(
+                        sampleWidth - 1,
+                        Math.max(0, Math.round(cx * CELL_SIZE + dx + offsetX))
+                     );
+                     const sy = Math.min(
+                        sampleHeight - 1,
+                        Math.max(0, Math.round(cy * CELL_SIZE + dy + offsetY))
+                     );
                      const i = (sy * sampleWidth + sx) * 4;
                      sum += (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
                   }
@@ -309,7 +315,8 @@ export function FlowerVideo() {
                const sx = Math.min(sampleWidth - 1, Math.max(0, Math.round(x + offsetX)));
                const sy = Math.min(sampleHeight - 1, Math.max(0, Math.round(y + offsetY)));
                const i = (sy * sampleWidth + sx) * 4;
-               const luminance = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
+               const luminance =
+                  (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
                const adjusted = Math.min(1, Math.max(0, 0.5 + (luminance - 0.5) / GAMMA));
                const baseRadius = adjusted * cellPx * HALFTONE_MAX_RADIUS;
                // blend toward a fixed mid-size dot within the ring — same idea
@@ -395,11 +402,7 @@ export function FlowerVideo() {
                   muted
                   playsInline
                />
-               <canvas
-                  ref={canvasRef}
-                  className="flower-video__canvas"
-                  data-style={style}
-               />
+               <canvas ref={canvasRef} className="flower-video__canvas" data-style={style} />
                {!loaded && (
                   <div className="flower-video__loading">
                      <GoldenRatioIcon />

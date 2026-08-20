@@ -18,13 +18,7 @@ const EXPAND_SPRING = { type: "spring" as const, stiffness: 420, damping: 38 };
 const DETAIL_SPRING = { type: "spring" as const, stiffness: 380, damping: 30 };
 const REGROUP_SPRING = { type: "spring" as const, stiffness: 380, damping: 24 };
 
-export function AccordionRows({
-   rows,
-   namePill,
-}: {
-   rows: AccordionRow[];
-   namePill?: boolean;
-}) {
+export function AccordionRows({ rows, namePill }: { rows: AccordionRow[]; namePill?: boolean }) {
    const [openKey, setOpenKey] = useState<string | null>(null);
 
    return (

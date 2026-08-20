@@ -5,7 +5,14 @@ import type { ToggleSelectOption } from "../toggle-select";
 // won't open
 function LockedFlowerIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M7.5 12C5.01472 12 3 9.98528 3 7.5C3 6.2924 3.47567 5.1959 4.24987 4.38765M7.5 12C5.01472 12 3 14.0147 3 16.5C3 18.9853 5.01472 21 7.5 21C9.98528 21 12 18.9853 12 16.5M7.5 12H9M7.5 3C9.98528 3 12 5.01472 12 7.5C12 5.01472 14.0147 3 16.5 3C18.9853 3 21 5.01472 21 7.5C21 9.98528 18.9853 12 16.5 12C18.9853 12 21 14.0147 21 16.5M12 16.5C12 18.9853 14.0147 21 16.5 21C17.7076 21 18.8041 20.5243 19.6124 19.7501M12 16.5V15"
             stroke="currentColor"
@@ -27,7 +34,12 @@ function LockedFlowerIcon(props: SVGProps<SVGSVGElement>) {
             strokeLinecap="round"
             strokeLinejoin="round"
          />
-         <path d="M1.98279 2.02637L22.0002 22.0438" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+         <path
+            d="M1.98279 2.02637L22.0002 22.0438"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+         />
       </svg>
    );
 }
@@ -35,7 +47,14 @@ function LockedFlowerIcon(props: SVGProps<SVGSVGElement>) {
 // opens (default)
 function UnlockedFlowerIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M7.5 12C5.01472 12 3 9.98528 3 7.5C3 5.01472 5.01472 3 7.5 3C9.98528 3 12 5.01472 12 7.5M7.5 12C5.01472 12 3 14.0147 3 16.5C3 18.9853 5.01472 21 7.5 21C9.98528 21 12 18.9853 12 16.5M7.5 12H9M12 7.5C12 5.01472 14.0147 3 16.5 3C18.9853 3 21 5.01472 21 7.5C21 9.98528 18.9853 12 16.5 12M12 7.5V9M12 16.5C12 18.9853 14.0147 21 16.5 21C18.9853 21 21 18.9853 21 16.5C21 14.0147 18.9853 12 16.5 12M12 16.5V15M16.5 12H15"
             stroke="currentColor"

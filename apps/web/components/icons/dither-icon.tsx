@@ -1,6 +1,12 @@
 export function DitherIcon({ size = 16 }: { size?: number }) {
    return (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+         width={size}
+         height={size}
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+      >
          <path d="M10.2 10.2002H13.8V13.8002H10.2V10.2002Z" fill="currentColor" />
          <path d="M6.59998 10.2002H10.2V13.8002H6.59998V10.2002Z" fill="currentColor" />
          <path d="M3 13.7998H6.6V17.3998H3V13.7998Z" fill="currentColor" />

@@ -6,7 +6,14 @@ export type BloomTheme = "auto" | "light" | "dark";
 
 function AutoThemeIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M11.9989 2.75C7.99438 2.75 4.74805 5.99633 4.74805 10.0009C4.74805 12.3433 5.85882 14.4264 7.58239 15.7519C7.62065 15.7814 7.65921 15.8104 7.69807 15.8391C8.30648 16.2881 8.74775 16.961 8.74775 17.7171V18.9988C8.74775 20.7944 10.2034 22.25 11.9989 22.25C13.7945 22.25 15.2501 20.7944 15.2501 18.9988V17.7171C15.2501 16.961 15.6914 16.2881 16.2998 15.8391C16.3387 15.8104 16.3772 15.7814 16.4155 15.7519C18.139 14.4264 19.2498 12.3433 19.2498 10.0009C19.2498 5.99633 16.0035 2.75 11.9989 2.75Z"
             stroke="currentColor"
@@ -31,7 +38,14 @@ function AutoThemeIcon(props: SVGProps<SVGSVGElement>) {
 
 function LightThemePropIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M2.49012 13.0894L1.53906 13.3984M22.4623 6.60006L21.5112 6.90908M2.49012 6.90863L1.53906 6.59961M22.4623 13.398L21.5112 13.089"
             stroke="currentColor"
@@ -59,7 +73,14 @@ function LightThemePropIcon(props: SVGProps<SVGSVGElement>) {
 
 function DarkThemePropIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M11.9991 2.75C7.99456 2.75 4.74823 5.99633 4.74823 10.0009C4.74823 12.3433 5.85901 14.4264 7.58257 15.7519C7.62083 15.7814 7.6594 15.8104 7.69826 15.8391C8.30666 16.2881 8.74793 16.961 8.74793 17.7171V18.9988C8.74793 20.7944 10.2035 22.25 11.9991 22.25C13.7947 22.25 15.2503 20.7944 15.2503 18.9988V17.7171C15.2503 16.961 15.6916 16.2881 16.3 15.8391C16.3388 15.8104 16.3774 15.7814 16.4157 15.7519C18.1392 14.4264 19.25 12.3433 19.25 10.0009C19.25 5.99633 16.0037 2.75 11.9991 2.75Z"
             stroke="currentColor"

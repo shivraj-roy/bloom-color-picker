@@ -38,7 +38,12 @@ export function IconToggle({
    ariaLabel: string;
 }) {
    return (
-      <button type="button" className={`copy ${className}`} onClick={onToggle} aria-label={ariaLabel}>
+      <button
+         type="button"
+         className={`copy ${className}`}
+         onClick={onToggle}
+         aria-label={ariaLabel}
+      >
          <AnimatePresence mode="wait" initial={false}>
             {on ? (
                <motion.span

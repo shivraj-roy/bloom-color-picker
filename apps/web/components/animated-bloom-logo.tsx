@@ -10,7 +10,13 @@ import { motion } from "motion/react";
 // (inner first, outer last — 0/0.15/0.3s stagger, 0.9s each), "close" scales
 // them back out in reverse order (outer first, inner last — same stagger,
 // 1.2s each). Preloader.tsx owns the actual timing/sequencing.
-export function AnimatedBloomLogo({ size = 64, phase = "bloom" }: { size?: number; phase?: "bloom" | "close" }) {
+export function AnimatedBloomLogo({
+   size = 64,
+   phase = "bloom",
+}: {
+   size?: number;
+   phase?: "bloom" | "close";
+}) {
    return (
       <motion.svg
          width={size}
@@ -75,7 +81,14 @@ export function AnimatedBloomLogo({ size = 64, phase = "bloom" }: { size?: numbe
                },
             }}
          />
-         <ellipse className="preloader-logo__center" cx="93.5" cy="90" rx="15.5" ry="15" fill="#FFF4BF" />
+         <ellipse
+            className="preloader-logo__center"
+            cx="93.5"
+            cy="90"
+            rx="15.5"
+            ry="15"
+            fill="#FFF4BF"
+         />
       </motion.svg>
    );
 }

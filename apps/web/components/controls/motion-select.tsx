@@ -6,7 +6,14 @@ export type MotionValue = "none" | "subtle" | "bouncy";
 
 function NoneMotionIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M18.5 19C19.8807 19 21 17.8807 21 16.5C21 15.1193 19.8807 14 18.5 14C17.1193 14 16 15.1193 16 16.5C16 17.8807 17.1193 19 18.5 19Z"
             stroke="currentColor"
@@ -22,7 +29,14 @@ function NoneMotionIcon(props: SVGProps<SVGSVGElement>) {
 
 function SubtleMotionIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M18.5 19C19.8807 19 21 17.8807 21 16.5C21 15.1193 19.8807 14 18.5 14C17.1193 14 16 15.1193 16 16.5C16 17.8807 17.1193 19 18.5 19Z"
             stroke="currentColor"
@@ -46,7 +60,14 @@ function SubtleMotionIcon(props: SVGProps<SVGSVGElement>) {
 
 function BouncyMotionIcon(props: SVGProps<SVGSVGElement>) {
    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <svg
+         width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+         {...props}
+      >
          <path
             d="M7.51189 19.039C7.51189 19.039 6.35204 7.69827 3.01245 4.96143"
             stroke="currentColor"

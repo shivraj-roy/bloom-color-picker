@@ -43,7 +43,11 @@ export function ColorSelect({ label, value, colors, onValueChange }: ColorSelect
                   transition={{ type: "spring", stiffness: 420, damping: 32 }}
                >
                   {pages.map((rowColors, rowIndex) => (
-                     <div key={rowIndex} className="color-select__row" aria-hidden={page !== rowIndex || undefined}>
+                     <div
+                        key={rowIndex}
+                        className="color-select__row"
+                        aria-hidden={page !== rowIndex || undefined}
+                     >
                         {rowColors.map((hex) => {
                            const isActive = hex.toLowerCase() === value.toLowerCase();
                            return (

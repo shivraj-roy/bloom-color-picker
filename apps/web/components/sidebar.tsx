@@ -36,8 +36,8 @@ export function Sidebar() {
                <h1 className="sidebar__title">Bloom Color Picker</h1>
             </div>
             <p className="sidebar__tagline">
-               A color picker that blooms. A tiny swatch opens into a dahlia of petal swatches.
-               Zero dependencies.
+               A color picker that blooms. A tiny swatch opens into a dahlia of petal swatches. Zero
+               dependencies.
             </p>
             <div className="badges">
                <span className="badge badge--accent">v0.1.0</span>

@@ -33,7 +33,10 @@ export function Playground() {
    const [palette, setPalette] = usePersistedState<BloomColorPickerPalette>("palette", "warm");
    const [disabled, setDisabled] = usePersistedState("disabled", false);
    const [motionValue, setMotionValue] = usePersistedState<MotionValue>("motion", "subtle");
-   const [inputVariant, setInputVariant] = usePersistedState<InputVariant>("input-variant", "split");
+   const [inputVariant, setInputVariant] = usePersistedState<InputVariant>(
+      "input-variant",
+      "split"
+   );
    const [bloomTheme, setBloomTheme] = usePersistedState<BloomTheme>("bloom-theme", "light");
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
@@ -182,7 +185,9 @@ export function Playground() {
                      exit={{ opacity: 0, filter: "blur(3px)" }}
                      transition={{ duration: 0.32 }}
                   >
-                     <pre className="playground__code-snippet scroll-mask-x scroll-mask-y">{codeSnippet}</pre>
+                     <pre className="playground__code-snippet scroll-mask-x scroll-mask-y">
+                        {codeSnippet}
+                     </pre>
                   </motion.div>
                )}
             </AnimatePresence>
@@ -255,7 +260,12 @@ export function Playground() {
                      </div>
 
                      <div className="control">
-                        <ColorSelect label="Color" value={color} colors={SWATCH_COLORS} onValueChange={setColor} />
+                        <ColorSelect
+                           label="Color"
+                           value={color}
+                           colors={SWATCH_COLORS}
+                           onValueChange={setColor}
+                        />
                      </div>
 
                      <div className="control">
