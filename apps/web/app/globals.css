@@ -695,6 +695,10 @@ body.blueprint-visible::before {
    transition: opacity 0.4s ease;
 }
 
+[data-theme="dark"] .bracket-annotation {
+   color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
 .bracket-annotation__cap {
    position: absolute;
    left: 0;
@@ -1974,6 +1978,10 @@ body.blueprint-visible::before {
    pointer-events: none;
    opacity: 0;
    transition: opacity 0.4s ease;
+}
+
+[data-theme="dark"] .footer-annotation {
+   color: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .footer-annotation__text {
