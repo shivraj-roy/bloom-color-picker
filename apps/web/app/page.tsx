@@ -6,8 +6,9 @@ import { AnnotationArrowIcon } from "../components/annotations/annotation-arrow-
 import { ApiReference } from "../components/api-reference";
 import { BlueprintAngleGuide } from "../components/blueprint-angle-guide";
 import { FlowerVideo } from "../components/flower-video";
+import { Preloader } from "../components/preloader";
 
-// these two read persisted settings from localStorage on first render —
+// these read persisted settings from localStorage on first render —
 // rendering them only on the client (no SSR) means there's no server-
 // rendered "default" HTML to flash before the real, persisted values show up.
 const Playground = dynamic(() => import("../components/playground").then((m) => m.Playground), {
@@ -22,6 +23,8 @@ const Sidebar = dynamic(() => import("../components/sidebar").then((m) => m.Side
 export default function Home() {
    return (
       <div className="page">
+         <Preloader />
+
          <BlueprintAngleGuide />
 
          <main className="bento">

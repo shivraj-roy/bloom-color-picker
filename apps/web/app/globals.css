@@ -237,6 +237,24 @@ body.blueprint-visible::before {
    color: var(--accent);
 }
 
+.preloader {
+   position: fixed;
+   inset: 0;
+   z-index: 50;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   /* system-by-default, same as the site's own theme — next-themes sets
+      data-theme before first paint, and this just follows --canvas like
+      everything else, so it needs no extra logic of its own. Only shifts
+      if the visitor explicitly picks a theme via the toggle. */
+   background: var(--canvas);
+}
+
+.preloader-logo__center {
+   opacity: 1;
+}
+
 .page {
    height: 100dvh;
    display: flex;
