@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "next-themes";
 
 import "./globals.css";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          suppressHydrationWarning
       >
          <body>
+            <Analytics />
             <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
                {children}
             </ThemeProvider>
