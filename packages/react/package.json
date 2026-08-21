@@ -4,7 +4,7 @@
   "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shivraj-roy/bloom-color-picker.git",
+    "url": "git+https://github.com/shivraj-roy/bloom-color-picker.git",
     "directory": "packages/react"
   },
   "homepage": "https://bloom-color-picker.shivrajroy.in",
