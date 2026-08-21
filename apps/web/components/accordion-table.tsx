@@ -54,7 +54,8 @@ export function AccordionRows({ rows, namePill }: { rows: AccordionRow[]; namePi
                      </span>
                      <motion.span
                         className="props-panel__caret"
-                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        style={{ transformPerspective: 300 }}
+                        animate={{ rotateX: isOpen ? 180 : 0 }}
                         transition={EXPAND_SPRING}
                      >
                         <ChevronDownIcon size={18} />
