@@ -13,7 +13,9 @@
     "check-types": "turbo run check-types",
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,css,md}\" --cache",
-    "publish:release": "cd packages/react && pnpm publish:release"
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=bloom-color-picker... && changeset publish"
   },
   "keywords": [
     "color picker",
@@ -24,6 +26,7 @@
   "author": "Shivraj Roy <shivrajroy78@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^3.0.1",
     "prettier": "3.5.3",
     "turbo": "^2.9.18",
     "typescript": "^5.8.3"

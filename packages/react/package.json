@@ -60,8 +60,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup --minify && node -e \"fs.writeFileSync('dist/style.css.d.ts', 'export {};\\n')\"",
-    "check-types": "tsc --noEmit",
-    "publish:release": "pnpm build && pnpm publish --access public"
+    "check-types": "tsc --noEmit"
   },
   "keywords": [
     "color picker",
