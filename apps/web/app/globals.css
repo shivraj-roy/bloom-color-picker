@@ -2170,4 +2170,8 @@ body.blueprint-visible .footer-annotation {
       padding: 16px;
       gap: 8px;
    }
+
+   .selector__option {
+      padding: 6px 3px;
+   }
 }
