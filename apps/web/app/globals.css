@@ -371,12 +371,12 @@ body.blueprint-visible::before {
 }
 
 .sidebar__title {
+   min-width: 0;
    font-size: 25px;
    font-weight: 800;
    letter-spacing: -0.3px;
    line-height: 1.1;
    text-transform: capitalize;
-   white-space: nowrap;
 }
 
 .sidebar__tagline {
