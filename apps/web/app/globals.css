@@ -170,6 +170,10 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
+   /* mobile browsers flash a translucent tap-highlight box on any tappable
+      element by default — the site already has its own hover/active
+      states, so this is just noise. */
+   -webkit-tap-highlight-color: transparent;
 }
 
 html,
