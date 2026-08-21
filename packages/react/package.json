@@ -1,6 +1,6 @@
 {
   "name": "bloom-color-picker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies.",
   "repository": {
     "type": "git",
