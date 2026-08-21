@@ -179,6 +179,11 @@
 html,
 body {
    height: 100%;
+   /* .blueprint-angle-guide is a position:fixed SVG sized 3000x3000px (so
+      its rays always reach the viewport edges) — that oversized box still
+      counts toward the document's scrollable width even while invisible
+      (opacity:0), unless something clips it. */
+   overflow-x: hidden;
 }
 
 body {
@@ -1801,6 +1806,7 @@ body.blueprint-visible::before {
 .props-panel__viewport {
    flex: 1;
    min-height: 0;
+   min-width: 0;
    display: flex;
    overflow: hidden;
 }
@@ -1824,7 +1830,7 @@ body.blueprint-visible::before {
 .props-panel__head-row {
    flex-shrink: 0;
    display: grid;
-   grid-template-columns: 1fr 1fr auto;
+   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
    gap: 8px;
    padding: 10px 12px 6px;
    font-size: 11px;
@@ -1836,6 +1842,7 @@ body.blueprint-visible::before {
 .props-panel__list {
    flex: 1;
    min-height: 0;
+   min-width: 0;
    display: flex;
    flex-direction: column;
    border: 1px solid var(--card-border);
@@ -1897,7 +1904,7 @@ body.blueprint-visible::before {
 
 .props-panel__head {
    display: grid;
-   grid-template-columns: 1fr 1fr auto;
+   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
    align-items: center;
    gap: 8px;
    width: 100%;
@@ -2037,9 +2044,12 @@ body.blueprint-visible::before {
 .footer-annotation {
    display: inline-flex;
    position: absolute;
-   left: calc(100% + 10px);
+   left: calc(100% + 4px);
    top: 100%;
    transform: translateY(-70%) rotate(-4deg);
+   /* anchors the shrink to the link-side corner (scaled via an inline
+      style override, based on available margin) instead of the center. */
+   transform-origin: left top;
    flex-direction: column-reverse;
    align-items: flex-start;
    gap: 2px;

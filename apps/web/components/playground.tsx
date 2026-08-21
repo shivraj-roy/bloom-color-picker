@@ -123,18 +123,17 @@ export function Playground() {
 
    return (
       <section className="box playground" ref={sectionRef}>
-         <BracketAnnotation
-            style={{
-               top: bracketRect.top,
-               left: bracketRect.left,
-               height: bracketRect.height,
-               // inline opacity:0 overrides the blueprint-visible CSS rule
-               // (inline styles always win) when there's no room; leaving
-               // it undefined otherwise lets that rule — and its fade
-               // transition — control visibility as normal.
-               opacity: bracketRect.hasRoom ? undefined : 0,
-            }}
-         />
+         {/* not rendered at all (rather than just opacity:0) when there's no
+            room — on mobile the playground spans the full width, so `left`
+            (measured off the playground's own right edge) would otherwise
+            sit just past the viewport, and that oversized fixed-position
+            box counts toward the page's scrollable width even while
+            invisible, causing a subtle horizontal scroll. */}
+         {bracketRect.hasRoom && (
+            <BracketAnnotation
+               style={{ top: bracketRect.top, left: bracketRect.left, height: bracketRect.height }}
+            />
+         )}
 
          <motion.div
             className="playground__code-panel"
