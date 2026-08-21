@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
+import bloomPackageJson from "../../../packages/react/package.json";
 import { GitHubIcon } from "./icons/github-icon";
 import { HeartIcon } from "./icons/heart-icon";
 import { BloomLogo } from "./bloom-logo";
@@ -40,7 +41,7 @@ export function Sidebar() {
                dependencies.
             </p>
             <div className="badges">
-               <span className="badge badge--accent">v0.1.0</span>
+               <span className="badge badge--accent">v{bloomPackageJson.version}</span>
                <a
                   className="badge"
                   href="https://github.com/shivraj-roy/bloom-color-picker"
