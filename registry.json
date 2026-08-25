@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "bloom-color-picker",
+  "homepage": "https://bloom-color-picker.shivrajroy.in",
+  "items": [
+    {
+      "name": "bloom-color-picker",
+      "type": "registry:item",
+      "title": "Bloom Color Picker",
+      "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies.",
+      "files": [
+        {
+          "path": "packages/react/src/index.tsx",
+          "type": "registry:component",
+          "target": "@components/bloom-color-picker/index.tsx"
+        },
+        {
+          "path": "packages/react/src/types.ts",
+          "type": "registry:file",
+          "target": "@components/bloom-color-picker/types.ts"
+        },
+        {
+          "path": "packages/react/src/palettes.ts",
+          "type": "registry:file",
+          "target": "@components/bloom-color-picker/palettes.ts"
+        },
+        {
+          "path": "packages/react/src/color.ts",
+          "type": "registry:file",
+          "target": "@components/bloom-color-picker/color.ts"
+        },
+        {
+          "path": "packages/react/src/use-controllable-state.ts",
+          "type": "registry:hook",
+          "target": "@components/bloom-color-picker/use-controllable-state.ts"
+        },
+        {
+          "path": "packages/react/src/style.css",
+          "type": "registry:file",
+          "target": "@components/bloom-color-picker/style.css"
+        }
+      ]
+    }
+  ]
+}
