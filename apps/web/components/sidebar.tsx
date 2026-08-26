@@ -24,6 +24,14 @@ const SOURCES: InstallTabOption<Source>[] = [
 
 const HEIGHT_SPRING = { type: "spring" as const, stiffness: 380, damping: 34 };
 
+// TODO: replace with "@shivraj-roy/bloom-color-picker" once that namespace is
+// listed in shadcn's registry directory (a PR adding it to
+// apps/v4/registry/directory.json in shadcn-ui/ui — it publishes on merge).
+// Register it against https://www.shivrajroy.in/r/{name}.json, not this
+// subdomain, so future components from other projects can share the namespace;
+// point that path here with a rewrite for now. The CLI resolves the directory
+// live on every install, so the host stays changeable later without breaking
+// anyone — but getting it right up front avoids a second review round.
 const REGISTRY_URL = "https://bloom-color-picker.shivrajroy.in/r/bloom-color-picker.json";
 
 const INSTALL: Record<Source, Record<Manager, string>> = {
