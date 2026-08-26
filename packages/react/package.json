@@ -52,10 +52,7 @@
     "clean": true,
     "dts": true,
     "injectStyle": false,
-    "outDir": "./dist",
-    "banner": {
-      "js": "\"use client\";"
-    }
+    "outDir": "./dist"
   },
   "scripts": {
     "dev": "tsup --watch",

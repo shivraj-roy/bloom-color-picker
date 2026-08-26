@@ -454,6 +454,101 @@ body.blueprint-visible::before {
    background: var(--card);
 }
 
+/* the install command can be long (the shadcn one carries a full registry
+   URL), so it scrolls under a fade instead of being cut off by an ellipsis */
+.install-box .code-row code {
+   overflow-x: auto;
+   text-overflow: clip;
+   scrollbar-width: none;
+}
+
+.install-box .code-row code::-webkit-scrollbar {
+   display: none;
+}
+
+/* ── Source tabs (Primitives / shadcn) ──────────────────────────────
+   Attached tabs: the active one is a bordered, top-rounded shape whose
+   bottom edge sits on top of the box's own top border and hides it, so
+   the pair reads as a single container. */
+.install-tabs {
+   position: relative;
+   z-index: 1;
+   display: flex;
+   margin-bottom: -1px;
+}
+
+.install-tab {
+   position: relative;
+   z-index: 1;
+   display: inline-flex;
+   align-items: center;
+   background: none;
+   border: none;
+   padding: 8px 12px 9px;
+   font-size: 11.5px;
+   font-weight: 700;
+   font-family: var(--font-nunito), sans-serif;
+   color: var(--muted);
+   cursor: pointer;
+   transition: color 0.2s ease;
+}
+
+.install-tab--active {
+   color: var(--ink);
+}
+
+/* Only the active tab shows its label; the rest collapse to the icon. The
+   gap lives on the label rather than the button so it collapses too —
+   otherwise every inactive tab would keep 6px of dead space beside its icon. */
+.install-tab__label {
+   display: flex;
+   overflow: hidden;
+}
+
+.install-tab__label-text {
+   padding-left: 6px;
+   white-space: nowrap;
+}
+
+.install-tabs__highlight {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   background: var(--canvas);
+   border: 1px solid var(--card-border);
+   border-bottom: none;
+   border-radius: var(--r-inner) var(--r-inner) 0 0;
+}
+
+/* Offsets are relative to the highlight's padding box, which sits 1px inside
+   its border — so the nominal -8px radius becomes -8.5px to land the arc's
+   endpoint on the border's centre line rather than its inner edge. The -2.5px
+   bottom does the same vertically: it drops the fill's 3px overrun past the
+   box's top border while leaving the arc itself on that border's centre. */
+.install-tabs__fillet {
+   position: absolute;
+   bottom: -2.5px;
+}
+
+.install-tabs__fillet--left {
+   left: -8.5px;
+}
+
+.install-tabs__fillet--right {
+   right: -8.5px;
+}
+
+.install-tabs__fillet-fill {
+   fill: var(--canvas);
+}
+
+.install-tabs__fillet-edge {
+   fill: none;
+   stroke: var(--card-border);
+   stroke-width: 1;
+}
+
 .sidebar__label {
    font-size: 11px;
    font-weight: 800;
@@ -521,6 +616,12 @@ body.blueprint-visible::before {
    border: 1px solid var(--card-border);
    border-radius: var(--r-inner);
    padding: 10px 12px 4px;
+}
+
+/* middle: the animated height, carrying no padding or border of its own so it
+   can be set straight from the <pre>'s measured height with no arithmetic */
+.code-block__reveal {
+   overflow: hidden;
 }
 
 /* inner: the actual scroll container — mask/fade applies only here */
