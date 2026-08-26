@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
@@ -20,6 +21,8 @@ const SOURCES: InstallTabOption<Source>[] = [
    { key: "primitives", label: "Primitives", icon: <BloomLogo size={15} /> },
    { key: "shadcn", label: "shadcn/ui", icon: <ShadcnIcon size={12} /> },
 ];
+
+const HEIGHT_SPRING = { type: "spring" as const, stiffness: 380, damping: 34 };
 
 const REGISTRY_URL = "https://bloom-color-picker.shivrajroy.in/r/bloom-color-picker.json";
 
@@ -61,6 +64,22 @@ export function Sidebar() {
    const [source, setSource] = usePersistedState<Source>("install-source", "primitives");
    const activeIdx = SOURCES.findIndex((s) => s.key === source);
 
+   // The two usage snippets differ by a line, so the box would otherwise jump
+   // on every switch. The <pre> keeps its natural height inside a clipped
+   // wrapper; only that wrapper is animated, to the height just measured.
+   const usageRef = useRef<HTMLPreElement>(null);
+   const [usageHeight, setUsageHeight] = useState<number | "auto">("auto");
+
+   useLayoutEffect(() => {
+      const measure = () => {
+         if (usageRef.current) setUsageHeight(usageRef.current.offsetHeight);
+      };
+
+      measure();
+      const raf = window.requestAnimationFrame(measure); // re-check once fonts settle
+      return () => window.cancelAnimationFrame(raf);
+   }, [source]);
+
    return (
       <aside className="box sidebar">
          <div>
@@ -97,7 +116,7 @@ export function Sidebar() {
                   className="install-box"
                   initial={false}
                   animate={{ borderTopLeftRadius: activeIdx > 0 ? 12 : 0 }}
-                  transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                  transition={HEIGHT_SPRING}
                >
                   <div className="tabs">
                      {MANAGERS.map((m) => (
@@ -132,7 +151,16 @@ export function Sidebar() {
                <CopyButton text={USAGE[source]} label="Copy usage snippet" />
             </div>
             <div className="code-block">
-               <pre className="code-block__scroll scroll-mask-x">{USAGE[source]}</pre>
+               <motion.div
+                  className="code-block__reveal"
+                  initial={false}
+                  animate={{ height: usageHeight }}
+                  transition={HEIGHT_SPRING}
+               >
+                  <pre ref={usageRef} className="code-block__scroll scroll-mask-x">
+                     {USAGE[source]}
+                  </pre>
+               </motion.div>
             </div>
          </div>
 

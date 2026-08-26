@@ -606,6 +606,12 @@ body.blueprint-visible::before {
    padding: 10px 12px 4px;
 }
 
+/* middle: the animated height, carrying no padding or border of its own so it
+   can be set straight from the <pre>'s measured height with no arithmetic */
+.code-block__reveal {
+   overflow: hidden;
+}
+
 /* inner: the actual scroll container — mask/fade applies only here */
 .code-block__scroll {
    font-family: var(--font-mono), ui-monospace, monospace;
