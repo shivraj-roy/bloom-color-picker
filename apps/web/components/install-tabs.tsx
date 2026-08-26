@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, type MotionProps } from "motion/react";
+import { useEffect, useRef } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring, type MotionProps } from "motion/react";
 
 const SLIDE_SPRING = { type: "spring" as const, stiffness: 380, damping: 34 };
 
@@ -61,26 +61,64 @@ export function InstallTabs<T extends string>({
 }) {
    const activeIdx = options.findIndex((o) => o.key === value);
    const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
-   const [highlight, setHighlight] = useState({ left: 0, width: 0 });
+   const labelRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-   // Measured offsetLeft/offsetWidth rather than a shared `layoutId`: the
-   // highlight owns the fillets and a real border, and layout projection
-   // distorts both while it interpolates. Re-measured on resize because the
-   // sidebar narrows at the tablet breakpoint.
+   // Measured geometry rather than a shared `layoutId`: the highlight owns the
+   // fillets and a real 1px border, and layout projection animates by scaling —
+   // which would visibly thicken the border and warp the fillets mid-flight.
+   //
+   // The live geometry can't be used as the target either: on switch, the new
+   // tab's label is still collapsed, so aiming at what's currently on screen
+   // would pull the highlight down to icon width before the label opens and
+   // pushed it back out — a visible shrink-then-grow. So the target is where
+   // the tab will *end up*, derived from the labels rather than waiting for
+   // them: the active one gains its label's full width (scrollWidth reports it
+   // even while clipped to 0), and every label before it collapses away, which
+   // is exactly how far left the active tab slides.
+   //
+   // Both are expressed as deltas off the current layout, so they hold at any
+   // point mid-flight — the numbers come out the same whether measured before
+   // the transition or halfway through it, which keeps the ResizeObserver
+   // below free to re-fire without ever re-aiming the spring.
+   const targetX = useMotionValue(0);
+   const targetWidth = useMotionValue(0);
+   const x = useSpring(targetX, SLIDE_SPRING);
+   const width = useSpring(targetWidth, SLIDE_SPRING);
+   const hasMeasured = useRef(false);
+
    useEffect(() => {
       const measure = () => {
          const el = btnRefs.current[activeIdx];
-         if (el) setHighlight({ left: el.offsetLeft, width: el.offsetWidth });
+         if (!el) return;
+
+         const label = labelRefs.current[activeIdx];
+         const settledWidth =
+            el.offsetWidth - (label?.offsetWidth ?? 0) + (label?.scrollWidth ?? 0);
+
+         let settledLeft = el.offsetLeft;
+         for (let i = 0; i < activeIdx; i++) {
+            settledLeft -= labelRefs.current[i]?.offsetWidth ?? 0;
+         }
+
+         targetX.set(settledLeft);
+         targetWidth.set(settledWidth);
+
+         // first measurement is the initial layout, not a transition — jump so
+         // the highlight doesn't slide in from zero width on mount
+         if (!hasMeasured.current) {
+            hasMeasured.current = true;
+            x.jump(settledLeft);
+            width.jump(settledWidth);
+         }
       };
 
       measure();
-      const raf = window.requestAnimationFrame(measure); // re-check once fonts settle
-      window.addEventListener("resize", measure);
-      return () => {
-         window.cancelAnimationFrame(raf);
-         window.removeEventListener("resize", measure);
-      };
-   }, [activeIdx]);
+      // still watched so font-swap reflow and the sidebar's tablet breakpoint
+      // are picked up; it no longer drives the transition itself
+      const observer = new ResizeObserver(measure);
+      btnRefs.current.forEach((el) => el && observer.observe(el));
+      return () => observer.disconnect();
+   }, [activeIdx, targetX, targetWidth, x, width]);
 
    return (
       <div className="install-tabs">
@@ -96,16 +134,33 @@ export function InstallTabs<T extends string>({
                aria-pressed={option.key === value}
             >
                {option.icon}
-               {option.label}
+               {/* clipped to width 0 rather than unmounted, so the button keeps
+                  its accessible name while collapsed to just the icon */}
+               <motion.span
+                  className="install-tab__label"
+                  ref={(el) => {
+                     labelRefs.current[i] = el;
+                  }}
+                  initial={false}
+                  animate={{ width: option.key === value ? "auto" : 0 }}
+                  transition={SLIDE_SPRING}
+               >
+                  {/* blurred on the text itself rather than on the wrapper —
+                     the wrapper clips, and a filter there would cut the blur
+                     off square at its edge */}
+                  <motion.span
+                     className="install-tab__label-text"
+                     initial={false}
+                     animate={{ filter: option.key === value ? "blur(0px)" : "blur(1.5px)" }}
+                     transition={{ duration: 0.22 }}
+                  >
+                     {option.label}
+                  </motion.span>
+               </motion.span>
             </button>
          ))}
 
-         <motion.div
-            className="install-tabs__highlight"
-            initial={false}
-            animate={{ x: highlight.left, width: highlight.width }}
-            transition={SLIDE_SPRING}
-         >
+         <motion.div className="install-tabs__highlight" style={{ x, width }}>
             {/* no fillet left of the first tab — nothing there to blend into */}
             <AnimatePresence>
                {activeIdx > 0 && (

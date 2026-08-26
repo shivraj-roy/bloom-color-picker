@@ -482,7 +482,6 @@ body.blueprint-visible::before {
    z-index: 1;
    display: inline-flex;
    align-items: center;
-   gap: 6px;
    background: none;
    border: none;
    padding: 8px 12px 9px;
@@ -496,6 +495,19 @@ body.blueprint-visible::before {
 
 .install-tab--active {
    color: var(--ink);
+}
+
+/* Only the active tab shows its label; the rest collapse to the icon. The
+   gap lives on the label rather than the button so it collapses too —
+   otherwise every inactive tab would keep 6px of dead space beside its icon. */
+.install-tab__label {
+   display: flex;
+   overflow: hidden;
+}
+
+.install-tab__label-text {
+   padding-left: 6px;
+   white-space: nowrap;
 }
 
 .install-tabs__highlight {
