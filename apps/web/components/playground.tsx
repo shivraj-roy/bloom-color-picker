@@ -6,6 +6,12 @@ import { bloomPalettes, BloomColorPicker, type BloomColorPickerPalette } from "b
 import "bloom-color-picker/style.css";
 
 import { usePersistedState } from "../lib/use-persisted-state";
+import {
+   DEFAULT_INSTALL_SOURCE,
+   IMPORT_LINES,
+   INSTALL_SOURCE_KEY,
+   type InstallSource,
+} from "../lib/install-source";
 import { CodeCloseIcon } from "./icons/code-close-icon";
 import { BLOOM_THEME_OPTIONS, type BloomTheme } from "./controls/bloom-theme-select";
 import { BracketAnnotation } from "./annotations/bracket-annotation";
@@ -38,6 +44,7 @@ export function Playground() {
       "split"
    );
    const [bloomTheme, setBloomTheme] = usePersistedState<BloomTheme>("bloom-theme", "light");
+   const [source] = usePersistedState<InstallSource>(INSTALL_SOURCE_KEY, DEFAULT_INSTALL_SOURCE);
    const [showCode, setShowCode] = useState(false);
    const previewRef = useRef<HTMLDivElement>(null);
    const sectionRef = useRef<HTMLElement>(null);
@@ -107,8 +114,9 @@ export function Playground() {
    }, [size, inputVariant]);
 
    const codeSnippet = [
-      'import { BloomColorPicker } from "bloom-color-picker";',
-      'import "bloom-color-picker/style.css";',
+      // follows the sidebar's install-source tabs — the two hooks share a key,
+      // so picking shadcn there swaps the import path here too
+      ...IMPORT_LINES[source],
       "",
       "<BloomColorPicker",
       `   size={${size}}`,

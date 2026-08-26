@@ -4,6 +4,12 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 
 import { usePersistedState } from "../lib/use-persisted-state";
+import {
+   DEFAULT_INSTALL_SOURCE,
+   IMPORT_LINES,
+   INSTALL_SOURCE_KEY,
+   type InstallSource,
+} from "../lib/install-source";
 import bloomPackageJson from "../../../packages/react/package.json";
 import { GitHubIcon } from "./icons/github-icon";
 import { HeartIcon } from "./icons/heart-icon";
@@ -14,10 +20,9 @@ import { CopyButton } from "./copy-button";
 import { InstallTabs, type InstallTabOption } from "./install-tabs";
 import { ThemeButton } from "./theme-button";
 
-type Source = "primitives" | "shadcn";
 type Manager = "npm" | "pnpm" | "bun" | "yarn";
 
-const SOURCES: InstallTabOption<Source>[] = [
+const SOURCES: InstallTabOption<InstallSource>[] = [
    { key: "primitives", label: "Primitives", icon: <BloomLogo size={15} /> },
    { key: "shadcn", label: "shadcn/ui", icon: <ShadcnIcon size={12} /> },
 ];
@@ -34,7 +39,7 @@ const HEIGHT_SPRING = { type: "spring" as const, stiffness: 380, damping: 34 };
 // anyone — but getting it right up front avoids a second review round.
 const REGISTRY_URL = "https://bloom-color-picker.shivrajroy.in/r/bloom-color-picker.json";
 
-const INSTALL: Record<Source, Record<Manager, string>> = {
+const INSTALL: Record<InstallSource, Record<Manager, string>> = {
    primitives: {
       npm: "npm install bloom-color-picker",
       pnpm: "pnpm add bloom-color-picker",
@@ -51,25 +56,24 @@ const INSTALL: Record<Source, Record<Manager, string>> = {
 
 const MANAGERS = Object.keys(INSTALL.primitives) as Manager[];
 
-const PROPS_SNIPPET = `
-<BloomColorPicker
-   defaultValue="#FFB1EE"
-   onChange={(hex) => console.log(hex)}
-/>`;
+const PROPS_SNIPPET = [
+   "<BloomColorPicker",
+   '   defaultValue="#FFB1EE"',
+   "   onChange={(hex) => console.log(hex)}",
+   "/>",
+];
 
-// the vendored copy imports its own stylesheet internally, so — unlike the
-// npm package — it needs no separate style.css import here.
-const USAGE: Record<Source, string> = {
-   primitives: `import { BloomColorPicker } from "bloom-color-picker";
-import "bloom-color-picker/style.css";
-${PROPS_SNIPPET}`,
-   shadcn: `import { BloomColorPicker } from "@/components/bloom-color-picker";
-${PROPS_SNIPPET}`,
-};
+function usageSnippet(source: InstallSource) {
+   return [...IMPORT_LINES[source], "", ...PROPS_SNIPPET].join("\n");
+}
 
 export function Sidebar() {
    const [manager, setManager] = usePersistedState<Manager>("package-manager", "npm");
-   const [source, setSource] = usePersistedState<Source>("install-source", "primitives");
+   const [source, setSource] = usePersistedState<InstallSource>(
+      INSTALL_SOURCE_KEY,
+      DEFAULT_INSTALL_SOURCE
+   );
+   const usage = usageSnippet(source);
    const activeIdx = SOURCES.findIndex((s) => s.key === source);
 
    // The two usage snippets differ by a line, so the box would otherwise jump
@@ -156,7 +160,7 @@ export function Sidebar() {
          <div className="sidebar__section" style={{ flex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                <span className="sidebar__label">Usage</span>
-               <CopyButton text={USAGE[source]} label="Copy usage snippet" />
+               <CopyButton text={usage} label="Copy usage snippet" />
             </div>
             <div className="code-block">
                <motion.div
@@ -166,7 +170,7 @@ export function Sidebar() {
                   transition={HEIGHT_SPRING}
                >
                   <pre ref={usageRef} className="code-block__scroll scroll-mask-x">
-                     {USAGE[source]}
+                     {usage}
                   </pre>
                </motion.div>
             </div>
