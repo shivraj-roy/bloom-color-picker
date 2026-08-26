@@ -23,7 +23,15 @@ function read(): Record<string, unknown> {
    let loaded: Record<string, unknown>;
    try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      loaded = raw ? JSON.parse(raw) : {};
+      const parsed: unknown = raw ? JSON.parse(raw) : null;
+      // JSON.parse yields any JSON value, so a corrupted entry could hand back
+      // null, a number or an array. Those reach `key in current` below and
+      // throw — during render, which takes the whole page down — so anything
+      // that isn't a plain object is treated as no stored state at all.
+      loaded =
+         parsed !== null && typeof parsed === "object" && !Array.isArray(parsed)
+            ? (parsed as Record<string, unknown>)
+            : {};
    } catch {
       loaded = {}; // private browsing, storage disabled, etc.
    }
