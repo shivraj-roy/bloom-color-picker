@@ -853,12 +853,17 @@
    border-radius: 50%;
    background: var(--bcp-dish-bg);
    overflow: hidden;
-   animation: bcp-dish-in var(--bcp-dur-dish) var(--bcp-ease-dish) 0.05s backwards;
+   animation: bcp-dish-in var(--bcp-dur-dish) var(--bcp-ease-dish) backwards;
 }
 
+/* The dish sits inside the bloom, so its scale multiplies with the bloom's own
+   0.1786 → 1. Starting from 0.4 meant an effective 0.07 on the first frame,
+   while the petals — siblings of the bloom, not children — animate at full size
+   from the start, so the dish read as arriving after them. It now starts close
+   to full and lets the parent's growth carry it. */
 @keyframes bcp-dish-in {
    from {
-      transform: scale(0.4);
+      transform: scale(0.86);
       opacity: 0;
       filter: blur(var(--bcp-dish-blur));
    }
@@ -993,6 +998,31 @@
    }
 }
 
+/* motion="none" is documented as an instant open/close — "a quick uniform
+   fade, not an instant snap" — but the override at the end of this file only
+   flattens durations, easings and delays; the keyframes still run the full
+   spiral. With the stagger gone, all 19 petals fly in from the centre on the
+   same frame inside 160ms, and the arc scales from 0.3 alongside them, which is
+   the most concentrated transform work this component can produce. These give
+   it the fade it actually promises — opacity only, so element-agnostic. */
+@keyframes bcp-fade-in {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}
+
+@keyframes bcp-fade-out {
+   from {
+      opacity: 1;
+   }
+   to {
+      opacity: 0;
+   }
+}
+
 /* Touch devices drop the focus-pull entirely. Opening the bloom animates blur
    on 22 layers at once — 19 petals, plus the bloom, the dish and the 360px arc,
    which is an SVG being blurred while it scales from 0.3. Unlike the transform
@@ -1008,7 +1038,11 @@
 @media (hover: none) and (pointer: coarse) {
    .bcp {
       --bcp-petal-blur-in: 0px;
-      --bcp-petal-blur-out: 0px;
+      /* The close keeps a softened version rather than dropping to 0: it is a
+         quarter of the entrance radius over a fixed 340ms, and without any of
+         it the petals snap back to the centre instead of collapsing. Far
+         cheaper than the entrance, which is what actually caused the jank. */
+      --bcp-petal-blur-out: 1.5px;
       --bcp-bloom-blur: 0px;
       --bcp-dish-blur: 0px;
       --bcp-arc-blur: 0px;
@@ -1027,6 +1061,20 @@
 
    .bcp__petal:not(:focus-visible) {
       outline: none !important;
+   }
+
+   /* Scoped to touch, where the compressed motion reads as a jerk. Desktop
+      keeps its current motion="none" look until that's a deliberate change.
+      The arc is the worst of them: a 360px SVG scaling from 0.3, so its paths
+      re-rasterise the whole way in. */
+   .bcp[data-motion="none"] .bcp__petal,
+   .bcp[data-motion="none"] .bcp__arc {
+      animation-name: bcp-fade-in;
+   }
+
+   .bcp[data-motion="none"] .bcp__petal--home,
+   .bcp[data-motion="none"] .bcp__arc--closing {
+      animation-name: bcp-fade-out;
    }
 }
 
