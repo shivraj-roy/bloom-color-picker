@@ -20,6 +20,16 @@
    --bcp-dur-press: 300ms;
    --bcp-ease-press: cubic-bezier(0.34, 1.56, 0.64, 1);
 
+   /* Focus-pull radii, kept as variables so they can be turned off where they
+      are too expensive to be worth it — see the coarse-pointer block at the end
+      of this file. `transform` and `opacity` are composited, but `blur()` forces
+      a re-raster every frame, and these layers all animate at once. */
+   --bcp-petal-blur-in: 12px;
+   --bcp-petal-blur-out: 3px;
+   --bcp-bloom-blur: 3px;
+   --bcp-dish-blur: 8px;
+   --bcp-arc-blur: 8px;
+
    --bcp-scale: 1;
 
    /* public theming variables — override any of these to restyle without
@@ -812,7 +822,7 @@
 
 @keyframes bcp-unblur-3 {
    from {
-      filter: blur(3px);
+      filter: blur(var(--bcp-bloom-blur));
    }
    to {
       filter: blur(0px);
@@ -833,7 +843,7 @@
    to {
       transform: scale(0.1786);
       opacity: 0;
-      filter: blur(3px);
+      filter: blur(var(--bcp-bloom-blur));
    }
 }
 
@@ -850,7 +860,7 @@
    from {
       transform: scale(0.4);
       opacity: 0;
-      filter: blur(8px);
+      filter: blur(var(--bcp-dish-blur));
    }
    to {
       transform: scale(1);
@@ -877,7 +887,7 @@
    from {
       opacity: 0;
       transform: scale(0.3);
-      filter: blur(8px);
+      filter: blur(var(--bcp-arc-blur));
    }
    to {
       opacity: 1;
@@ -899,7 +909,7 @@
    to {
       opacity: 0;
       transform: scale(0.3);
-      filter: blur(8px);
+      filter: blur(var(--bcp-arc-blur));
    }
 }
 
@@ -945,7 +955,7 @@
    from {
       transform: translate(var(--bcp-from-x), var(--bcp-from-y)) scale(1.5);
       opacity: 0;
-      filter: blur(12px);
+      filter: blur(var(--bcp-petal-blur-in));
    }
    to {
       transform: translate(0, 0) scale(1);
@@ -979,7 +989,44 @@
    to {
       transform: translate(var(--bcp-from-x), var(--bcp-from-y)) scale(1);
       opacity: 0;
-      filter: blur(3px);
+      filter: blur(var(--bcp-petal-blur-out));
+   }
+}
+
+/* Touch devices drop the focus-pull entirely. Opening the bloom animates blur
+   on 22 layers at once — 19 petals, plus the bloom, the dish and the 360px arc,
+   which is an SVG being blurred while it scales from 0.3. Unlike the transform
+   and opacity beside them, blur() can't be composited: every frame re-rasterises
+   the layer and runs a Gaussian over it. Desktop GPUs absorb that; phone GPUs
+   drop frames on it.
+
+   Keyed on pointer type rather than width, so a narrowed desktop window keeps
+   the full effect and only the devices that actually struggle take the cheap
+   path. Everything still spirals, scales and fades; what goes is the decoration
+   that costs the most to paint and reads the least in motion — the focus-pull
+   here, plus the petals' shadow and ring below. */
+@media (hover: none) and (pointer: coarse) {
+   .bcp {
+      --bcp-petal-blur-in: 0px;
+      --bcp-petal-blur-out: 0px;
+      --bcp-bloom-blur: 0px;
+      --bcp-dish-blur: 0px;
+      --bcp-arc-blur: 0px;
+   }
+
+   /* The rest of a petal's cost is paint, not motion: a blurred shadow and a
+      ring built from a nested color-mix(), on a 50%-radius box — repeated 19
+      times, all scaling at once. Both are decoration a phone can do without;
+      the petals stay legible on their own fills. The ring is set inline from
+      JS, so only !important can take it off — hence :not(:focus-visible), so
+      this can't also suppress the focus ring for anyone pairing a keyboard
+      with a touch device. */
+   .bcp__petal {
+      box-shadow: none;
+   }
+
+   .bcp__petal:not(:focus-visible) {
+      outline: none !important;
    }
 }
 
