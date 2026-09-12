@@ -7,7 +7,7 @@
       "name": "bloom-color-picker",
       "type": "registry:item",
       "title": "Bloom Color Picker",
-      "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies.",
+      "description": "A flower-inspired color picker \u2014 a swatch that blooms open into petals. Zero dependencies.",
       "files": [
         {
           "path": "packages/react/src/index.tsx",
@@ -28,6 +28,11 @@
           "path": "packages/react/src/color.ts",
           "type": "registry:file",
           "target": "@components/bloom-color-picker/color.ts"
+        },
+        {
+          "path": "packages/react/src/geometry.ts",
+          "type": "registry:file",
+          "target": "@components/bloom-color-picker/geometry.ts"
         },
         {
           "path": "packages/react/src/use-controllable-state.ts",

@@ -7,93 +7,22 @@ import "./style.css";
 import { deriveFromHex, normalizeHex, shadeOf } from "./color";
 import { bloomPalettes } from "./palettes";
 import type { BloomColorPickerPart, BloomColorPickerProps } from "./types";
+import {
+   ARC_C,
+   ARC_CANVAS,
+   ARC_GRADIENT_DY,
+   ARC_HALF_SPAN,
+   ARC_PATH,
+   ARC_STROKE,
+   BASE_SWATCH,
+   buildPetals,
+   cx,
+   knobPoint,
+   lightPosAt,
+   petalAt,
+   PETAL_SIZE,
+} from "./geometry";
 import { useControllableState } from "./use-controllable-state";
-
-const TAU = Math.PI * 2;
-
-// Base geometry, defined at size = 50 (closed swatch diameter). Everything scales linearly.
-const BASE_SWATCH = 50;
-const BLOOM_SIZE = 280;
-const PETAL_SIZE = 54;
-const OUTER_RADIUS = 78;
-const INNER_RADIUS = 42;
-
-// Brightness arc (SVG canvas units — the svg element scales as a whole)
-const ARC_CANVAS = 360;
-const ARC_C = ARC_CANVAS / 2;
-const ARC_RADIUS = 170;
-const ARC_HALF_SPAN = 26; // degrees above & below 3 o'clock
-const ARC_STROKE = 20;
-
-interface Petal {
-   key: string;
-   x: number;
-   y: number;
-   color: string;
-   order: number;
-}
-
-function buildPetals(outer: string[], inner: string[]): Petal[] {
-   const raw: Array<Omit<Petal, "order"> & { radius: number; angleNorm: number }> = [];
-
-   // Outer ring first so inner petals overlap on top.
-   outer.forEach((color, i) => {
-      const angle = (i / outer.length) * TAU - Math.PI / 2;
-      raw.push({
-         key: `o${i}`,
-         x: Math.cos(angle) * OUTER_RADIUS,
-         y: Math.sin(angle) * OUTER_RADIUS,
-         color,
-         radius: OUTER_RADIUS,
-         angleNorm: i / outer.length,
-      });
-   });
-
-   inner.forEach((color, i) => {
-      const angle = (i / inner.length) * TAU - Math.PI / 2;
-      raw.push({
-         key: `i${i}`,
-         x: Math.cos(angle) * INNER_RADIUS,
-         y: Math.sin(angle) * INNER_RADIUS,
-         color,
-         radius: INNER_RADIUS,
-         angleNorm: i / inner.length,
-      });
-   });
-
-   // White center on top
-   raw.push({ key: "center", x: 0, y: 0, color: "#FFFFFF", radius: 0, angleNorm: 0 });
-
-   // Spiral reveal order: radius + angle so it winds outward (rings interleave)
-   const orderOf = new Map<string, number>();
-   raw.map((p) => ({ key: p.key, m: p.radius / OUTER_RADIUS + p.angleNorm }))
-      .sort((a, b) => a.m - b.m)
-      .forEach((e, idx) => orderOf.set(e.key, idx));
-
-   return raw.map((p) => ({
-      key: p.key,
-      x: p.x,
-      y: p.y,
-      color: p.color,
-      order: orderOf.get(p.key)!,
-   }));
-}
-
-function arcPath(): string {
-   const a0 = (-ARC_HALF_SPAN * Math.PI) / 180;
-   const a1 = (ARC_HALF_SPAN * Math.PI) / 180;
-   const x0 = ARC_C + ARC_RADIUS * Math.cos(a0);
-   const y0 = ARC_C + ARC_RADIUS * Math.sin(a0);
-   const x1 = ARC_C + ARC_RADIUS * Math.cos(a1);
-   const y1 = ARC_C + ARC_RADIUS * Math.sin(a1);
-   return `M${x0} ${y0} A ${ARC_RADIUS} ${ARC_RADIUS} 0 0 1 ${x1} ${y1}`;
-}
-
-const ARC_PATH = arcPath();
-
-function cx(...parts: Array<string | false | null | undefined>): string {
-   return parts.filter(Boolean).join(" ");
-}
 
 const FALLBACK_HEX = "#F5B81E";
 
@@ -237,27 +166,21 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
    const handleDishMove = (e: React.PointerEvent) => {
       if (!bloomed || !dishRef.current) return;
       const rect = dishRef.current.getBoundingClientRect();
-      const px = e.clientX - rect.left - rect.width / 2;
-      const py = e.clientY - rect.top - rect.height / 2;
-      let best: string | null = null;
-      let bestDist = ((PETAL_SIZE * scale) / 2) ** 2;
-      for (const p of petals) {
-         const d = (px - p.x * scale) ** 2 + (py - p.y * scale) ** 2;
-         if (d <= bestDist) {
-            bestDist = d;
-            best = p.key;
-         }
-      }
-      setHovered(best);
+      setHovered(
+         petalAt(
+            petals,
+            e.clientX - rect.left - rect.width / 2,
+            e.clientY - rect.top - rect.height / 2,
+            scale
+         )
+      );
    };
 
    const shade = hex;
    const ringColor = `color-mix(in srgb, color-mix(in srgb, ${shade}, #000 30%) 14%, transparent)`;
 
    // Knob position along the arc
-   const knobAngle = ((-ARC_HALF_SPAN + lightPos * 2 * ARC_HALF_SPAN) * Math.PI) / 180;
-   const knobX = ARC_C + ARC_RADIUS * Math.cos(knobAngle);
-   const knobY = ARC_C + ARC_RADIUS * Math.sin(knobAngle);
+   const { x: knobX, y: knobY } = knobPoint(lightPos);
 
    const onKnobDown = (e: React.PointerEvent) => {
       e.preventDefault();
@@ -269,10 +192,7 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
          const rect = svg.getBoundingClientRect();
          const lx = (clientX - rect.left) * (ARC_CANVAS / rect.width);
          const ly = (clientY - rect.top) * (ARC_CANVAS / rect.height);
-         let deg = (Math.atan2(ly - ARC_C, lx - ARC_C) * 180) / Math.PI;
-         deg = Math.max(-ARC_HALF_SPAN, Math.min(ARC_HALF_SPAN, deg));
-         const pos = (deg + ARC_HALF_SPAN) / (2 * ARC_HALF_SPAN);
-         setValue(shadeOf(dragBase, pos));
+         setValue(shadeOf(dragBase, lightPosAt(lx, ly)));
       };
       updateFromPointer(e.clientX, e.clientY);
       const move = (ev: PointerEvent) => updateFromPointer(ev.clientX, ev.clientY);
@@ -325,9 +245,9 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                         id={gradientId}
                         gradientUnits="userSpaceOnUse"
                         x1={ARC_C}
-                        y1={ARC_C - ARC_RADIUS * Math.sin((ARC_HALF_SPAN * Math.PI) / 180)}
+                        y1={ARC_C - ARC_GRADIENT_DY}
                         x2={ARC_C}
-                        y2={ARC_C + ARC_RADIUS * Math.sin((ARC_HALF_SPAN * Math.PI) / 180)}
+                        y2={ARC_C + ARC_GRADIENT_DY}
                      >
                         <stop offset="0" stopColor="#ffffff" />
                         <stop offset="0.35" stopColor={base} />
