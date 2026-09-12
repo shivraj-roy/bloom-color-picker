@@ -33,3 +33,23 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      # public/r/ is a committed artifact generated from packages/react/src, and
+      # nothing regenerates it on deploy — so a source change that skips this
+      # step silently serves stale code to everyone installing via `shadcn add`.
+      # That happened once: 0.1.2's fixes never reached the registry.
+      # Wiped before regenerating so the comparison catches deletions too: an
+      # item removed from registry.json leaves its built file behind, and a
+      # check that only diffs regenerated output would pass while the site
+      # still served a component that no longer exists. --porcelain covers
+      # added, modified and deleted alike, where `git diff` alone misses
+      # untracked files.
+      - name: Registry up to date
+        run: |
+          rm -rf apps/web/public/r
+          pnpm build:registry
+          if [[ -n "$(git status --porcelain=v1 --untracked-files=all -- apps/web/public/r)" ]]; then
+            echo "::error::apps/web/public/r is stale. Run 'pnpm build:registry' and commit the result."
+            git status --short --untracked-files=all -- apps/web/public/r
+            exit 1
+          fi

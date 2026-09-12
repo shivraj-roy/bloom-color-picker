@@ -9,6 +9,7 @@
     "build": "turbo run build",
     "build:web": "turbo run build --filter=web...",
     "build:react": "turbo run build --filter=bloom-color-picker...",
+    "build:registry": "shadcn build registry.json -o apps/web/public/r",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md}\" --cache",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@changesets/cli": "^3.0.1",
     "prettier": "3.5.3",
+    "shadcn": "4.21.0",
     "turbo": "^2.9.18",
     "typescript": "^5.8.3"
   },
