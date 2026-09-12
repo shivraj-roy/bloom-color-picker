@@ -1,0 +1,8 @@
+{
+  "name": "@bloom-color-picker/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Canonical source for the parts of the picker that are not framework-specific. Synced into each framework package by `pnpm sync:core`; never published or imported at runtime.",
+  "license": "MIT",
+  "type": "module"
+}
