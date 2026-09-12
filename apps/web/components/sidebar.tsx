@@ -29,15 +29,12 @@ const SOURCES: InstallTabOption<InstallSource>[] = [
 
 const HEIGHT_SPRING = { type: "spring" as const, stiffness: 380, damping: 34 };
 
-// TODO: replace with "@shivraj-roy/bloom-color-picker" once that namespace is
-// listed in shadcn's registry directory (a PR adding it to
-// apps/v4/registry/directory.json in shadcn-ui/ui — it publishes on merge).
-// Register it against https://www.shivrajroy.in/r/{name}.json, not this
-// subdomain, so future components from other projects can share the namespace;
-// point that path here with a rewrite for now. The CLI resolves the directory
-// live on every install, so the host stays changeable later without breaking
-// anyone — but getting it right up front avoids a second review round.
-const REGISTRY_URL = "https://bloom-color-picker.shivrajroy.in/r/bloom-color-picker.json";
+// The namespace is listed in shadcn's registry directory, which the CLI
+// resolves on every install, so this short form needs no configuration on the
+// user's side. It points at https://www.shivrajroy.in/r/{name}.json — the
+// personal domain rather than this subdomain, so components from other projects
+// can share it later.
+const REGISTRY_ITEM = "@shivraj-roy/bloom-color-picker";
 
 const INSTALL: Record<InstallSource, Record<Manager, string>> = {
    primitives: {
@@ -47,10 +44,10 @@ const INSTALL: Record<InstallSource, Record<Manager, string>> = {
       yarn: "yarn add bloom-color-picker",
    },
    shadcn: {
-      npm: `npx shadcn@latest add ${REGISTRY_URL}`,
-      pnpm: `pnpm dlx shadcn@latest add ${REGISTRY_URL}`,
-      bun: `bunx --bun shadcn@latest add ${REGISTRY_URL}`,
-      yarn: `yarn dlx shadcn@latest add ${REGISTRY_URL}`,
+      npm: `npx shadcn@latest add ${REGISTRY_ITEM}`,
+      pnpm: `pnpm dlx shadcn@latest add ${REGISTRY_ITEM}`,
+      bun: `bunx --bun shadcn@latest add ${REGISTRY_ITEM}`,
+      yarn: `yarn dlx shadcn@latest add ${REGISTRY_ITEM}`,
    },
 };
 
