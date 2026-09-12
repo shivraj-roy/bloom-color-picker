@@ -33,3 +33,16 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      # public/r/ is a committed artifact generated from packages/react/src, and
+      # nothing regenerates it on deploy — so a source change that skips this
+      # step silently serves stale code to everyone installing via `shadcn add`.
+      # That happened once: 0.1.2's fixes never reached the registry.
+      - name: Registry up to date
+        run: |
+          pnpm build:registry
+          if ! git diff --quiet --exit-code apps/web/public/r; then
+            echo "::error::apps/web/public/r is stale. Run 'pnpm build:registry' and commit the result."
+            git diff --stat apps/web/public/r
+            exit 1
+          fi
