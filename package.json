@@ -10,6 +10,7 @@
     "build:web": "turbo run build --filter=web...",
     "build:react": "turbo run build --filter=bloom-color-picker...",
     "build:registry": "shadcn build registry.json -o apps/web/public/r",
+    "sync:core": "node scripts/sync-core.mjs",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md}\" --cache",

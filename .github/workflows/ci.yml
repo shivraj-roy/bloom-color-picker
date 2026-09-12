@@ -34,6 +34,25 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # The framework-agnostic sources live in packages/core and are copied into
+      # each framework package, because both distribution channels need real
+      # files: published packages stay zero-dependency, and the shadcn registry
+      # vendors raw source into users' projects. This catches a copy edited
+      # directly, or a core change that was never synced outward.
+      #
+      # Unlike the registry below, the target directories can't be wiped first —
+      # they also hold framework-specific files — so a file *deleted* from core
+      # leaves its copies behind. That surfaces as a build or type-check failure
+      # instead, since nothing would import it any more.
+      - name: Core in sync
+        run: |
+          pnpm sync:core
+          if [[ -n "$(git status --porcelain=v1 --untracked-files=all -- packages)" ]]; then
+            echo "::error::A framework package's core copy is out of sync. Edit packages/core, run 'pnpm sync:core', and commit."
+            git status --short --untracked-files=all -- packages
+            exit 1
+          fi
+
       # public/r/ is a committed artifact generated from packages/react/src, and
       # nothing regenerates it on deploy — so a source change that skips this
       # step silently serves stale code to everyone installing via `shadcn add`.
