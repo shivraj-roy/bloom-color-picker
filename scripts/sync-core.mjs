@@ -21,7 +21,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const coreDir = join(root, "packages/core/src");
 
 // every framework package that should receive a copy
-const targets = ["react"];
+const targets = ["react", "vue"];
 
 const files = readdirSync(coreDir).sort();
 

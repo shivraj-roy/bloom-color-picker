@@ -1,0 +1,17 @@
+import { resolve } from "node:path";
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+   plugins: [vue()],
+   build: {
+      lib: {
+         entry: resolve(__dirname, "src/index.ts"),
+         formats: ["es"],
+         fileName: () => "index.js",
+      },
+      // vue stays external so the published package keeps zero runtime
+      // dependencies, matching the React build
+      rollupOptions: { external: ["vue"] },
+   },
+});
