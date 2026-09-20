@@ -10,6 +10,9 @@ build/
 # turbo
 .turbo/
 
+# svelte-package scratch output
+.svelte-kit/
+
 # TypeScript incremental build info
 *.tsbuildinfo
 
