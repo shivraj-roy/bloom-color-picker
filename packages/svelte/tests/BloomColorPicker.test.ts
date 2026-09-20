@@ -217,4 +217,19 @@ describe("BloomColorPicker", () => {
       await fireEvent.input(input, { target: { value: "#AABBCCDD" } });
       expect(input.value).toBe("#AABBCC");
    });
+
+   // Regression: the caret was adjusted by the total characters removed, which
+   // also counted ones removed *after* it. Typing D into "#AA|BBCC" truncates
+   // the trailing C, but that is past the caret and must not drag it back.
+   it("puts the caret after a character typed mid-string", async () => {
+      render(BloomColorPicker, { defaultValue: "#AABBCC" });
+      const el = $(".bcp__input") as HTMLInputElement;
+
+      el.value = "#AADBBCC";
+      el.setSelectionRange(4, 4);
+      await fireEvent.input(el);
+
+      expect(el.value).toBe("#AADBBC");
+      expect(el.selectionStart).toBe(4);
+   });
 });

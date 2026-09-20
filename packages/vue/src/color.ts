@@ -101,3 +101,25 @@ export function deriveFromHex(hex: string): { base: string; lightPos: number } {
       lightPos: Math.min(1, Math.max(0, 1 - l)),
    };
 }
+
+/**
+ * Sanitises what a user typed into the hex field, and says where the caret
+ * belongs afterwards.
+ *
+ * The caret is derived from the sanitised *prefix* rather than by subtracting
+ * the total characters removed: truncation drops characters after the caret,
+ * and those must not drag it backwards. Typing `D` into `#AA|BBCC` yields
+ * `#AADBBC` — a character was lost, but from the end, so the caret still
+ * belongs right after the `D`.
+ */
+export function sanitizeHexEntry(raw: string, caretAt: number): { value: string; caret: number } {
+   const upper = raw.toUpperCase();
+   const digitsOf = (s: string) => s.replace(/[^0-9A-F]/g, "");
+
+   const value = (upper.startsWith("#") ? "#" : "") + digitsOf(upper).slice(0, 6);
+
+   const head = upper.slice(0, caretAt);
+   const headValue = (head.startsWith("#") ? "#" : "") + digitsOf(head).slice(0, 6);
+
+   return { value, caret: Math.min(headValue.length, value.length) };
+}

@@ -3,7 +3,7 @@
 
    import "./style.css";
 
-   import { deriveFromHex, normalizeHex, shadeOf } from "./color";
+   import { deriveFromHex, normalizeHex, sanitizeHexEntry, shadeOf } from "./color";
    import {
       ARC_C,
       ARC_CANVAS,
@@ -240,20 +240,18 @@
 
    const onHexInput = (e: Event) => {
       const el = e.currentTarget as HTMLInputElement;
-      const raw = el.value.toUpperCase();
-      const hasHash = raw.startsWith("#");
-      const digits = raw.replace(/[^0-9A-F]/g, "").slice(0, 6);
-      const next = (hasHash ? "#" : "") + digits;
+      const { value: next, caret } = sanitizeHexEntry(
+         el.value,
+         el.selectionStart ?? el.value.length
+      );
       hexDraft = next;
 
       // Svelte only writes to the DOM when the bound value changes, and a
       // rejected character sanitises to the string already there — so it would
       // stay on screen. React's controlled input overwrites on every render
       // instead, which is why it silently drops junk. Do the same explicitly,
-      // and pull the caret back by however many characters were dropped so
-      // typing mid-string doesn't send it to the end.
+      // restoring the caret the helper worked out.
       if (el.value !== next) {
-         const caret = (el.selectionStart ?? raw.length) + (next.length - raw.length);
          el.value = next;
          el.setSelectionRange(caret, caret);
       }

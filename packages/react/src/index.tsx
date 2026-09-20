@@ -4,7 +4,7 @@ import * as React from "react";
 
 import "./style.css";
 
-import { deriveFromHex, normalizeHex, shadeOf } from "./color";
+import { deriveFromHex, normalizeHex, sanitizeHexEntry, shadeOf } from "./color";
 import { bloomPalettes } from "./palettes";
 import type { BloomColorPickerPart, BloomColorPickerProps } from "./types";
 import {
@@ -350,10 +350,10 @@ export function BloomColorPicker(props: BloomColorPickerProps) {
                   data-slot="bcp-input"
                   value={hexDraft}
                   onChange={(e) => {
-                     const raw = e.target.value.toUpperCase();
-                     const hasHash = raw.startsWith("#");
-                     const digits = raw.replace(/[^0-9A-F]/g, "").slice(0, 6);
-                     const next = (hasHash ? "#" : "") + digits;
+                     const { value: next } = sanitizeHexEntry(
+                        e.target.value,
+                        e.target.selectionStart ?? e.target.value.length
+                     );
                      setHexDraft(next);
                      const valid = normalizeHex(next);
                      if (valid) setValue(valid);
