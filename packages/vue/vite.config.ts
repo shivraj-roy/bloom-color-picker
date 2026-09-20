@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
    plugins: [vue()],
@@ -13,5 +13,11 @@ export default defineConfig({
       // vue stays external so the published package keeps zero runtime
       // dependencies, matching the React build
       rollupOptions: { external: ["vue"] },
+   },
+   test: {
+      // the component reaches for document, getBoundingClientRect and pointer
+      // events, so it needs a DOM rather than a bare node environment
+      environment: "happy-dom",
+      include: ["src/**/*.test.ts"],
    },
 });

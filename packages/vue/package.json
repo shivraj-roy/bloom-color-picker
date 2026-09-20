@@ -1,7 +1,7 @@
 {
   "name": "bloom-color-picker-vue",
   "version": "0.0.0",
-  "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies. Vue 3.",
+  "description": "A flower-inspired color picker \u2014 a swatch that blooms open into petals. Zero dependencies. Vue 3.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shivraj-roy/bloom-color-picker.git",
@@ -37,7 +37,8 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly && node -e \"fs.writeFileSync('dist/style.css.d.ts', 'export {};\\n')\"",
-    "check-types": "vue-tsc --noEmit"
+    "check-types": "vue-tsc --noEmit",
+    "test": "vitest run"
   },
   "keywords": [
     "color picker",
@@ -51,8 +52,11 @@
   "license": "MIT",
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/test-utils": "^2.5.1",
+    "happy-dom": "^20.14.5",
     "typescript": "^5.8.3",
     "vite": "^6.0.7",
+    "vitest": "^5.0.1",
     "vue": "^3.5.13",
     "vue-tsc": "^2.2.0"
   },
