@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import BloomColorPicker from "./BloomColorPicker.vue";
+import BloomColorPicker from "../src/BloomColorPicker.vue";
 
 // Matches the constants in the component: the swatch waits PRESS_MS before
 // opening, the petals converge at CLOSE_PETALS_MS and unmount at
