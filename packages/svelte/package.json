@@ -1,7 +1,7 @@
 {
   "name": "bloom-color-picker-svelte",
   "version": "0.0.0",
-  "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies. Svelte 5.",
+  "description": "A flower-inspired color picker \u2014 a swatch that blooms open into petals. Zero dependencies. Svelte 5.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shivraj-roy/bloom-color-picker.git",
@@ -47,7 +47,7 @@
   "author": "Shivraj Roy <shivrajroy78@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "^5.20.0"
   },
   "devDependencies": {
     "@sveltejs/package": "^2.5.8",
