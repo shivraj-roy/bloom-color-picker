@@ -18,6 +18,6 @@ export default defineConfig({
       // the component reaches for document, getBoundingClientRect and pointer
       // events, so it needs a DOM rather than a bare node environment
       environment: "happy-dom",
-      include: ["src/**/*.test.ts"],
+      include: ["tests/**/*.test.ts"],
    },
 });
