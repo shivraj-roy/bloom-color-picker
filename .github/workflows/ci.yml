@@ -34,6 +34,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Test
+        run: pnpm test
+
       # The framework-agnostic sources live in packages/core and are copied into
       # each framework package, because both distribution channels need real
       # files: published packages stay zero-dependency, and the shadcn registry

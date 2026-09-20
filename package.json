@@ -13,6 +13,7 @@
     "sync:core": "node scripts/sync-core.mjs",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
+    "test": "turbo run test",
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,css,md}\" --cache",
     "changeset": "changeset",

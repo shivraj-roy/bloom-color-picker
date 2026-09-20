@@ -26,6 +26,12 @@ const FALLBACK_HEX = "#F5B81E";
 
 const props = withDefaults(defineProps<BloomColorPickerProps>(), {
    defaultValue: FALLBACK_HEX,
+   // Vue casts an absent Boolean prop to `false`, which would make `open` read
+   // as controlled-at-false and leave the picker permanently shut. Declaring the
+   // default as undefined opts out of that cast, so absent stays absent and the
+   // uncontrolled path works. `defaultOpen`, `disabled` and `hexInput` want the
+   // cast, since they are plain booleans rather than tri-state.
+   open: undefined,
    defaultOpen: false,
    palette: "warm",
    size: 28,
