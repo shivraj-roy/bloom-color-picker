@@ -13,7 +13,7 @@
 // telling them to edit a core copy they don't have would be worse than nothing.
 // The guard against editing a copy is CI, not a comment.
 
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -23,7 +23,17 @@ const coreDir = join(root, "packages/core/src");
 // every framework package that should receive a copy
 const targets = ["react", "vue"];
 
+// What the last sync wrote. Without it, a file deleted from core would leave its
+// copies behind: the copies are no longer regenerated, nothing reports a change,
+// and the CI guard passes while each package keeps shipping a module core no
+// longer has — including into users' projects, via the registry.
+const manifestPath = join(root, "scripts/.core-manifest.json");
+const previous = existsSync(manifestPath)
+   ? (JSON.parse(readFileSync(manifestPath, "utf8")).files ?? [])
+   : [];
+
 const files = readdirSync(coreDir).sort();
+const removed = previous.filter((name) => !files.includes(name));
 
 for (const target of targets) {
    const outDir = join(root, "packages", target, "src");
@@ -33,7 +43,18 @@ for (const target of targets) {
       writeFileSync(join(outDir, name), readFileSync(join(coreDir, name)));
    }
 
+   for (const name of removed) {
+      const stale = join(outDir, name);
+      if (existsSync(stale)) {
+         rmSync(stale);
+         console.log(`  ${target}: removed ${name} (no longer in core)`);
+      }
+   }
+
    console.log(`  ${target}: ${files.length} file(s)`);
 }
 
+writeFileSync(manifestPath, JSON.stringify({ files }, null, 2) + "\n");
+
 console.log(`\nSynced ${files.length} file(s) from packages/core/src`);
+if (removed.length) console.log(`Removed ${removed.length} stale file(s): ${removed.join(", ")}`);
