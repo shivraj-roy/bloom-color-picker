@@ -3,7 +3,7 @@ import { computed, onBeforeUnmount, ref, useId, watch } from "vue";
 
 import "./style.css";
 
-import { deriveFromHex, normalizeHex, shadeOf } from "./color";
+import { deriveFromHex, normalizeHex, sanitizeHexEntry, shadeOf } from "./color";
 import {
    ARC_C,
    ARC_CANVAS,
@@ -43,11 +43,15 @@ const props = withDefaults(defineProps<BloomColorPickerProps>(), {
    "aria-label": "Pick a color",
 });
 
-// Emits mirror the React callbacks, and `update:` pairs let `v-model` and
-// `v-model:open` work without the consumer wiring handlers by hand.
+// Only the `update:` pairs are emits, so `v-model` and `v-model:open` work.
+//
+// `change`/`openChange` are deliberately NOT declared here. They arrive as the
+// declared `onChange`/`onOpenChange` props instead, which is the only form that
+// catches every binding style: emit() resolves a camelised `onChange` key, so a
+// template's `:on-change="fn"` — kebab in the vnode props — would never reach
+// it, while prop resolution camelises and finds it. Calling the prop *and*
+// emitting would fire a handler twice, so it is the prop alone.
 const emit = defineEmits<{
-   change: [hex: string];
-   openChange: [open: boolean];
    "update:value": [hex: string];
    "update:open": [open: boolean];
 }>();
@@ -77,10 +81,8 @@ const ring = (color: string) => ({
 const [rawValue, setValue] = useControllableState(
    () => props.value,
    props.defaultValue,
-   // Only emit: Vue routes an `onChange` prop to the same listener that
-   // `emit("change")` reaches, so calling the prop as well fires it twice.
    (next) => {
-      emit("change", next);
+      props.onChange?.(next);
       emit("update:value", next);
    }
 );
@@ -100,7 +102,7 @@ const [open, setOpen] = useControllableState(
    () => props.open,
    props.defaultOpen,
    (next) => {
-      emit("openChange", next);
+      props.onOpenChange?.(next);
       emit("update:open", next);
    }
 );
@@ -256,11 +258,20 @@ const pickPetal = (color: string) => {
 };
 
 const onHexInput = (e: Event) => {
-   const raw = (e.target as HTMLInputElement).value.toUpperCase();
-   const hasHash = raw.startsWith("#");
-   const digits = raw.replace(/[^0-9A-F]/g, "").slice(0, 6);
-   const next = (hasHash ? "#" : "") + digits;
+   const el = e.target as HTMLInputElement;
+   const { value: next, caret } = sanitizeHexEntry(el.value, el.selectionStart ?? el.value.length);
    hexDraft.value = next;
+
+   // Vue only writes to the DOM when the bound value changes, and a rejected
+   // character sanitises to the string already there — so it would stay on
+   // screen. React's controlled input overwrites on every render instead, which
+   // is why it silently drops junk. Do the same explicitly, restoring the caret
+   // the helper worked out.
+   if (el.value !== next) {
+      el.value = next;
+      el.setSelectionRange(caret, caret);
+   }
+
    const valid = normalizeHex(next);
    if (valid) setValue(valid);
 };

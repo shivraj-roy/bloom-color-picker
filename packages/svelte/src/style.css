@@ -731,6 +731,16 @@
    opacity: 0.55;
 }
 
+/* The split variant carries its own focus ring, so it looks the same in any
+   host. Without one the browser default shows through in a bare app, while a
+   page with its own :focus-visible rule paints something else entirely — the
+   same component appearing to differ between frameworks purely because their
+   hosts differed. Matches the grouped variant's treatment below. */
+.bcp[data-input-variant="split"] .bcp__input:focus-visible {
+   outline: 2px solid var(--bcp-color-focus);
+   outline-offset: 2px;
+}
+
 /* grouped: swatch + input share one pill background instead of two boxes.
    The wrap's padding-left already reaches back under the swatch, so the
    shared background just needs its own bg/border/height — the swatch
