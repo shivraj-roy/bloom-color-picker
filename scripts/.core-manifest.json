@@ -1,0 +1,9 @@
+{
+  "files": [
+    "color.ts",
+    "geometry.ts",
+    "palettes.ts",
+    "style.css",
+    "types.ts"
+  ]
+}
