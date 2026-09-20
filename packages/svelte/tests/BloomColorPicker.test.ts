@@ -160,4 +160,34 @@ describe("BloomColorPicker", () => {
       render(BloomColorPicker, { theme: "auto" });
       expect($(".bcp")!.getAttribute("data-theme")).toBeNull();
    });
+
+   // The Vue port fired consumer callbacks twice, because Vue routes an
+   // onChange prop to the same listener emit() reaches. Svelte has no emit
+   // layer so it cannot, but the guarantee is worth pinning in both.
+   it("calls an onChange prop exactly once per change", async () => {
+      const onChange = vi.fn();
+      render(BloomColorPicker, { onChange });
+      await openPicker();
+      await fireEvent.click($$(".bcp__petal")[0]!);
+      expect(onChange).toHaveBeenCalledTimes(1);
+   });
+
+   it("an initially open picker still closes on Escape", async () => {
+      render(BloomColorPicker, { defaultOpen: true });
+      await vi.advanceTimersByTimeAsync(0);
+      expect($$(".bcp__petal").length).toBeGreaterThan(0);
+
+      await fireEvent.keyDown(document, { key: "Escape" });
+      await vi.advanceTimersByTimeAsync(CLOSE_UNMOUNT_MS);
+      expect($$(".bcp__petal")).toHaveLength(0);
+   });
+
+   it("gives the gradient a stable id, not a random one", () => {
+      render(BloomColorPicker, { defaultOpen: true });
+      const grad = $("linearGradient");
+      const id = grad?.getAttribute("id");
+      expect(id).toBeTruthy();
+      // the arc must reference the very same id
+      expect($("path[stroke^='url(']")?.getAttribute("stroke")).toBe(`url(#${id})`);
+   });
 });

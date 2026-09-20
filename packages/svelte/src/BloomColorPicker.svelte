@@ -117,7 +117,10 @@
    let dishEl = $state<HTMLDivElement | null>(null);
    let svgEl = $state<SVGSVGElement | null>(null);
 
-   const gradientId = `bcp-grad-${Math.random().toString(36).slice(2, 9)}`;
+   // $props.id() rather than a random string: the id is rendered into both an
+   // attribute and a url(#…) reference, so a value that differs between server
+   // and client would be a hydration mismatch. Requires Svelte 5.20.
+   const gradientId = $props.id();
 
    const petals = $derived(buildPetals(resolvedOuterColors, resolvedInnerColors));
 
