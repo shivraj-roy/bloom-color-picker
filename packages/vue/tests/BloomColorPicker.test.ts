@@ -165,4 +165,37 @@ describe("BloomColorPicker", () => {
       const auto = mount(BloomColorPicker, { props: { theme: "auto" } });
       expect(auto.find(".bcp").attributes("data-theme")).toBeUndefined();
    });
+
+   // Regression: Vue routes an `onChange` prop to the same listener that
+   // emit("change") reaches, so calling both fired every handler twice.
+   it("calls an onChange prop exactly once per change", async () => {
+      const onChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { onChange } });
+      await open(w);
+      await w.findAll(".bcp__petal")[0].trigger("click");
+      expect(onChange).toHaveBeenCalledTimes(1);
+   });
+
+   it("calls an onOpenChange prop exactly once per change", async () => {
+      const onOpenChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { onOpenChange } });
+      await open(w);
+      expect(onOpenChange).toHaveBeenCalledTimes(1);
+      expect(onOpenChange).toHaveBeenCalledWith(true);
+   });
+
+   // Regression: the close-listener watcher was not immediate, so a picker that
+   // started open had no Escape or outside-click handling until it cycled once.
+   it("an initially open picker still closes on Escape", async () => {
+      const w = mount(BloomColorPicker, { props: { defaultOpen: true } });
+      await w.vm.$nextTick();
+      expect(w.findAll(".bcp__petal").length).toBeGreaterThan(0);
+
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+      await w.vm.$nextTick();
+      vi.advanceTimersByTime(CLOSE_UNMOUNT_MS);
+      await w.vm.$nextTick();
+
+      expect(w.findAll(".bcp__petal")).toHaveLength(0);
+   });
 });

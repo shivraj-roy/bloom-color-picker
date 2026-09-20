@@ -77,8 +77,9 @@ const ring = (color: string) => ({
 const [rawValue, setValue] = useControllableState(
    () => props.value,
    props.defaultValue,
+   // Only emit: Vue routes an `onChange` prop to the same listener that
+   // `emit("change")` reaches, so calling the prop as well fires it twice.
    (next) => {
-      props.onChange?.(next);
       emit("change", next);
       emit("update:value", next);
    }
@@ -99,7 +100,6 @@ const [open, setOpen] = useControllableState(
    () => props.open,
    props.defaultOpen,
    (next) => {
-      props.onOpenChange?.(next);
       emit("openChange", next);
       emit("update:open", next);
    }
@@ -133,15 +133,20 @@ watch(
    open,
    (isOpen) => {
       clearTimers();
+      // Runs during SSR because of `immediate`, where there is no window. The
+      // state below is still worth setting so an initially-open picker renders
+      // its bloom on the server; only the timers need a client.
+      const canSchedule = typeof window !== "undefined";
       if (isOpen) {
          rendered.value = true;
          closing.value = false;
          petalsHome.value = false;
-         timers.push(window.setTimeout(() => (bloomed.value = true), BLOOM_DELAY_MS.value));
+         if (canSchedule)
+            timers.push(window.setTimeout(() => (bloomed.value = true), BLOOM_DELAY_MS.value));
       } else {
          bloomed.value = false;
          hovered.value = null;
-         if (rendered.value) {
+         if (rendered.value && canSchedule) {
             closing.value = true;
             timers.push(window.setTimeout(() => (petalsHome.value = true), CLOSE_PETALS_MS.value));
             timers.push(
@@ -165,15 +170,22 @@ const onDocumentKey = (e: KeyboardEvent) => {
    if (e.key === "Escape") setOpen(false);
 };
 
-watch(open, (isOpen) => {
-   if (isOpen) {
-      document.addEventListener("pointerdown", onDocumentDown);
-      document.addEventListener("keydown", onDocumentKey);
-   } else {
-      document.removeEventListener("pointerdown", onDocumentDown);
-      document.removeEventListener("keydown", onDocumentKey);
-   }
-});
+// immediate, so a picker that starts open still closes on Escape or an outside
+// click: without it no value change occurs and the listeners are never bound.
+watch(
+   open,
+   (isOpen) => {
+      if (typeof document === "undefined") return;
+      if (isOpen) {
+         document.addEventListener("pointerdown", onDocumentDown);
+         document.addEventListener("keydown", onDocumentKey);
+      } else {
+         document.removeEventListener("pointerdown", onDocumentDown);
+         document.removeEventListener("keydown", onDocumentKey);
+      }
+   },
+   { immediate: true }
+);
 
 onBeforeUnmount(() => {
    clearTimers();
