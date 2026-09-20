@@ -1,0 +1,63 @@
+{
+  "name": "bloom-color-picker-svelte",
+  "version": "0.0.0",
+  "description": "A flower-inspired color picker — a swatch that blooms open into petals. Zero dependencies. Svelte 5.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivraj-roy/bloom-color-picker.git",
+    "directory": "packages/svelte"
+  },
+  "homepage": "https://bloom-color-picker.shivrajroy.in",
+  "bugs": {
+    "url": "https://github.com/shivraj-roy/bloom-color-picker/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "svelte-package --watch",
+    "build": "svelte-package --input src --output dist",
+    "check-types": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "color picker",
+    "color",
+    "picker",
+    "bloom",
+    "flower",
+    "svelte"
+  ],
+  "author": "Shivraj Roy <shivrajroy78@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
+  "devDependencies": {
+    "@sveltejs/package": "^2.5.8",
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "@testing-library/svelte": "^5.4.2",
+    "happy-dom": "^20.14.5",
+    "svelte": "^5.57.1",
+    "svelte-check": "^4.7.6",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.3",
+    "vitest": "^5.0.1"
+  }
+}

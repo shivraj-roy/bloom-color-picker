@@ -21,7 +21,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const coreDir = join(root, "packages/core/src");
 
 // every framework package that should receive a copy
-const targets = ["react", "vue"];
+const targets = ["react", "vue", "svelte"];
 
 // What the last sync wrote. Without it, a file deleted from core would leave its
 // copies behind: the copies are no longer regenerated, nothing reports a change,
