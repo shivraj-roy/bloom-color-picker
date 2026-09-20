@@ -190,4 +190,31 @@ describe("BloomColorPicker", () => {
       // the arc must reference the very same id
       expect($("path[stroke^='url(']")?.getAttribute("stroke")).toBe(`url(#${id})`);
    });
+
+   // Regression: a rejected character sanitises to the string already bound, so
+   // nothing re-rendered and the junk stayed on screen. React's controlled
+   // input overwrites the DOM on every render, so it never shows.
+   it("drops a rejected character instead of leaving it in the field", async () => {
+      render(BloomColorPicker, { defaultValue: "#FFB1EE" });
+      const input = $(".bcp__input") as HTMLInputElement;
+
+      await fireEvent.input(input, { target: { value: "#AB" } });
+      expect(input.value).toBe("#AB");
+
+      await fireEvent.input(input, { target: { value: "#ABz" } });
+      expect(input.value).toBe("#AB");
+
+      await fireEvent.input(input, { target: { value: "#AB!!" } });
+      expect(input.value).toBe("#AB");
+
+      await fireEvent.input(input, { target: { value: "#ABC" } });
+      expect(input.value).toBe("#ABC");
+   });
+
+   it("caps the field at six hex digits", async () => {
+      render(BloomColorPicker, {});
+      const input = $(".bcp__input") as HTMLInputElement;
+      await fireEvent.input(input, { target: { value: "#AABBCCDD" } });
+      expect(input.value).toBe("#AABBCC");
+   });
 });

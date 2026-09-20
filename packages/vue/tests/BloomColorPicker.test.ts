@@ -70,19 +70,19 @@ describe("BloomColorPicker", () => {
    });
 
    it("picking a petal reports a normalised hex", async () => {
-      const w = mount(BloomColorPicker, {});
+      const onChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { onChange } });
       await open(w);
 
       await w.findAll(".bcp__petal")[0].trigger("click");
 
-      const emitted = w.emitted("change");
-      expect(emitted).toBeTruthy();
-      const hex = emitted![0][0] as string;
-      expect(hex).toMatch(/^#[0-9A-F]{6}$/);
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange.mock.calls[0][0]).toMatch(/^#[0-9A-F]{6}$/);
    });
 
    it("uncontrolled: the swatch follows its own state", async () => {
-      const w = mount(BloomColorPicker, { props: { defaultValue: "#FFB1EE" } });
+      const onChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { defaultValue: "#FFB1EE", onChange } });
       expect(w.find(".bcp__swatch").attributes("style")).toContain("#FFB1EE");
 
       await open(w);
@@ -90,20 +90,21 @@ describe("BloomColorPicker", () => {
       vi.advanceTimersByTime(CLOSE_UNMOUNT_MS);
       await w.vm.$nextTick();
 
-      const hex = (w.emitted("change")![0][0] as string).toLowerCase();
+      const hex = (onChange.mock.calls[0][0] as string).toLowerCase();
       // internal state moved to the picked colour
       expect(w.find(".bcp__bloom, .bcp__swatch").exists()).toBe(true);
       expect(hex).not.toBe("#ffb1ee");
    });
 
    it("controlled: the value prop wins and changes are only reported", async () => {
-      const w = mount(BloomColorPicker, { props: { value: "#FFB1EE" } });
+      const onChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { value: "#FFB1EE", onChange } });
       await open(w);
       await w.findAll(".bcp__petal")[0].trigger("click");
       await w.vm.$nextTick();
 
-      // reported outward...
-      expect(w.emitted("change")).toBeTruthy();
+      // reported outward, through the callback and the v-model emit...
+      expect(onChange).toHaveBeenCalledTimes(1);
       expect(w.emitted("update:value")).toBeTruthy();
       // ...but the rendered colour still follows the prop
       const knobCore = w.find(".bcp__knob-core");
@@ -120,15 +121,16 @@ describe("BloomColorPicker", () => {
    });
 
    it("hex input keeps partial text while typing, and applies valid values", async () => {
-      const w = mount(BloomColorPicker, { props: { defaultValue: "#FFB1EE" } });
+      const onChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { defaultValue: "#FFB1EE", onChange } });
       const input = w.find(".bcp__input");
 
       await input.setValue("#AB");
       expect((input.element as HTMLInputElement).value).toBe("#AB");
-      expect(w.emitted("change")).toBeFalsy();
+      expect(onChange).not.toHaveBeenCalled();
 
       await input.setValue("#00FF00");
-      expect(w.emitted("change")![0][0]).toBe("#00FF00");
+      expect(onChange).toHaveBeenCalledWith("#00FF00");
    });
 
    it("hex input rejects characters that are not hex digits", async () => {
@@ -144,10 +146,11 @@ describe("BloomColorPicker", () => {
    });
 
    it("emits update:open so v-model:open works", async () => {
-      const w = mount(BloomColorPicker, {});
+      const onOpenChange = vi.fn();
+      const w = mount(BloomColorPicker, { props: { onOpenChange } });
       await open(w);
       expect(w.emitted("update:open")![0]).toEqual([true]);
-      expect(w.emitted("openChange")![0]).toEqual([true]);
+      expect(onOpenChange).toHaveBeenCalledWith(true);
    });
 
    it("passes per-part classes through", async () => {
@@ -166,19 +169,22 @@ describe("BloomColorPicker", () => {
       expect(auto.find(".bcp").attributes("data-theme")).toBeUndefined();
    });
 
-   // Regression: Vue routes an `onChange` prop to the same listener that
-   // emit("change") reaches, so calling both fired every handler twice.
-   it("calls an onChange prop exactly once per change", async () => {
+   // Regression, twice over. Calling the prop *and* emitting fired every
+   // handler twice; emitting alone then missed `:on-change="fn"` entirely,
+   // because a template's kebab binding lands in the vnode props as
+   // "on-change" and emit() only resolves the camelised "onChange". Both
+   // spellings must fire, and exactly once.
+   it.each(["onChange", "on-change"])("a %s binding fires exactly once", async (key) => {
       const onChange = vi.fn();
-      const w = mount(BloomColorPicker, { props: { onChange } });
+      const w = mount(BloomColorPicker, { props: { [key]: onChange } as never });
       await open(w);
       await w.findAll(".bcp__petal")[0].trigger("click");
       expect(onChange).toHaveBeenCalledTimes(1);
    });
 
-   it("calls an onOpenChange prop exactly once per change", async () => {
+   it.each(["onOpenChange", "on-open-change"])("a %s binding fires exactly once", async (key) => {
       const onOpenChange = vi.fn();
-      const w = mount(BloomColorPicker, { props: { onOpenChange } });
+      const w = mount(BloomColorPicker, { props: { [key]: onOpenChange } as never });
       await open(w);
       expect(onOpenChange).toHaveBeenCalledTimes(1);
       expect(onOpenChange).toHaveBeenCalledWith(true);
@@ -197,5 +203,33 @@ describe("BloomColorPicker", () => {
       await w.vm.$nextTick();
 
       expect(w.findAll(".bcp__petal")).toHaveLength(0);
+   });
+
+   // Regression: a rejected character sanitises to the string already bound, so
+   // nothing re-rendered and the junk stayed on screen. React's controlled
+   // input overwrites the DOM on every render, so it never shows.
+   it("drops a rejected character instead of leaving it in the field", async () => {
+      const w = mount(BloomColorPicker, { props: { defaultValue: "#FFB1EE" } });
+      const input = w.find(".bcp__input");
+      const el = input.element as HTMLInputElement;
+
+      await input.setValue("#AB");
+      expect(el.value).toBe("#AB");
+
+      await input.setValue("#ABz");
+      expect(el.value).toBe("#AB");
+
+      await input.setValue("#AB!!");
+      expect(el.value).toBe("#AB");
+
+      await input.setValue("#ABC");
+      expect(el.value).toBe("#ABC");
+   });
+
+   it("caps the field at six hex digits", async () => {
+      const w = mount(BloomColorPicker, {});
+      const input = w.find(".bcp__input");
+      await input.setValue("#AABBCCDD");
+      expect((input.element as HTMLInputElement).value).toBe("#AABBCC");
    });
 });
